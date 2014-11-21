@@ -15,6 +15,10 @@ repositories {
 
 dependencies {
     compile group: 'commons-collections', name: 'commons-collections', version: '3.2'
+	//依赖spring项目
+	compile 'org.springframework:spring-context:4.1.2.RELEASE'
+	//依赖springframework.security项目
+	compile 'org.springframework.security:spring-security-web:3.2.5.RELEASE'
     testCompile group: 'junit', name: 'junit', version: '4.+'
 }
 
