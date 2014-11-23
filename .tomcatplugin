@@ -7,13 +7,22 @@
     <updateXml>true</updateXml>
     <warLocation></warLocation>
     <extraInfo></extraInfo>
-    <webPath>taobao</webPath>
+    <webPath>web3</webPath>
     <webClassPathEntries>
+        <webClassPathEntry>/web3/WebContent/WEB-INF/classes</webClassPathEntry>
         <webClassPathEntry>C:/Users/Administrator/.gradle/caches/modules-2/files-2.1/aopalliance/aopalliance/1.0/235ba8b489512805ac13a8f9ea77a1ca5ebe3e8/aopalliance-1.0.jar</webClassPathEntry>
         <webClassPathEntry>C:/Users/Administrator/.gradle/caches/modules-2/files-2.1/commons-collections/commons-collections/3.2/f951934aa5ae5a88d7e6dfaa6d32307d834a88be/commons-collections-3.2.jar</webClassPathEntry>
         <webClassPathEntry>C:/Users/Administrator/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.1.3/f6f66e966c70a83ffbdb6f17a0919eaf7c8aca7f/commons-logging-1.1.3.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Users/Administrator/.gradle/caches/modules-2/files-2.1/javax.servlet/jstl/1.2/74aca283cd4f4b4f3e425f5820cda58f44409547/jstl-1.2.jar</webClassPathEntry>
         <webClassPathEntry>C:/Users/Administrator/.gradle/caches/modules-2/files-2.1/junit/junit/4.12-beta-3/c3b3e612612fcbb9faa46d10d2d69e3b21a062fe/junit-4.12-beta-3.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Users/Administrator/.gradle/caches/modules-2/files-2.1/log4j/log4j/1.2.17/5af35056b4d257e4b64b9e8069c0746e8b08629f/log4j-1.2.17.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Users/Administrator/.gradle/caches/modules-2/files-2.1/org.codehaus.jackson/jackson-core-asl/1.9.13/3c304d70f42f832e0a86d45bd437f692129299a4/jackson-core-asl-1.9.13.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Users/Administrator/.gradle/caches/modules-2/files-2.1/org.codehaus.jackson/jackson-core-lgpl/1.9.13/daf3ed9350a24e505a9ef77a713b9e2b66135993/jackson-core-lgpl-1.9.13.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Users/Administrator/.gradle/caches/modules-2/files-2.1/org.codehaus.jackson/jackson-mapper-lgpl/1.9.13/562912b6ea695a2ae6411b9e4aed21153f46dde1/jackson-mapper-lgpl-1.9.13.jar</webClassPathEntry>
         <webClassPathEntry>C:/Users/Administrator/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-core/1.3/42a25dc3219429f0e5d060061f71acb49bf010a0/hamcrest-core-1.3.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Users/Administrator/.gradle/caches/modules-2/files-2.1/org.springframework.security/spring-security-config/3.2.5.RELEASE/1286983a3ad4549d7f7fd0f3784e747667b44b70/spring-security-config-3.2.5.RELEASE.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Users/Administrator/.gradle/caches/modules-2/files-2.1/org.springframework.security/spring-security-core/3.2.5.RELEASE/d5db43e696a02186ab7e18f8c9d99afbde94bd77/spring-security-core-3.2.5.RELEASE.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Users/Administrator/.gradle/caches/modules-2/files-2.1/org.springframework.security/spring-security-web/3.2.5.RELEASE/47624ce0bca40bac9a64276ed36d67be11f133b8/spring-security-web-3.2.5.RELEASE.jar</webClassPathEntry>
         <webClassPathEntry>C:/Users/Administrator/.gradle/caches/modules-2/files-2.1/org.springframework/spring-aop/4.0.6.RELEASE/e377760b7692569535573ba9f6e80b4b74869369/spring-aop-4.0.6.RELEASE.jar</webClassPathEntry>
         <webClassPathEntry>C:/Users/Administrator/.gradle/caches/modules-2/files-2.1/org.springframework/spring-beans/4.0.6.RELEASE/587879b58acebeb5b0a63c01e822f9b44d9a4c77/spring-beans-4.0.6.RELEASE.jar</webClassPathEntry>
         <webClassPathEntry>C:/Users/Administrator/.gradle/caches/modules-2/files-2.1/org.springframework/spring-context/4.0.6.RELEASE/3bb3a52edabf9ffe73aa534fb085c816bac28b4d/spring-context-4.0.6.RELEASE.jar</webClassPathEntry>
