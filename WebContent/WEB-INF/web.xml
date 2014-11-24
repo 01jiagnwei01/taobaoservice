@@ -16,6 +16,7 @@
     <filter-name>Spring character encoding filter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  <!--  去除spring security相关
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
@@ -28,8 +29,9 @@
   </filter>
   <filter-mapping>
     <filter-name>springSecurityFilterChain</filter-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/admin/*</url-pattern>
   </filter-mapping>
+   -->
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>

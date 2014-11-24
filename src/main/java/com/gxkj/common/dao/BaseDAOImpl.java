@@ -2,6 +2,8 @@ package com.gxkj.common.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
  
 /**
@@ -17,9 +19,20 @@ public class BaseDAOImpl implements BaseDAO {
 	}
 
  
+	@SuppressWarnings("unchecked")
 	public List<Object> selectByHql(String hql, List<Object> parameters) {
-		 
-		return null;
+		Session session  =  this.sessionFactory.getCurrentSession();
+		Query query = session.createQuery(hql);
+		if (parameters != null){
+			for(int i=0,l = parameters.size();i<l;i++ ){
+				query.setParameter(i, parameters.get(i));
+			}
+		}
+		return ((List<Object>)query.list());
+	}
+	
+	public void test(){
+		System.out.println("play success");
 	}
 	 
 	 

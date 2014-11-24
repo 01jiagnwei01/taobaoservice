@@ -13,4 +13,6 @@ public interface BaseDAO {
 	
 
 	public  List<Object> selectByHql(String hql,List<Object> parameters);
+	
+	public void test();
 }
