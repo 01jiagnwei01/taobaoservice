@@ -44,9 +44,7 @@
 		<property name="testWhileIdle" value="${taobaoservice.jdbc.testWhileIdle}"/>
 	</bean>
 
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" lazy-init="true">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
+	
 	 
 
 	
