@@ -3,7 +3,6 @@ package com.gxkj.common.dao;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.hibernate.mapping.Map;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
