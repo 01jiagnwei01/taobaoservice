@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/spring-dao-context.xml","/spring-datasource-context.xml","/spring-hibernate-context.xml","/spring-service-context.xml","spring-transaction-context.xml" })
+@ContextConfiguration(locations = { "classpath:/spring-*.xml" })
 public class BaseDaoImplTest  extends AbstractTransactionalJUnit4SpringContextTests {
 	
 	@Autowired
@@ -24,7 +24,7 @@ public class BaseDaoImplTest  extends AbstractTransactionalJUnit4SpringContextTe
 	public void  selectByHqlTest() throws SQLException{
 		
 		String sql = "select * from customer";
-		List<?> datas = basedao.executeQuery(sql, null, Map.class);
+		List<?> datas = basedao.executeQuery(sql, null,null);
 		System.out.println(datas.size());
 		
 	}

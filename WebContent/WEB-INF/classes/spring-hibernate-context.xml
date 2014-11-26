@@ -25,11 +25,12 @@
 		<property name="packagesToScan">
             <list>
                 <!-- 可以加多个包 -->
-                <value>com.gxkj.security.entitys</value>
                 <value>com.gxkj.taobaoservice.entitys</value>
             </list>
         </property>
 	</bean>
-	
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate4.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
 	
 </beans>
