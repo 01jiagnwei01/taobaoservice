@@ -58,7 +58,7 @@ test {
 eclipse.classpath.defaultOutputDir=file("${project.projectDir}/WebContent/WEB-INF/classes");
 eclipse {
 	project {
-		natures += ['org.eclipse.wst.jsdt.core.jsNature' ]
+		natures += ['org.eclipse.wst.jsdt.core.jsNature' ,'com.sysdeo.eclipse.tomcat.tomcatnature']
 		buildCommand 'org.eclipse.wst.jsdt.core.javascriptValidator'
 		buildCommand 'org.eclipse.jdt.core.javabuilder'
 		buildCommand 'org.eclipse.wst.common.project.facet.core.builder'
