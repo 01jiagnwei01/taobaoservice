@@ -86,19 +86,27 @@ eclipse {
    
 	}
 }
-/**
+/***/
 eclipse.classpath.file.withXml {
 		def node = it.asNode();
-		for (Node n : node.children()) {
-			if ("lib".equals(n.attribute("kind"))) {
-				def node_attributes = new Node(n, "attributes");
-				def map = new HashMap();
-				map.put("name", "org.eclipse.jst.component.dependency");
-				map.put("value", "/WEB-INF/lib");
-				def node_attribute = new Node(node_attributes, "attribute", map);
+		node.children().removeAll() { c ->
+			def path = c.attribute('path')
+			if(path != null){
+				//if(path.contains('javax.servlet-api'))return true;
 			}
+			return false;
+			  
 		}
-	}*/
+//		for (Node n : node.children()) {
+//			if ("lib".equals(n.attribute("kind"))) {
+//				def node_attributes = new Node(n, "attributes");
+//				def map = new HashMap();
+//				map.put("name", "org.eclipse.jst.component.dependency");
+//				map.put("value", "/WEB-INF/lib");
+//				def node_attribute = new Node(node_attributes, "attribute", map);
+//			}
+//		}
+	}
 uploadArchives {
     repositories {
        flatDir {
