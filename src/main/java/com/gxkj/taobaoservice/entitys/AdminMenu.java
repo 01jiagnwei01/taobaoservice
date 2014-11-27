@@ -1,0 +1,111 @@
+package com.gxkj.taobaoservice.entitys;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+ 
+
+@Entity
+@Table(name = "admin_menu")
+public class AdminMenu  implements Serializable  {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3545715545966442853L;
+
+	// 主键 ：@Id    主键生成方式：strategy = "increment"
+	//映射表中id这个字段，不能为空，并且是唯一的
+	@GenericGenerator(name = "generator", strategy = "increment")
+	@GeneratedValue(generator = "generator")
+	@Id
+	@Column(name = "id", unique = true, nullable = false) 
+	private Integer  id;
+	 
+	@Column(name = "name", length = 500)
+	private String name;
+	
+	@Column(name = "path", length = 500) 
+	private String path;
+	
+	public static enum MenuType {isButton,isMenu} 
+	@Enumerated(value = EnumType.STRING)//ORDINAL序数      
+	private MenuType isbutton;
+	 
+	@Column(name = "btnflag", length = 50)
+	private String btnflag;
+	
+	@Column(name = "pid" )
+	private int pid;
+
+	
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	 
+
+	 
+	public MenuType getIsbutton() {
+		return isbutton;
+	}
+
+	public void setIsbutton(MenuType isbutton) {
+		this.isbutton = isbutton;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getBtnflag() {
+		return btnflag;
+	}
+
+	 
+	public void setBtnflag(String btnflag) {
+		this.btnflag = btnflag;
+	}
+	public int getPid() {
+		return pid;
+	}
+
+	public void setPid(int pid) {
+		this.pid = pid;
+	}
+	
+	
+	
+	
+	
+
+}
