@@ -26,7 +26,7 @@ public class UserBase implements Serializable{
 	@GeneratedValue(generator = "generator")
 	@Id
 	@Column(name = "id", unique = true, nullable = false) 
-	private int id;
+	private Integer id;
 	
 	/**
 	 * 用户名
@@ -65,11 +65,11 @@ public class UserBase implements Serializable{
 	@Temporal(TemporalType.TIMESTAMP )
 	private Date regTime;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
