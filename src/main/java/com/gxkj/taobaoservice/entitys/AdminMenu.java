@@ -46,7 +46,7 @@ public class AdminMenu  implements Serializable  {
 
 	
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 

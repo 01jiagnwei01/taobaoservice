@@ -22,7 +22,10 @@
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hiberante.format_sql">true</prop>
 				 <!-- 如果采用jdbc独立引用程序配置如下：--> 
-			<prop key="hibernate.current_session_context_class">thread</prop>
+				<!-- 
+				 <prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate3.SpringSessionContext</prop>
+				 --> 
+				 <!-- <prop key="hibernate.current_session_context_class">thread</prop>--> 
 			  <!-- 如果采用了JTA事务配置如下--> 
 			 		 <!--  <prop key="hibernate.current_session_context_class">jta</prop>--> 
 			</props>

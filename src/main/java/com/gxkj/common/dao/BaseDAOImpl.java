@@ -1,6 +1,7 @@
 package com.gxkj.common.dao;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -93,16 +94,16 @@ public  class BaseDAOImpl    implements BaseDAO {
 			ListPager pager) throws SQLException {
 		
 		Session session = sessionFactory.getCurrentSession();
-		Query countQuery = session.createSQLQuery(sql);
+		String countSql = this.getCounthql(sql);
+		SQLQuery countQuery = session.createSQLQuery(countSql);
 		if(parameters != null){
 			for(int i=0,l = parameters.length;i<l;i++ ){
 				countQuery.setParameter(i, parameters[i]);
 			}
 		}
-		List<?> temp = countQuery.list();
-		long totalRows = temp!=null&&temp.size()>0?Long.parseLong(temp.get(0)+""):0L;
-		pager.setTotalRows(totalRows);
-		if(totalRows == 0){
+		BigInteger totalRows = (BigInteger) countQuery.uniqueResult();
+		pager.setTotalRows(totalRows.longValue());
+		if(totalRows.intValue() == 0){
 			pager.setPageData(null);
 			
 			return pager; 
