@@ -15,27 +15,41 @@ public interface BaseDAO {
 	public void insert(final Object entity) throws SQLException;
 
 	public void delete(Object entity) throws SQLException;
+	public void deleteById(Serializable  id,Class<?> clazz) throws SQLException;
 
 	public void update(Object entity) throws SQLException;
 
-	public List<?> select(String hql) throws SQLException;
+	public List<?> selectByHQL(String hql) throws SQLException;
 
 	public List<?> selectPage(String hql, ListPager pager) throws SQLException;
 
-	public List<?> select(String hql, Object[] parameters) throws SQLException;
+	public List<?> selectByHQL(String hql, Object[] parameters) throws SQLException;
 	
-	public List<?> selectBySql (String sql,Class<?> clazz) throws SQLException;
+	public List<?> selectBySQL (String sql,Class<?> clazz) throws SQLException;
 
-	public ListPager selectPage(String hql, Object[] parameters, ListPager pager)
+	public ListPager selectPageByHql(String hql, Object[] parameters, ListPager pager)
+			throws SQLException;
+	
+	public ListPager selectPageBySQL(String sql, Object[] parameters,Class<?> clazz, ListPager pager)
 			throws SQLException;
 
-	public List<?> selectPage(String hql, Object[] parameters, int from, int to)
+	public List<?> selectPageByHQL(String hql, Object[] parameters, int from, int to)
+			throws SQLException;
+	
+	public List<?> selectPageBySQL(String sql, Object[] parameters, int from,Class<?> clazz,
+			int to)
+			throws SQLException;
+	
+
+	public Object selectOneByHQL(String hql, Object[] parameters)
 			throws SQLException;
 
-	public Object selectOne(String hql, Object[] parameters)
+	public Object selectOneByHQL(String hql) throws SQLException;
+	
+	public Object selectOneBySQL(String sql,Class<?> clazz) throws SQLException;
+	
+	public Object selectOneBySQL(String sql, Object[] parameters,Class<?> clazz)
 			throws SQLException;
-
-	public Object selectOne(String hql) throws SQLException;
 
 	public int executeUpdate(String sql, Object[] parameters)
 			throws SQLException;

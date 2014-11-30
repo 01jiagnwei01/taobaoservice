@@ -2,6 +2,8 @@ package com.gxkj.common.exceptions;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,8 +31,12 @@ public class CustomSimpleMappingExceptionResolver extends SimpleMappingException
 	                return getModelAndView(viewName, ex, request);  
 	            } else {// JSON格式返回  
 	                try {  
+	                	response.setContentType("text/javascript;charset=UTF-8");  
 	                    PrintWriter writer = response.getWriter();  
-	                    writer.write(ex.getMessage());  
+	                    Map json = new HashMap();
+	                    json.put("result", false);
+	                    json.put("msg", ex.getMessage());
+	                    writer.write(json.toString());  
 	                    writer.flush();  
 	                } catch (IOException e) {  
 	                    e.printStackTrace();  

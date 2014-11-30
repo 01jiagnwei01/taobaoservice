@@ -8,13 +8,14 @@
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-	<context:component-scan base-package="com.**.controllers" />
+	<context:component-scan base-package="com.gxkj.taobaoservice.controllers" />
 	<bean id="handlerMapping"
 		class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
 		<property name="order" value="0" />
 		<property name="interceptors">  
            <list>  
                <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+                <bean class="com.gxkj.taobaoservice.filters.AuthorizationInterceptor" /> 
            </list>  
        </property>  
 		
@@ -43,6 +44,9 @@
                    <!-- <ref bean="marshallingConverter" />  -->
 			 </list>
          </property>
+         <property name="webBindingInitializer">
+			<bean class="com.gxkj.common.util.BindingInitializer"></bean>
+		</property>
      </bean>
  
      <bean id="stringHttpMessageConverter"
@@ -64,6 +68,16 @@
 		</property>
 		<property name="defaultStatusCode" value="500"></property>
 	</bean>
-	 
+	 <!--  这里申明的id必须为multipartResolver  -->  
+	<bean id="multipartResolver"  
+	    class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+	    <!-- one of the properties available; the maximum file size in bytes -->  
+	    <!-- 
+	    <property name="maxUploadSize" value="1000000"/>
+	      <property name="defaultEncoding" value="ISO-8859-1"/>
+	      <property name="uploadTempDir" value="/temp"/>
+	      <property name="maxInMemorySize" value="10240"/>
+	     -->  
+	</bean>  
 	 <mvc:resources mapping="/resources/**" location="/resources/" />
 </beans>

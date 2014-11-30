@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -36,9 +34,9 @@ public class AdminMenu  implements Serializable  {
 	@Column(name = "path", length = 500) 
 	private String path;
 	
-	public static enum MenuType {isButton,isMenu} 
-	@Enumerated(value = EnumType.STRING)//ORDINAL序数      
-	private MenuType isbutton;
+	 
+	@Column(name = "isbutton" )  
+	private int isbutton;
 	 
 	@Column(name = "btnflag", length = 50)
 	private String btnflag;
@@ -71,15 +69,12 @@ public class AdminMenu  implements Serializable  {
 	public void setPath(String path) {
 		this.path = path;
 	}
-
 	 
-
-	 
-	public MenuType getIsbutton() {
+	public int getIsbutton() {
 		return isbutton;
 	}
 
-	public void setIsbutton(MenuType isbutton) {
+	public void setIsbutton(int isbutton) {
 		this.isbutton = isbutton;
 	}
 

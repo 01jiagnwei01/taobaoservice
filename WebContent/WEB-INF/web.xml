@@ -4,6 +4,10 @@
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath:spring-*.xml</param-value>
   </context-param>
+  <context-param>
+    <param-name>SystemGlobalsProperties</param-name>
+    <param-value>SystemGlobals.properties</param-value>
+  </context-param>
   <filter>
     <filter-name>Spring character encoding filter</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -32,9 +36,13 @@
     <url-pattern>/admin/*</url-pattern>
   </filter-mapping>
    -->
-  <listener>
-    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+   <listener>
+     <listener-class>com.gxkj.common.listeners.ConfigInitializer</listener-class>
   </listener>
+  <listener>
+    <listener-class>com.gxkj.common.util.ContextUtil</listener-class>
+  </listener>
+   
   <servlet>
     <servlet-name>springmvc</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
