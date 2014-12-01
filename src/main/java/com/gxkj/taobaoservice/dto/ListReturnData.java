@@ -1,8 +1,14 @@
 package com.gxkj.taobaoservice.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ListReturnData {
+public class ListReturnData implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4419677389438361665L;
 
 	/**
 	 * 成功与否

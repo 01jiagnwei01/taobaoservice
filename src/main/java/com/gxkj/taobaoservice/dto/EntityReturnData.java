@@ -1,6 +1,12 @@
 package com.gxkj.taobaoservice.dto;
 
-public class EntityReturnData {
+import java.io.Serializable;
+
+public class EntityReturnData implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3691383085130219034L;
 	/**
 	 * 成功与否
 	 */

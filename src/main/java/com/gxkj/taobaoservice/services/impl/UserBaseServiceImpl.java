@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gxkj.common.util.PWDGenter;
+import com.gxkj.common.util.StringMatchUtil;
 import com.gxkj.taobaoservice.daos.OperateLogDao;
 import com.gxkj.taobaoservice.daos.UserAccountDao;
 import com.gxkj.taobaoservice.daos.UserBaseDao;
@@ -63,6 +64,10 @@ public class UserBaseServiceImpl implements UserBaseService {
 		userBase.setUerAccount(userAccount);
 		
 		/**
+		 * 向邮箱发信,激活邮箱
+		 */
+		
+		/**
 		 * 保存修改邮箱的记录
 		 */
 		OperateLog operateLog = new OperateLog();
@@ -111,6 +116,10 @@ public class UserBaseServiceImpl implements UserBaseService {
 			ret.setMsg("email_blank");
 			return false;
 		}
+		if(!StringMatchUtil.isEmail(email)){
+			ret.setMsg("email_error");
+			return false;
+		}
 		if(StringUtils.isBlank(passowrd)){
 			ret.setMsg("passowrd_blank");
 			return false;
@@ -123,6 +132,7 @@ public class UserBaseServiceImpl implements UserBaseService {
 			ret.setMsg("password_and_repassword_not_equal");
 			return false;
 		}
+		
 		
 		List<UserBase> users = userBaseDao.getUsersByUserName(userName);
 		if(CollectionUtils.isNotEmpty(users)){
