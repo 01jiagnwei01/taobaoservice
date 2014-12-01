@@ -41,7 +41,7 @@ public class RegController {
 		String ip = request.getRemoteAddr();
 		regObjDTO.setIp(ip);
 		try {
-			ret =   userBaseService.regUser(regObjDTO);
+			ret =   userBaseService.addRegUser(regObjDTO);
 		} catch (Exception e) {
 			e.printStackTrace();
 			ret.setMsg("syserror");

@@ -26,6 +26,12 @@ public class UserAccount implements Serializable{
 	private Integer  id;
 	
 	/**
+	 * 用户ID
+	 */
+	@Column(name = "user_id", unique = true, nullable = false)
+	private int userId;
+	
+	/**
 	 * 当前余额
 	 */
 	@Column(name = "current_balance")
@@ -88,6 +94,16 @@ public class UserAccount implements Serializable{
 	public void setLockedPoints(int lockedPoints) {
 		this.lockedPoints = lockedPoints;
 	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+	
+	
 	
 	
 

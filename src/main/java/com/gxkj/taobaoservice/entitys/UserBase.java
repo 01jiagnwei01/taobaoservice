@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -64,6 +65,9 @@ public class UserBase implements Serializable{
 	@Column(name="regTime")
 	@Temporal(TemporalType.TIMESTAMP )
 	private Date regTime;
+	
+	@Transient
+	private UserAccount uerAccount;
 
 	public Integer getId() {
 		return id;
@@ -120,6 +124,15 @@ public class UserBase implements Serializable{
 	public void setRegTime(Date regTime) {
 		this.regTime = regTime;
 	}
+
+	public UserAccount getUerAccount() {
+		return uerAccount;
+	}
+
+	public void setUerAccount(UserAccount uerAccount) {
+		this.uerAccount = uerAccount;
+	}
+	
 	
 	
 }

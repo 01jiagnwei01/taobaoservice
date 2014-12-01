@@ -11,7 +11,7 @@ public interface UserBaseService {
 	 * @return
 	 * @throws Exception
 	 */
-	EntityReturnData regUser(RegObjDTO regObjDTO)throws Exception;
+	EntityReturnData addRegUser(RegObjDTO regObjDTO)throws Exception;
 	
 	
 
