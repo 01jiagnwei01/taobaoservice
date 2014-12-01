@@ -1,6 +1,7 @@
 /build/
 /bin/
 /.gradle/
+/.gradle/
 /.settings/
 *classes/
 /work/
