@@ -4,7 +4,7 @@ public class EntityReturnData {
 	/**
 	 * 成功与否
 	 */
-	private boolean result;
+	private boolean result = false;
 	/**
 	 * 操作结果 
 	 */

@@ -27,7 +27,9 @@
         <webClassPathEntry>C:/Users/Administrator/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.1.3/f6f66e966c70a83ffbdb6f17a0919eaf7c8aca7f/commons-logging-1.1.3.jar</webClassPathEntry>
         <webClassPathEntry>C:/Users/Administrator/.gradle/caches/modules-2/files-2.1/commons-pool/commons-pool/1.5.4/75b6e20c596ed2945a259cea26d7fadd298398e6/commons-pool-1.5.4.jar</webClassPathEntry>
         <webClassPathEntry>C:/Users/Administrator/.gradle/caches/modules-2/files-2.1/dom4j/dom4j/1.6.1/5d3ccc056b6f056dbf0dddfdf43894b9065a8f94/dom4j-1.6.1.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Users/Administrator/.gradle/caches/modules-2/files-2.1/javax.activation/activation/1.1/e6cb541461c2834bdea3eb920f1884d1eb508b50/activation-1.1.jar</webClassPathEntry>
         <webClassPathEntry>C:/Users/Administrator/.gradle/caches/modules-2/files-2.1/javax.batch/javax.batch-api/1.0/65392d027a6eb369fd9fcd1b75cae150e25ac03c/javax.batch-api-1.0.jar</webClassPathEntry>
+        <webClassPathEntry>C:/Users/Administrator/.gradle/caches/modules-2/files-2.1/javax.mail/mail/1.4.7/9add058589d5d85adeb625859bf2c5eeaaedf12d/mail-1.4.7.jar</webClassPathEntry>
         <webClassPathEntry>C:/Users/Administrator/.gradle/caches/modules-2/files-2.1/javax.servlet/jstl/1.2/74aca283cd4f4b4f3e425f5820cda58f44409547/jstl-1.2.jar</webClassPathEntry>
         <webClassPathEntry>C:/Users/Administrator/.gradle/caches/modules-2/files-2.1/junit/junit/4.12-beta-3/c3b3e612612fcbb9faa46d10d2d69e3b21a062fe/junit-4.12-beta-3.jar</webClassPathEntry>
         <webClassPathEntry>C:/Users/Administrator/.gradle/caches/modules-2/files-2.1/log4j/log4j/1.2.17/5af35056b4d257e4b64b9e8069c0746e8b08629f/log4j-1.2.17.jar</webClassPathEntry>
