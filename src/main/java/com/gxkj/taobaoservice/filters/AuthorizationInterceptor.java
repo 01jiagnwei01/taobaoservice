@@ -83,21 +83,24 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter  {
 			if(authPath.indexOf(";"+url+";")>=0){
 				return true;
 			}
-			
+			String requestType = req.getHeader("X-Requested-With");
+			if(StringUtils.isNotBlank(requestType )){
+				//是ajax请求，返回json对象
+				Map<String,Object>  json = new HashMap<String,Object>();
+				json.put("resutlt", false);
+				json.put("msg", "no auth");
+				 response.setContentType("text/javascript;charset=UTF-8");   
+				 PrintWriter out = response.getWriter();   
+	             out.write(json.toString());
+				
+			} else{
+				response.sendRedirect(req.getContextPath()+"/exception/noauth");
+			}
+		}else {
+			//前台来的
+			return true;
 		}
-		String requestType = req.getHeader("X-Requested-With");
-		if(StringUtils.isNotBlank(requestType )){
-			//是ajax请求，返回json对象
-			Map<String,Object>  json = new HashMap<String,Object>();
-			json.put("resutlt", false);
-			json.put("msg", "no auth");
-			 response.setContentType("text/javascript;charset=UTF-8");   
-			 PrintWriter out = response.getWriter();   
-             out.write(json.toString());
-			
-		} else{
-			response.sendRedirect(req.getContextPath()+"/exception/noauth");
-		}
+		
 		
 		return false;
 	}
