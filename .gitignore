@@ -3,4 +3,5 @@
 /.gradle/
 /.settings/
 *classes/
-/work//WebContent/#webclasspath
+/work/
+/WebContent/#webclasspath
