@@ -1,7 +1,9 @@
 package com.gxkj.taobaoservice.entitys;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,23 +43,13 @@ public class UserBase implements Serializable{
 	@Column(name="password" )
 	private String password;
 	
-	/**
-	 * 手机
-	 */
-	@Column(name="tel" )
-	private String telPhone;
-	
-	/**
-	 * 邮箱
-	 */
-	@Column(name="e_mail" )
-	private String eMail;
+	 
 
 	/**
-	 * qq
+	 * enabled
 	 */
-	@Column(name="qq" )
-	private String qq;
+	@Column(name="enabled" )
+	private int enabled;
 	
 	/**
 	 * 注册时间
@@ -66,8 +58,17 @@ public class UserBase implements Serializable{
 	@Temporal(TemporalType.TIMESTAMP )
 	private Date regTime;
 	
+	/**
+	 * 账户信息
+	 */
 	@Transient
 	private UserAccount uerAccount;
+	
+	/**
+	 * 联系方式
+	 */
+	@Transient
+	private List<UserLink> userLinks = new ArrayList<UserLink>();;
 
 	public Integer getId() {
 		return id;
@@ -92,31 +93,7 @@ public class UserBase implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	public String getTelPhone() {
-		return telPhone;
-	}
-
-	public void setTelPhone(String telPhone) {
-		this.telPhone = telPhone;
-	}
-
-	public String geteMail() {
-		return eMail;
-	}
-
-	public void seteMail(String eMail) {
-		this.eMail = eMail;
-	}
-
-	public String getQq() {
-		return qq;
-	}
-
-	public void setQq(String qq) {
-		this.qq = qq;
-	}
-
+	 
 	public Date getRegTime() {
 		return regTime;
 	}
@@ -132,7 +109,22 @@ public class UserBase implements Serializable{
 	public void setUerAccount(UserAccount uerAccount) {
 		this.uerAccount = uerAccount;
 	}
-	
+
+	public List<UserLink> getUserLinks() {
+		return userLinks;
+	}
+
+	public void setUserLinks(List<UserLink> userLinks) {
+		this.userLinks = userLinks;
+	}
+
+	public int getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(int enabled) {
+		this.enabled = enabled;
+	}
 	
 	
 }

@@ -14,12 +14,16 @@ import com.gxkj.common.util.StringMatchUtil;
 import com.gxkj.taobaoservice.daos.OperateLogDao;
 import com.gxkj.taobaoservice.daos.UserAccountDao;
 import com.gxkj.taobaoservice.daos.UserBaseDao;
+import com.gxkj.taobaoservice.daos.UserLinkDao;
 import com.gxkj.taobaoservice.dto.EntityReturnData;
 import com.gxkj.taobaoservice.dto.RegObjDTO;
 import com.gxkj.taobaoservice.entitys.OperateLog;
 import com.gxkj.taobaoservice.entitys.UserAccount;
 import com.gxkj.taobaoservice.entitys.UserBase;
+import com.gxkj.taobaoservice.entitys.UserLink;
 import com.gxkj.taobaoservice.enums.OperateTypes;
+import com.gxkj.taobaoservice.enums.UserLinkStatus;
+import com.gxkj.taobaoservice.enums.UserLinkTypes;
 import com.gxkj.taobaoservice.services.UserBaseService;
 @Service
 public class UserBaseServiceImpl implements UserBaseService {
@@ -32,6 +36,9 @@ public class UserBaseServiceImpl implements UserBaseService {
 	
 	@Autowired
 	private OperateLogDao operateLogDao;
+	
+	@Autowired
+	private UserLinkDao userLinkDao;
 	/**
 	 * 前台用户注册接口
 	 */
@@ -48,11 +55,26 @@ public class UserBaseServiceImpl implements UserBaseService {
 		 * 验证通过，数据入库
 		 */
 		UserBase userBase = new UserBase();
-		userBase.seteMail(regObjDTO.getEmail());
 		userBase.setPassword(PWDGenter.generateKen(regObjDTO.getPassword()) );
 		userBase.setUserName(userBase.getUserName());
 		userBase.setRegTime(now);
+		userBase.setEnabled(1);
 		userBaseDao.insert(userBase);
+		
+		/**
+		 * 联系方式
+		 * 邮箱：默认待激活
+		 */
+		UserLink emailLink = new UserLink();
+		emailLink.setCreateTime(now);
+		emailLink.setStatus(UserLinkStatus.WAIT_ACTIVE);;
+		emailLink.setLinkType(UserLinkTypes.EMAIL);
+		emailLink.setLinkValue(regObjDTO.getEmail());
+		emailLink.setUserId(userBase.getId());
+		userLinkDao.insert(emailLink);
+		userBase.getUserLinks().add(emailLink);
+		
+		 
 		
 		/**
 		 * 保存用户账户信息
@@ -74,7 +96,7 @@ public class UserBaseServiceImpl implements UserBaseService {
 		operateLog.setIp(regObjDTO.getIp());
 		operateLog.setOperateTime(now);
 		operateLog.setOperateType(OperateTypes.REG_EMAIL);
-		operateLog.setAfterValue(userBase.geteMail());
+		operateLog.setAfterValue(regObjDTO.getEmail());
 		operateLog.setUser_id(userBase.getId());
 		operateLogDao.insert(operateLog);
 		
@@ -85,7 +107,7 @@ public class UserBaseServiceImpl implements UserBaseService {
 		operateLog2.setIp(regObjDTO.getIp());
 		operateLog2.setOperateTime(now);
 		operateLog2.setOperateType(OperateTypes.REG_PASSWORD);
-		operateLog2.setAfterValue(userBase.getPassword());
+		operateLog2.setAfterValue(PWDGenter.generateKen(regObjDTO.getPassword()) );
 		operateLog2.setUser_id(userBase.getId());
 		operateLogDao.insert(operateLog2);
 		

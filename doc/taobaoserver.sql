@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50620
 File Encoding         : 65001
 
-Date: 2014-11-30 22:54:23
+Date: 2014-12-01 21:41:54
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,7 +28,7 @@ CREATE TABLE `admin_menu` (
   `btnflag` varchar(32) DEFAULT NULL,
   `pid` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of admin_menu
@@ -136,7 +136,7 @@ CREATE TABLE `rel_role_menu` (
   `roleid` int(10) DEFAULT NULL,
   `menuid` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rel_role_menu
@@ -176,7 +176,10 @@ CREATE TABLE `user_account` (
   `current_rest_points` int(10) DEFAULT NULL,
   `locked_balance` double(10,2) DEFAULT NULL,
   `locked_points` int(10) DEFAULT NULL COMMENT '帐户表',
-  PRIMARY KEY (`id`)
+  `user_id` int(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user_base` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -217,15 +220,32 @@ CREATE TABLE `user_account_log` (
 DROP TABLE IF EXISTS `user_base`;
 CREATE TABLE `user_base` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `user_name` varchar(50) DEFAULT NULL,
-  `password` varchar(36) DEFAULT NULL,
-  `tel` varchar(36) DEFAULT NULL,
-  `e_mail` varchar(50) DEFAULT NULL,
-  `qq` varchar(15) DEFAULT NULL,
-  `regTime` datetime DEFAULT NULL COMMENT '用户基本信息表',
+  `user_name` varchar(50) NOT NULL,
+  `password` varchar(36) NOT NULL,
+  `regTime` datetime NOT NULL COMMENT '用户基本信息表',
+  `status` varchar(10) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_base
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `user_link`
+-- ----------------------------
+DROP TABLE IF EXISTS `user_link`;
+CREATE TABLE `user_link` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) NOT NULL,
+  `link_type` varchar(30) NOT NULL,
+  `link_value` varchar(30) NOT NULL,
+  `enabled` int(1) NOT NULL,
+  `active_time` datetime DEFAULT NULL,
+  `create_time` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of user_link
 -- ----------------------------
