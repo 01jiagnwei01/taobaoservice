@@ -71,7 +71,7 @@ public class UserLinkServiceImpl implements UserLinkService {
 		}
 		 ObjectMapper mapper = new ObjectMapper();  
 		 
-		userLink.setActiveTime(now);
+//		userLink.setActiveTime(now);
 		userLink.setStatus(UserLinkStatus.NORMAL);
 		userLinkDao.update(userLink);
 		 

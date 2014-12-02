@@ -99,7 +99,7 @@ public class UserBaseServiceImpl implements UserBaseService {
 		 * 邮箱：默认待激活
 		 */
 		UserLink emailLink = new UserLink();
-		emailLink.setCreateTime(now);
+//		emailLink.setCreateTime(now);
 		emailLink.setStatus(UserLinkStatus.WAIT_ACTIVE);;
 		emailLink.setLinkType(UserLinkTypes.EMAIL);
 		emailLink.setLinkValue(regObjDTO.getEmail());

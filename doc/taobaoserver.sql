@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50620
 File Encoding         : 65001
 
-Date: 2014-12-01 21:41:54
+Date: 2014-12-02 19:16:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -93,6 +93,25 @@ CREATE TABLE `admin_user` (
 INSERT INTO `admin_user` VALUES ('1', '01jiangwei01', '980ac217c6b51e7dc41040bec1edfec8', '管理员', '1');
 
 -- ----------------------------
+-- Table structure for `business_exception`
+-- ----------------------------
+DROP TABLE IF EXISTS `business_exception`;
+CREATE TABLE `business_exception` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `userId` int(10) NOT NULL,
+  `create_time` datetime NOT NULL,
+  `type` varchar(30) NOT NULL,
+  `class_path` varchar(100) NOT NULL,
+  `method_name` varchar(100) NOT NULL,
+  `param_string` varchar(400) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of business_exception
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `operate_log`
 -- ----------------------------
 DROP TABLE IF EXISTS `operate_log`;
@@ -104,6 +123,7 @@ CREATE TABLE `operate_log` (
   `before_value` varchar(100) DEFAULT NULL,
   `after_value` varchar(100) NOT NULL,
   `ip` varchar(30) NOT NULL,
+  `isused` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -180,7 +200,7 @@ CREATE TABLE `user_account` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user_base` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_account
@@ -225,11 +245,12 @@ CREATE TABLE `user_base` (
   `regTime` datetime NOT NULL COMMENT '用户基本信息表',
   `status` varchar(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_base
 -- ----------------------------
+INSERT INTO `user_base` VALUES ('1', 'x1', 'ec6ef230f1828039ee794566b9c58adc', '2014-12-02 17:59:15', 'NORMAL');
 
 -- ----------------------------
 -- Table structure for `user_link`
@@ -240,9 +261,7 @@ CREATE TABLE `user_link` (
   `user_id` int(10) NOT NULL,
   `link_type` varchar(30) NOT NULL,
   `link_value` varchar(30) NOT NULL,
-  `enabled` int(1) NOT NULL,
-  `active_time` datetime DEFAULT NULL,
-  `create_time` datetime NOT NULL,
+  `status` varchar(10) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

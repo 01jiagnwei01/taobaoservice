@@ -1,7 +1,6 @@
 package com.gxkj.taobaoservice.entitys;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,8 +9,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -46,13 +43,13 @@ public class UserLink implements Serializable{
 	@Enumerated(EnumType.STRING)
 	private UserLinkStatus status;
 	
-	@Column(name = "create_time" )
-	@Temporal(TemporalType.TIMESTAMP )
-	private Date createTime;
-	
-	@Column(name = "active_time" )
-	@Temporal(TemporalType.TIMESTAMP )
-	private Date activeTime;
+//	@Column(name = "create_time" )
+//	@Temporal(TemporalType.TIMESTAMP )
+//	private Date createTime;
+//	
+//	@Column(name = "active_time" )
+//	@Temporal(TemporalType.TIMESTAMP )
+//	private Date activeTime;
 
 	public Integer getId() {
 		return id;
@@ -96,21 +93,21 @@ public class UserLink implements Serializable{
 		this.status = status;
 	}
 
-	public Date getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
-
-	public Date getActiveTime() {
-		return activeTime;
-	}
-
-	public void setActiveTime(Date activeTime) {
-		this.activeTime = activeTime;
-	}
+//	public Date getCreateTime() {
+//		return createTime;
+//	}
+//
+//	public void setCreateTime(Date createTime) {
+//		this.createTime = createTime;
+//	}
+//
+//	public Date getActiveTime() {
+//		return activeTime;
+//	}
+//
+//	public void setActiveTime(Date activeTime) {
+//		this.activeTime = activeTime;
+//	}
 	
 	
 }
