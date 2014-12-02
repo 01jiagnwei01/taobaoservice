@@ -62,7 +62,7 @@ public class IndexController {
 		String mingWen=encrypt.getStrM(); //调用get函数获取解密后明文。
 		String[] args = mingWen.split("&");
 		if(args.length != 3){
-			modelMap.put("error", "你属于非法操作哦");
+			modelMap.put("error", "您属于非法操作哦");
 			mv = "error/active_error";
 			return mv;
 		}
@@ -71,13 +71,15 @@ public class IndexController {
 		String id = args[1];
 		String email = args[2];
 		if(StringUtils.isBlank(endtime) || StringUtils.isBlank(id) || StringUtils.isBlank(email)){
-			modelMap.put("error", "你属于非法操作哦");
+			modelMap.put("error", "您属于非法操作哦");
 			mv = "error/active_error";
 			return mv;
 		}
-		Integer id_Integer = Integer.parseInt(id);
+		
 		try {
-			Date endtime_date = DateUtils.parseDateStrictly(endtime, new String[]{"yyyy-MM-dd HH:mm:ss"});
+			email = email.split("=")[1];
+			Integer id_Integer = Integer.parseInt(id.split("=")[1]);
+			Date endtime_date = DateUtils.parseDateStrictly(endtime.split("=")[1], new String[]{"yyyy-MM-dd HH:mm:ss"});
 			UserLinkActiveResult userLinkActiveResult = userLinkService.activeEmail(email, id_Integer, endtime_date);
 			if(userLinkActiveResult == UserLinkActiveResult.HAVE_PASS_ACTIVE_DATE_FAILER){
 				modelMap.put("error", userLinkActiveResult.getName());
@@ -92,7 +94,7 @@ public class IndexController {
 				return mv;
 			}
 		} catch (Exception e) {
-			modelMap.put("error", "你属于非法操作哦");
+			modelMap.put("error", "您属于非法操作哦");
 			mv = "site/active_error";
 			return mv;	
 		}
@@ -100,6 +102,7 @@ public class IndexController {
 		
 		return mv;	
 	}
+	
 	
 	
 	

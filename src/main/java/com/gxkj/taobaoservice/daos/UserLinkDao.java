@@ -25,4 +25,11 @@ public interface UserLinkDao extends BaseDAO {
 	 * @throws SQLException
 	 */
 	UserLink getUserLinkByIdAndEmail(int id, String email)throws SQLException;
+
+	/**
+	 * 根据用户ID,查询用户的联系方式 
+	 * @param id
+	 * @return
+	 */
+	List<UserLink> getUsersByUserId(Integer userId)throws SQLException;
 }

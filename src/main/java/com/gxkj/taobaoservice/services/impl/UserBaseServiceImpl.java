@@ -20,6 +20,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gxkj.common.enums.BusinessExceptionInfos;
+import com.gxkj.common.exceptions.BusinessException;
 import com.gxkj.common.util.PWDGenter;
 import com.gxkj.common.util.StringMatchUtil;
 import com.gxkj.taobaoservice.daos.OperateLogDao;
@@ -37,6 +39,7 @@ import com.gxkj.taobaoservice.enums.RegProcessResult;
 import com.gxkj.taobaoservice.enums.UserBaseStatus;
 import com.gxkj.taobaoservice.enums.UserLinkStatus;
 import com.gxkj.taobaoservice.enums.UserLinkTypes;
+import com.gxkj.taobaoservice.services.BusinessExceptionService;
 import com.gxkj.taobaoservice.services.UserBaseService;
 import com.gxkj.taobaoservice.util.mail.MailSender;
 @Service
@@ -56,6 +59,9 @@ public class UserBaseServiceImpl implements UserBaseService {
 	
 	@Autowired
 	private UserLinkDao userLinkDao;
+	
+	@Autowired
+	private BusinessExceptionService businessExceptionService;
 	/**
 	 * 前台用户注册接口
 	 * @throws SQLException 
@@ -203,6 +209,51 @@ public class UserBaseServiceImpl implements UserBaseService {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * 用户登陆操作  
+	 * @throws SQLException 
+	 * @throws BusinessException 
+	 */
+	public UserBase doLogin(String username, String password) throws SQLException, BusinessException {
+		if(StringUtils.isBlank(username)){
+			 return null;
+		}else if(StringUtils.isBlank(password)){
+			return null;
+		} 
+		
+		List<UserBase>  userBases =   userBaseDao.getUsersByUserName(username);
+		if(CollectionUtils.isEmpty(userBases)){
+			return null;
+		}
+		password = PWDGenter.generateKen(password);
+		UserBase userBase = userBases.get(0);
+		if(!userBase.getPassword().equals(password)){
+			return null;
+		}
+		if(userBase.getStatus() != UserBaseStatus.NORMAL){
+			return userBase;
+		}
+		//查看该用户的帐务信息 
+		UserAccount uerAccount = userAccountDao.getUserAccountByUserId(userBase.getId());
+		if(uerAccount == null){
+			
+			com.gxkj.taobaoservice.entitys.BusinessException fentity = businessExceptionService.initBusinessException(this.getClass(), Thread.currentThread().getStackTrace()[1].getMethodName()
+					, BusinessExceptionInfos.NO_USER_ACCOUNT_BY_USERID, "{username:"+username+"}", userBase.getId());
+			businessExceptionService.insertEntity(fentity);
+			
+			throw new BusinessException(BusinessExceptionInfos.NO_USER_ACCOUNT_BY_USERID);
+		}
+		userBase.setUerAccount(uerAccount);
+		
+		/**
+		 * 查看用户联系方式 
+		 */
+		List<UserLink> userLinks = userLinkDao.getUsersByUserId(userBase.getId());
+		userBase.setUserLinks(userLinks);
+		
+		return userBase;
 	}
 
 }

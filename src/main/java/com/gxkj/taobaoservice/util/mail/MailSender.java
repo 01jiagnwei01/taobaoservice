@@ -54,39 +54,7 @@ public class MailSender {
     	content = this.body.replace("{1}",content);
     	this.sendEmail(to, subject, sentDate, content);
     }
-    public  void sendEmail(String to,String subject,Date sentDate,String htmlContent) throws AddressException, MessagingException{
-    	 session = this.getSession();
-    	 MimeMessage message=new MimeMessage(session);
-         message.setFrom(new InternetAddress(from));
-         message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(to));
-         message.setSubject(subject);
-         message.setSentDate(sentDate);
-         
-         /**
-          * 创建复杂格式
-          */
-         Multipart multi=new MimeMultipart("mixed");//混合MIME消息
-         BodyPart content=new MimeBodyPart();
-         Multipart relate=new MimeMultipart("related");//组合MIME消息
-         
-         BodyPart html=new MimeBodyPart();
-         html.setContent(htmlContent, "text/html;charset=UTF-8");
-         relate.addBodyPart(html);
-          relate.addBodyPart(createImagePart(new File("C:/Users/Public/Pictures/Sample Pictures/a.jpg"), "img1"));//嵌入图片
-//         relate.addBodyPart(createImagePart(new File("D:/image2.jpg"), "img2"));
-         
-         content.setContent(relate);
-         multi.addBodyPart(content);
-         message.setContent(multi);//发送复杂文本消息
-         
-         //message.saveChanges();//保存消息
-         
-         Transport trans=session.getTransport();
-         trans.connect(server,username,password);
-         trans.sendMessage(message,message.getRecipients(Message.RecipientType.TO));//发送
-         trans.close();
-         
-    }
+    
     
     public Session getSession(){
     	if(session == null){
@@ -119,5 +87,54 @@ public class MailSender {
         
         return image;
     }
+  
+    public  void sendEmail(String to,String subject,Date sentDate,String htmlContent) throws AddressException, MessagingException{
+   	 session = this.getSession();
+   	 MimeMessage message=new MimeMessage(session);
+        message.setFrom(new InternetAddress(from));
+        message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(to));
+        message.setSubject(subject);
+        message.setSentDate(sentDate);
+        
+        /**
+         * 创建复杂格式
+         */
+        Multipart multi=new MimeMultipart("mixed");//混合MIME消息
+        BodyPart content=new MimeBodyPart();
+        Multipart relate=new MimeMultipart("related");//组合MIME消息
+        
+        BodyPart html=new MimeBodyPart();
+        html.setContent(htmlContent, "text/html;charset=UTF-8");
+        relate.addBodyPart(html);
+         relate.addBodyPart(createImagePart(new File("C:/Users/Public/Pictures/Sample Pictures/a.jpg"), "img1"));//嵌入图片
+//        relate.addBodyPart(createImagePart(new File("D:/image2.jpg"), "img2"));
+        
+        content.setContent(relate);
+        multi.addBodyPart(content);
+        message.setContent(multi);//发送复杂文本消息
+        
+        //message.saveChanges();//保存消息
+        
+        Transport trans=session.getTransport();
+        trans.connect(server,username,password);
+        trans.sendMessage(message,message.getRecipients(Message.RecipientType.TO));//发送
+        trans.close();
+        
+   }
+	public void findBackPasswordSendEmail(String to, String subject,
+			Date sentDate, String data) throws AddressException, MessagingException {
+			
+		String system_index = SystemGlobals.getPreference("system.index.url");
+    	
+    	Encrypt encrypt = new Encrypt();
+		encrypt.setKey(EncryptKey.encryptKeyString); 
+		encrypt.setEncString(data);
+		data=encrypt.getStrMi();
+		
+    	String content =  String.format("%s/findbackpassword?data=%s", system_index,data);
+    	content = this.body.replace("{1}",content);
+    	this.sendEmail(to, subject, sentDate, content);
+		
+	}
      
 }

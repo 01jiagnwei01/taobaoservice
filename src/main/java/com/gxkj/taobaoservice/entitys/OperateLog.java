@@ -69,6 +69,12 @@ public class OperateLog implements Serializable{
 	 */
 	@Column(name="ip" )
 	private String ip;
+	
+	/**
+	 * 被用过了 
+	 */
+	@Column(name="isused" )
+	private int isUsed;
 
 	public Integer getId() {
 		return id;
@@ -125,5 +131,15 @@ public class OperateLog implements Serializable{
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
+
+	public int getIsUsed() {
+		return isUsed;
+	}
+
+	public void setIsUsed(int isUsed) {
+		this.isUsed = isUsed;
+	}
+	
+	
 
 }

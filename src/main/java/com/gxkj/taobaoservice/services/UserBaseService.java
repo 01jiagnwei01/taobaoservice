@@ -9,8 +9,10 @@ import javax.mail.internet.AddressException;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 
+import com.gxkj.common.exceptions.BusinessException;
 import com.gxkj.taobaoservice.dto.EntityReturnData;
 import com.gxkj.taobaoservice.dto.RegObjDTO;
+import com.gxkj.taobaoservice.entitys.UserBase;
 
 public interface UserBaseService {
 
@@ -26,6 +28,16 @@ public interface UserBaseService {
 	 * @throws AddressException 
 	 */
 	EntityReturnData addRegUser(RegObjDTO regObjDTO)throws SQLException, JsonGenerationException, JsonMappingException, IOException, AddressException, MessagingException ;
+
+	/**
+	 * 用户登陆 
+	 * @param username
+	 * @param password
+	 * @return
+	 * @throws SQLException 
+	 * @throws BusinessException 
+	 */
+	UserBase doLogin(String username, String password) throws SQLException, BusinessException;
 	
 	
 

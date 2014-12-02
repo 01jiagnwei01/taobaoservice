@@ -1,10 +1,12 @@
 package com.gxkj.taobaoservice.services;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.gxkj.taobaoservice.dto.EntityReturnData;
 import com.gxkj.taobaoservice.dto.RegObjDTO;
+import com.gxkj.taobaoservice.entitys.UserBase;
 import com.gxkj.test.BaseSpringTest;
 
 public class UserBaseServiceImplTest extends BaseSpringTest{
@@ -27,6 +29,14 @@ public class UserBaseServiceImplTest extends BaseSpringTest{
 		EntityReturnData ret = userBaseServiceImpl.addRegUser(regObjDTO);
 		System.out.println(ret.getMsg());
 		
+	}
+	@Test
+	public void doLoginTest() throws Exception{
+		String username = "x1";
+		String password = "p1";
+		UserBase userBase = userBaseServiceImpl.doLogin(username, password);
+		 ObjectMapper mapper = new ObjectMapper();  
+		System.out.println("userBase="+userBase==null?"null":mapper.writeValueAsString(userBase));
 	}
 
 }

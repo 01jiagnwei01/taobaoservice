@@ -7,7 +7,8 @@ public enum OperateTypes {
 	UPDATE_PHONE("修改手机号码"),
 	UPDATE_EMAIL("修改邮箱"),
 	UPDATE_QQ("修改QQ"),
-	ACTIVE_EMAIL("邮箱激活") ;
+	ACTIVE_EMAIL("邮箱激活"),
+	FIND_PASSWORD_SEND_EMAIL("找回密码发送邮件") ;
 	
 	private String name; 
 	private OperateTypes(String name ) {  
