@@ -15,7 +15,7 @@ public class UserBaseServiceImplTest extends BaseSpringTest{
 	private UserBaseService userBaseServiceImpl;
 	
 	@Test
-	public void addRegUser() throws Exception {
+	public  void addRegUser() throws Exception {
 		
 		RegObjDTO regObjDTO = new RegObjDTO ();
 		regObjDTO.setEmail("01jiangwei01@163.com");

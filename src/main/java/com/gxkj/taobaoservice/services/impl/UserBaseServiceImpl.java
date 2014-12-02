@@ -1,8 +1,12 @@
 package com.gxkj.taobaoservice.services.impl;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -10,6 +14,8 @@ import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,8 +58,14 @@ public class UserBaseServiceImpl implements UserBaseService {
 	private UserLinkDao userLinkDao;
 	/**
 	 * 前台用户注册接口
+	 * @throws SQLException 
+	 * @throws IOException 
+	 * @throws JsonMappingException 
+	 * @throws JsonGenerationException 
+	 * @throws MessagingException 
+	 * @throws AddressException 
 	 */
-	public EntityReturnData addRegUser(RegObjDTO regObjDTO) throws Exception {
+	public EntityReturnData addRegUser(RegObjDTO regObjDTO) throws SQLException, JsonGenerationException, JsonMappingException, IOException, AddressException, MessagingException  {
 		
 		EntityReturnData ret = new EntityReturnData();
 		 ObjectMapper mapper = new ObjectMapper();  

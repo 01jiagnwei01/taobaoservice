@@ -17,4 +17,11 @@ public class UserLinkDaoImpl extends BaseDAOImpl implements UserLinkDao {
 		String hql = "from UserLink where link_value = ? and link_type =?" ;
 		return ((List<UserLink>) this.selectByHQL(hql, new Object[]{email,UserLinkTypes.EMAIL}));
 	}
+
+	 
+	public UserLink getUserLinkByIdAndEmail(int id, String email)
+			throws SQLException {
+		String hql = "from UserLink where link_value = ? and link_type =? and id = ?" ;
+		return (UserLink) this.selectOneByHQL(hql, new Object[]{email,UserLinkTypes.EMAIL,id});
+	}
 }

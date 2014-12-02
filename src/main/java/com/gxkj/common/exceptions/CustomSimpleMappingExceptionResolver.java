@@ -33,7 +33,7 @@ public class CustomSimpleMappingExceptionResolver extends SimpleMappingException
 	                try {  
 	                	response.setContentType("text/javascript;charset=UTF-8");  
 	                    PrintWriter writer = response.getWriter();  
-	                    Map json = new HashMap();
+	                    Map<String,Object> json = new HashMap<>();
 	                    json.put("result", false);
 	                    json.put("msg", ex.getMessage());
 	                    writer.write(json.toString());  
