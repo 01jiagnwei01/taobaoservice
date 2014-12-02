@@ -6,6 +6,11 @@ import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang.time.DateUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +27,17 @@ import com.gxkj.taobaoservice.entitys.UserAccount;
 import com.gxkj.taobaoservice.entitys.UserBase;
 import com.gxkj.taobaoservice.entitys.UserLink;
 import com.gxkj.taobaoservice.enums.OperateTypes;
+import com.gxkj.taobaoservice.enums.RegProcessResult;
+import com.gxkj.taobaoservice.enums.UserBaseStatus;
 import com.gxkj.taobaoservice.enums.UserLinkStatus;
 import com.gxkj.taobaoservice.enums.UserLinkTypes;
 import com.gxkj.taobaoservice.services.UserBaseService;
+import com.gxkj.taobaoservice.util.mail.MailSender;
 @Service
 public class UserBaseServiceImpl implements UserBaseService {
+
+	private static final Log log = 
+			LogFactory.getLog(UserBaseServiceImpl.class);
 
 	@Autowired
 	private UserBaseDao userBaseDao;
@@ -45,7 +56,10 @@ public class UserBaseServiceImpl implements UserBaseService {
 	public EntityReturnData addRegUser(RegObjDTO regObjDTO) throws Exception {
 		
 		EntityReturnData ret = new EntityReturnData();
+		 ObjectMapper mapper = new ObjectMapper();  
+		 
 		boolean checkResult =  checkRegCondition(regObjDTO,ret);
+		log.info(String.format("checkRegCondition checkResult=%s", checkResult));
 		/**
 		 * 验证不通过把验证结果返回
 		 */
@@ -56,10 +70,11 @@ public class UserBaseServiceImpl implements UserBaseService {
 		 */
 		UserBase userBase = new UserBase();
 		userBase.setPassword(PWDGenter.generateKen(regObjDTO.getPassword()) );
-		userBase.setUserName(userBase.getUserName());
+		userBase.setUserName(regObjDTO.getUserName());
 		userBase.setRegTime(now);
-		userBase.setEnabled(1);
+		userBase.setStatus(UserBaseStatus.WAIT_FOR_ACTIVE);
 		userBaseDao.insert(userBase);
+		log.info(String.format("inser into userBase =%s", mapper.writeValueAsString(userBase)));
 		
 		/**
 		 * 联系方式
@@ -72,6 +87,7 @@ public class UserBaseServiceImpl implements UserBaseService {
 		emailLink.setLinkValue(regObjDTO.getEmail());
 		emailLink.setUserId(userBase.getId());
 		userLinkDao.insert(emailLink);
+		log.info(String.format("inser into emailLink =%s", mapper.writeValueAsString(emailLink)));
 		userBase.getUserLinks().add(emailLink);
 		
 		 
@@ -82,13 +98,19 @@ public class UserBaseServiceImpl implements UserBaseService {
 		UserAccount userAccount = new UserAccount();
 		userAccount.setUserId(userBase.getId());
 		userAccountDao.insert(userAccount);
-		
+		log.info(String.format("inser into userAccount =%s", mapper.writeValueAsString(userAccount)));
 		userBase.setUerAccount(userAccount);
 		
 		/**
 		 * 向邮箱发信,激活邮箱
 		 */
-		
+		MailSender mailSender = new MailSender();
+		Date days3Later = DateUtils.addDays(now, 3);
+		int emailLinkId = emailLink.getId();
+		String endtime = DateFormatUtils.format(days3Later, "yyyy-MM-dd HH:mm:ss");
+		String content = String.format("endtime=%s&id=%d&email=%s", endtime,emailLinkId,regObjDTO.getEmail());
+		mailSender.regSendEmail(regObjDTO.getEmail(), "信用网 邮箱验证 ", now, content);
+		log.info(String.format("mailSender sender content =%s", content));
 		/**
 		 * 保存修改邮箱的记录
 		 */
@@ -99,7 +121,7 @@ public class UserBaseServiceImpl implements UserBaseService {
 		operateLog.setAfterValue(regObjDTO.getEmail());
 		operateLog.setUser_id(userBase.getId());
 		operateLogDao.insert(operateLog);
-		
+		log.info(String.format("inser into operateLog =%s", mapper.writeValueAsString(operateLog)));
 		/**
 		 * 保存修改密码的操作
 		 */
@@ -110,9 +132,11 @@ public class UserBaseServiceImpl implements UserBaseService {
 		operateLog2.setAfterValue(PWDGenter.generateKen(regObjDTO.getPassword()) );
 		operateLog2.setUser_id(userBase.getId());
 		operateLogDao.insert(operateLog2);
+		log.info(String.format("inser into operateLog2 =%s", mapper.writeValueAsString(operateLog2)));
 		
 		ret.setResult(true);
 		ret.setEntity(userBase);
+		ret.setMsg("SUCCESS");
 		return ret;
 	}
 	
@@ -131,39 +155,39 @@ public class UserBaseServiceImpl implements UserBaseService {
 		String passowrd = regObjDTO.getPassword();
 		String rePassword = regObjDTO.getRePassword();
 		if(StringUtils.isBlank(userName)){
-			ret.setMsg("user_name_blank");
+			ret.setMsg(RegProcessResult.USER_NAME_BLANK_FAILURE.toString());
 			return false;
 		}
 		if(StringUtils.isBlank(email)){
-			ret.setMsg("email_blank");
+			ret.setMsg(RegProcessResult.EMAIL_BLANK_FAILURE.toString());
 			return false;
 		}
 		if(!StringMatchUtil.isEmail(email)){
-			ret.setMsg("email_error");
+			ret.setMsg(RegProcessResult.EMAIL_ERROR_FAILURE.toString());
 			return false;
 		}
 		if(StringUtils.isBlank(passowrd)){
-			ret.setMsg("passowrd_blank");
+			ret.setMsg(RegProcessResult.PASSWORD_BLANK_FAILURE.toString());
 			return false;
 		}
 		if(StringUtils.isBlank(rePassword)){
-			ret.setMsg("rePassword_blank");
+			ret.setMsg(RegProcessResult.REPASSWORD_BLANK_FAILURE.toString());
 			return false;
 		}
-		if (rePassword.equals(passowrd)){
-			ret.setMsg("password_and_repassword_not_equal");
+		if (!rePassword.equals(passowrd)){
+			ret.setMsg(RegProcessResult.PASSWORD_NOT_EQUAL_REPASSWORD_FAILURE.toString());
 			return false;
 		}
 		
 		
-		List<UserBase> users = userBaseDao.getUsersByUserName(userName);
+		List<UserBase> users =userBaseDao.getUsersByUserName(userName);
 		if(CollectionUtils.isNotEmpty(users)){
-			ret.setMsg("user_name_is_used");
+			ret.setMsg(RegProcessResult.USER_NAME_IS_USED_FAILURE.toString());
 			return false;
 		}
-		List<UserBase> emailusers = userBaseDao.getUsersByEmail(email);
-		if(CollectionUtils.isNotEmpty(emailusers)){
-			ret.setMsg("email_is_used");
+		List<UserLink> emailLinks =  userLinkDao.getUsersByEmail(email);
+		if(CollectionUtils.isNotEmpty(emailLinks)){
+			ret.setMsg(RegProcessResult.EMAIL_IS_USED_FAILURE.toString());
 			return false;
 		}
 		return true;

@@ -15,11 +15,4 @@ public interface UserBaseDao extends BaseDAO{
 	 */
 	List<UserBase> getUsersByUserName(String userName)throws SQLException;
 
-	/**
-	 * 根据邮箱查询用户信息
-	 * @param email
-	 * @return
-	 */
-	List<UserBase> getUsersByEmail(String email)throws SQLException;
-
 }

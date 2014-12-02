@@ -20,11 +20,7 @@ public class UserBaseDaoImpl extends BaseDAOImpl implements UserBaseDao {
 	}
 
 	 
-	@SuppressWarnings("unchecked")
-	public List<UserBase> getUsersByEmail(String email) throws SQLException {
-		String hql = "from UserBase where eMail = ?";
-		return ((List<UserBase>) this.selectByHQL(hql, new Object[]{email}));
-	}
+	
 
 	 
 

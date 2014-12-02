@@ -35,25 +35,25 @@ public class UserAccount implements Serializable{
 	 * 当前余额
 	 */
 	@Column(name = "current_balance")
-	private BigDecimal currentBalance;
+	private BigDecimal currentBalance = BigDecimal.ZERO;
 	
 	/**
 	 * 剩余点数
 	 */
 	@Column(name = "current_rest_points")
-	private int currentRestPoints;
+	private int currentRestPoints = 0;
 	
 	/**
 	 * 锁定金额
 	 */
 	@Column(name = "locked_balance")
-	private BigDecimal lockedBalance;
+	private BigDecimal lockedBalance = BigDecimal.ZERO;
 	
 	/**
 	 * 锁定点数
 	 */
 	@Column(name = "locked_points")
-	private int lockedPoints;
+	private int lockedPoints = 0;
 
 	public Integer getId() {
 		return id;

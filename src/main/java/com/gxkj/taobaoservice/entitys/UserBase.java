@@ -16,6 +16,8 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.gxkj.taobaoservice.enums.UserBaseStatus;
+
 @Entity
 @Table(name = "user_base")
 public class UserBase implements Serializable{
@@ -46,10 +48,10 @@ public class UserBase implements Serializable{
 	 
 
 	/**
-	 * enabled
+	 * status
 	 */
-	@Column(name="enabled" )
-	private int enabled;
+	@Column(name="status" )
+	private UserBaseStatus status;
 	
 	/**
 	 * 注册时间
@@ -57,6 +59,8 @@ public class UserBase implements Serializable{
 	@Column(name="regTime")
 	@Temporal(TemporalType.TIMESTAMP )
 	private Date regTime;
+	
+	
 	
 	/**
 	 * 账户信息
@@ -68,7 +72,7 @@ public class UserBase implements Serializable{
 	 * 联系方式
 	 */
 	@Transient
-	private List<UserLink> userLinks = new ArrayList<UserLink>();;
+	private List<UserLink> userLinks = new ArrayList<UserLink>();
 
 	public Integer getId() {
 		return id;
@@ -118,12 +122,12 @@ public class UserBase implements Serializable{
 		this.userLinks = userLinks;
 	}
 
-	public int getEnabled() {
-		return enabled;
+	public UserBaseStatus getStatus() {
+		return status;
 	}
 
-	public void setEnabled(int enabled) {
-		this.enabled = enabled;
+	public void setStatus(UserBaseStatus status) {
+		this.status = status;
 	}
 	
 	
