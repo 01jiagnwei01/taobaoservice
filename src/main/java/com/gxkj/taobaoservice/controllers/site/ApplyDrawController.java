@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,35 +15,31 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gxkj.common.util.SessionUtil;
 import com.gxkj.taobaoservice.dto.EntityReturnData;
-import com.gxkj.taobaoservice.entitys.RechargeApply;
+import com.gxkj.taobaoservice.entitys.ApplyDraw;
 import com.gxkj.taobaoservice.entitys.UserBase;
 import com.gxkj.taobaoservice.enums.RechargeApplyResults;
-import com.gxkj.taobaoservice.services.RechargeApplyService;
+import com.gxkj.taobaoservice.services.ApplyDrawService;
 
 @Controller
-@RequestMapping("/rechargeapply")
-public class RechargeApplyController {
+@RequestMapping("/applydraw")
+public class ApplyDrawController {
 	
 	@Autowired
-	public RechargeApplyService rechargeApplyService;
-	
+	private ApplyDrawService applyDrawService;
+
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public EntityReturnData addRechargeApplyService(HttpServletRequest request,HttpServletResponse response,ModelMap modelMap,
-			@RequestParam(value="thirdOrderNo") String thirdOrderNo,@RequestParam(value="amount") BigDecimal amount) throws SQLException{
+			@RequestParam(value="amount") BigDecimal amount) throws SQLException{
 		EntityReturnData ret = new EntityReturnData(); 
-		if(StringUtils.isBlank(thirdOrderNo)){
-			ret.setMsg(RechargeApplyResults.THIRD_ORDER_No_IS_BLANK.getName());
-			return ret;
-		}
+		
 		if(amount == null || amount.intValue() == 0){
 			ret.setMsg(RechargeApplyResults.AMOUNT_IS_BLANK.getName());
 			return ret;
 		}
 		UserBase userBase  = SessionUtil.getSiteUserInSession(request);
-		RechargeApply apply = rechargeApplyService.addRechargeApply(thirdOrderNo, amount, userBase);
+		ApplyDraw apply = applyDrawService.addApplyDraw(amount, userBase);
 		ret.setResult(true);
 		ret.setEntity(apply);
 		return ret;	
 	}
-
 }

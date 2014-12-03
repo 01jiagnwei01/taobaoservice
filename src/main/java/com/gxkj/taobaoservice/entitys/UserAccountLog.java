@@ -93,7 +93,7 @@ public class UserAccountLog  implements Serializable{
 	 * 操作后可用金额
 	 */
 	@Column(name="after_rest_amount")
-	private double afterRestAmount;
+	private BigDecimal afterRestAmount;
 	
 	/**
 	 * 操作后可用点数
@@ -205,11 +205,11 @@ public class UserAccountLog  implements Serializable{
 		this.beforeLockedPoints = beforeLockedPoints;
 	}
 
-	public double getAfterRestAmount() {
+	public BigDecimal getAfterRestAmount() {
 		return afterRestAmount;
 	}
 
-	public void setAfterRestAmount(double afterRestAmount) {
+	public void setAfterRestAmount(BigDecimal afterRestAmount) {
 		this.afterRestAmount = afterRestAmount;
 	}
 

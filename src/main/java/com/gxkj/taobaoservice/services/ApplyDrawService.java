@@ -7,20 +7,19 @@ import java.util.Date;
 import com.gxkj.common.exceptions.BusinessException;
 import com.gxkj.common.util.ListPager;
 import com.gxkj.taobaoservice.entitys.AdminUser;
-import com.gxkj.taobaoservice.entitys.RechargeApply;
+import com.gxkj.taobaoservice.entitys.ApplyDraw;
 import com.gxkj.taobaoservice.entitys.UserBase;
 import com.gxkj.taobaoservice.enums.RechargeApplyStatus;
 
-public interface RechargeApplyService {
+public interface ApplyDrawService {
 	
 	/**
 	 * 
-	 * @param thirdOrderNo  第三方流水号
-	 * @param amount	充值金额
+	 * @param amount	取款金额
 	 * @param userBase	申请人
 	 * @throws SQLException 
 	 */
-	 public RechargeApply addRechargeApply(String thirdOrderNo,BigDecimal  amount,UserBase userBase) throws SQLException;
+	 public ApplyDraw addApplyDraw( BigDecimal  amount,UserBase userBase) throws SQLException;
 
 	/**
 	  * 
@@ -30,7 +29,7 @@ public interface RechargeApplyService {
 	 * @param reason
 	 * @throws SQLException
 	 */
-	 public RechargeApply doRefuseRechargeApply(Integer applyId,AdminUser  adminUser,String reason) throws SQLException;
+	 public ApplyDraw doRefuseApplyDraw(Integer applyId,AdminUser  adminUser,String reason) throws SQLException;
 	 
 	 /**
 	  * 审核通过
@@ -39,7 +38,7 @@ public interface RechargeApplyService {
 	  * @throws SQLException
 	 * @throws BusinessException 
 	  */
-	 public RechargeApply doAgreeRechargeApply(Integer applyId,AdminUser  adminUser) throws SQLException, BusinessException;
+	 public ApplyDraw doAgreeApplyDraw(Integer applyId,AdminUser  adminUser,String thirdOrderNo) throws SQLException, BusinessException;
 	 
 	 /**
 	  * 分页查看充值申请

@@ -6,29 +6,30 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gxkj.common.enums.BusinessExceptionInfos;
 import com.gxkj.common.exceptions.BusinessException;
 import com.gxkj.common.util.ListPager;
-import com.gxkj.taobaoservice.daos.RechargeApplyDao;
+import com.gxkj.taobaoservice.daos.ApplyDrawDao;
 import com.gxkj.taobaoservice.daos.UserAccountDao;
 import com.gxkj.taobaoservice.daos.UserAccountLogDao;
 import com.gxkj.taobaoservice.daos.UserBaseDao;
 import com.gxkj.taobaoservice.entitys.AdminUser;
-import com.gxkj.taobaoservice.entitys.RechargeApply;
+import com.gxkj.taobaoservice.entitys.ApplyDraw;
 import com.gxkj.taobaoservice.entitys.UserAccount;
 import com.gxkj.taobaoservice.entitys.UserAccountLog;
 import com.gxkj.taobaoservice.entitys.UserBase;
 import com.gxkj.taobaoservice.enums.RechargeApplyStatus;
 import com.gxkj.taobaoservice.enums.UserAccountTypes;
-import com.gxkj.taobaoservice.services.RechargeApplyService;
+import com.gxkj.taobaoservice.services.ApplyDrawService;
 @Service
-public class RechargeApplyServiceImpl implements RechargeApplyService {
+public class ApplyDrawServiceImpl implements ApplyDrawService {
 
 	@Autowired
-	 private RechargeApplyDao rechargeApplyDao;
+	 private ApplyDrawDao applyDrawDao;
 	
 	@Autowired
 	private UserBaseDao userBaseDao;
@@ -40,27 +41,26 @@ public class RechargeApplyServiceImpl implements RechargeApplyService {
 	private UserAccountLogDao userAccountLogDao;
 	
 	/**
-	 * 充值申请
+	 *	取款申请
 	 */
-	 public RechargeApply addRechargeApply(String thirdOrderNo,BigDecimal  amount,UserBase userBase) throws SQLException{
-		 RechargeApply apply = new RechargeApply();
-		 apply.setAmount(amount);
-		 apply.setThirdOrderNo(thirdOrderNo);
+	 public ApplyDraw addApplyDraw( BigDecimal  amount,UserBase userBase) throws SQLException{
+		 ApplyDraw apply = new ApplyDraw();
+		 apply.setAmount(amount); 
 		 Date now = new Date();
 		 apply.setCreateTime(now);
 		 apply.setStatus(RechargeApplyStatus.WAIT_FOR_AUDIT);
 		 apply.setUserId(userBase.getId());
-		 rechargeApplyDao.insert(apply);
+		 applyDrawDao.insert(apply);
 		 return apply;
 	 }
 
 	 /**
 	  * 审核拒绝
 	  */
-	public RechargeApply doRefuseRechargeApply(Integer applyId, AdminUser adminUser,
+	public ApplyDraw doRefuseApplyDraw(Integer applyId, AdminUser adminUser,
 			String reason) throws SQLException {
 		 
-		RechargeApply apply = (RechargeApply) rechargeApplyDao.selectById(applyId, RechargeApply.class);
+		ApplyDraw apply = (ApplyDraw) applyDrawDao.selectById(applyId, ApplyDraw.class);
 		apply.setRefuseReason(reason);
 		apply.setAuditorId(adminUser.getId());
 		apply.setAuditorName(adminUser.getRealName());
@@ -68,7 +68,7 @@ public class RechargeApplyServiceImpl implements RechargeApplyService {
 		apply.setReviewTime(now);
 		apply.setStatus(RechargeApplyStatus.REFUSE);
 		
-		rechargeApplyDao.update(apply);
+		applyDrawDao.update(apply);
 		
 		return apply;
 	}
@@ -76,17 +76,39 @@ public class RechargeApplyServiceImpl implements RechargeApplyService {
 	/**
 	 * 审核通过
 	 */
-	public RechargeApply doAgreeRechargeApply(Integer applyId, AdminUser adminUser)
+	public ApplyDraw doAgreeApplyDraw(Integer applyId, AdminUser adminUser,String thirdOrderNo)
 			throws SQLException, BusinessException {
 		 
-		RechargeApply apply = (RechargeApply) rechargeApplyDao.selectById(applyId, RechargeApply.class);
+		ApplyDraw apply = (ApplyDraw) applyDrawDao.selectById(applyId, ApplyDraw.class);
+		/**
+		 * 状态需要是待审核
+		 */
 		if (apply.getStatus() != RechargeApplyStatus.WAIT_FOR_AUDIT){
-			throw new BusinessException(BusinessExceptionInfos.RECHARDAPPLY_STATUS_NOT_WAIT_FOR);
+			throw new BusinessException(BusinessExceptionInfos.DRAWPAPPLY_STATUS_NOT_WAIT_FOR);
 		}
-		String thirdOrderNo = apply.getThirdOrderNo();
-		List<RechargeApply> rechargeApplys =  rechargeApplyDao.getRechargeApplyByThirdOrderNoAndNotIDndPassed(thirdOrderNo,applyId);
+		/**
+		 * 流水号不能为空
+		 */
+		 if(StringUtils.isBlank( thirdOrderNo)){
+			 throw new BusinessException(BusinessExceptionInfos.THIRD_ORDER_NO_IS_NULL);
+		 }
+		 /**
+		  * 账户金额要足够
+		  */
+		 Integer userId =  apply.getUserId();
+		 BigDecimal amount = apply.getAmount();
+		 UserAccount userAccount = userAccountDao.getUserAccountByUserId(userId);
+		 BigDecimal accountAmount = userAccount.getCurrentBalance();
+		 if(accountAmount.compareTo(amount)<0){
+			 throw new BusinessException(BusinessExceptionInfos.THIRD_ORDER_NO_IS_NULL);
+		 }
+		 
+		/**
+		 * 流水号不能重复
+		 */
+		List<ApplyDraw> rechargeApplys =  applyDrawDao.getApplyDrawByThirdOrderNoAndNotIDndPassed(thirdOrderNo,applyId);
 		if(CollectionUtils.isNotEmpty(rechargeApplys)){
-			throw new BusinessException(BusinessExceptionInfos.THIRDORDERNO_IS_USED);
+			throw new BusinessException(BusinessExceptionInfos.DRAWPAPPLY_THIRDORDERNO_IS_USED);
 		}
 		/**
 		 * 记录通过
@@ -96,16 +118,16 @@ public class RechargeApplyServiceImpl implements RechargeApplyService {
 		apply.setStatus(RechargeApplyStatus.APPROVE);
 		apply.setAuditorId(adminUser.getId());
 		apply.setAuditorName(adminUser.getRealName());
-		rechargeApplyDao.update(apply);
+		applyDrawDao.update(apply);
 		
 		/**
-		 * 充值资金到用户账户
+		 *  用户账户扣除资金 
 		 */
 		
-		UserAccount userAccount = userAccountDao.getUserAccountByUserId(apply.getUserId());
-		//充值前金额
+		 
+		//取款前金额
 		BigDecimal beforeBalance =  userAccount.getCurrentBalance();
-		userAccount.setCurrentBalance(beforeBalance.add(apply.getAmount()));
+		userAccount.setCurrentBalance(beforeBalance.subtract(apply.getAmount()));
 		userAccountDao.update(userAccount);
 		
 		/**
@@ -123,7 +145,7 @@ public class RechargeApplyServiceImpl implements RechargeApplyService {
 		log.setBeforeRestAmount(beforeBalance);
 		log.setBeforeRestPoints(userAccount.getLockedPoints());
 		log.setCreateTime(now);
-		log.setType(UserAccountTypes.DEPOSIT);
+		log.setType(UserAccountTypes.WITHDRAW);
 		log.setUserId(apply.getUserId());
 		
  		userAccountLogDao.insert(log);
@@ -137,7 +159,7 @@ public class RechargeApplyServiceImpl implements RechargeApplyService {
 			Date createBeginTime, Date createEndTime, Date reviewBeginTime,
 			Date reviewEndTime, Integer auditorId) throws SQLException {
 		
-		return rechargeApplyDao.doPage( pageno,  pagesize,  thirdOrderNo,
+		return applyDrawDao.doPage( pageno,  pagesize,  thirdOrderNo,
 				 amount,  userId,  status,
 				 createBeginTime,  createEndTime,  reviewBeginTime,
 				 reviewEndTime,  auditorId);
