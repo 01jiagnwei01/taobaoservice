@@ -16,7 +16,7 @@ import org.hibernate.annotations.GenericGenerator;
 import com.gxkj.common.enums.BusinessExceptionInfos;
 @Entity
 @Table(name="business_exception")
-public class BusinessException implements Serializable{
+public class BusinessExceptionEntity implements Serializable{
 
 	/**
 	 * 

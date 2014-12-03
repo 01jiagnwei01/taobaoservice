@@ -107,7 +107,7 @@ public class UserLinkServiceImpl implements UserLinkService {
 			return entity;
 		}
 		if(userLinks.size()>=2){
-			com.gxkj.taobaoservice.entitys.BusinessException fentity = businessExceptionService.initBusinessException(this.getClass(), Thread.currentThread().getStackTrace()[1].getMethodName()
+			com.gxkj.taobaoservice.entitys.BusinessExceptionEntity fentity = businessExceptionService.initBusinessException(this.getClass(), Thread.currentThread().getStackTrace()[1].getMethodName()
 					, BusinessExceptionInfos.EMAIL_DUPLICATE_EXIST, "{email:"+email+"}", 0);
 			businessExceptionService.insertEntity(fentity);
 			

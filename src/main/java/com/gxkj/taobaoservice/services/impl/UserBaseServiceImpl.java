@@ -239,7 +239,7 @@ public class UserBaseServiceImpl implements UserBaseService {
 		UserAccount uerAccount = userAccountDao.getUserAccountByUserId(userBase.getId());
 		if(uerAccount == null){
 			
-			com.gxkj.taobaoservice.entitys.BusinessException fentity = businessExceptionService.initBusinessException(this.getClass(), Thread.currentThread().getStackTrace()[1].getMethodName()
+			com.gxkj.taobaoservice.entitys.BusinessExceptionEntity fentity = businessExceptionService.initBusinessException(this.getClass(), Thread.currentThread().getStackTrace()[1].getMethodName()
 					, BusinessExceptionInfos.NO_USER_ACCOUNT_BY_USERID, "{username:"+username+"}", userBase.getId());
 			businessExceptionService.insertEntity(fentity);
 			

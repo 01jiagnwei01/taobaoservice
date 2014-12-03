@@ -1,6 +1,7 @@
 package com.gxkj.taobaoservice.entitys;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -56,7 +57,7 @@ public class UserAccountLog  implements Serializable{
 	 * 操作金额
 	 */
 	@Column(name="amount")
-	private double amount;
+	private BigDecimal amount;
 	
 	/**
 	 * 操作点数
@@ -68,7 +69,7 @@ public class UserAccountLog  implements Serializable{
 	 * 操作前可用余额
 	 */
 	@Column(name="before_rest_amount")
-	private double beforeRestAmount;
+	private BigDecimal beforeRestAmount;
 	
 	/**
 	 * 操作前可用点数
@@ -80,7 +81,7 @@ public class UserAccountLog  implements Serializable{
 	 * 操作前锁定金额
 	 */
 	@Column(name="before_locked_amount")
-	private double beforeLockedAmount;
+	private BigDecimal beforeLockedAmount;
 	
 	/**
 	 * 操作前锁定点数
@@ -104,7 +105,7 @@ public class UserAccountLog  implements Serializable{
 	 * 操作后锁定金额
 	 */
 	@Column(name="after_locked_amount")
-	private double afterLockedAmount;
+	private BigDecimal afterLockedAmount;
 	
 	/**
 	 * 操作后锁定点数
@@ -156,11 +157,11 @@ public class UserAccountLog  implements Serializable{
 		this.type = type;
 	}
 
-	public double getAmount() {
+	public BigDecimal getAmount() {
 		return amount;
 	}
 
-	public void setAmount(double amount) {
+	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
 
@@ -172,11 +173,11 @@ public class UserAccountLog  implements Serializable{
 		this.points = points;
 	}
 
-	public double getBeforeRestAmount() {
+	public BigDecimal getBeforeRestAmount() {
 		return beforeRestAmount;
 	}
 
-	public void setBeforeRestAmount(double beforeRestAmount) {
+	public void setBeforeRestAmount(BigDecimal beforeRestAmount) {
 		this.beforeRestAmount = beforeRestAmount;
 	}
 
@@ -188,11 +189,11 @@ public class UserAccountLog  implements Serializable{
 		this.beforeRestPoints = beforeRestPoints;
 	}
 
-	public double getBeforeLockedAmount() {
+	public BigDecimal getBeforeLockedAmount() {
 		return beforeLockedAmount;
 	}
 
-	public void setBeforeLockedAmount(double beforeLockedAmount) {
+	public void setBeforeLockedAmount(BigDecimal beforeLockedAmount) {
 		this.beforeLockedAmount = beforeLockedAmount;
 	}
 
@@ -220,11 +221,11 @@ public class UserAccountLog  implements Serializable{
 		this.afterRestPoints = afterRestPoints;
 	}
 
-	public double getAfterLockedAmount() {
+	public BigDecimal getAfterLockedAmount() {
 		return afterLockedAmount;
 	}
 
-	public void setAfterLockedAmount(double afterLockedAmount) {
+	public void setAfterLockedAmount(BigDecimal afterLockedAmount) {
 		this.afterLockedAmount = afterLockedAmount;
 	}
 
