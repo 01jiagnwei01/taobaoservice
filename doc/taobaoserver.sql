@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50620
 File Encoding         : 65001
 
-Date: 2014-12-02 19:16:51
+Date: 2014-12-03 18:35:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -93,6 +93,28 @@ CREATE TABLE `admin_user` (
 INSERT INTO `admin_user` VALUES ('1', '01jiangwei01', '980ac217c6b51e7dc41040bec1edfec8', '管理员', '1');
 
 -- ----------------------------
+-- Table structure for `apply_draw`
+-- ----------------------------
+DROP TABLE IF EXISTS `apply_draw`;
+CREATE TABLE `apply_draw` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `third_order_no` varchar(50) NOT NULL,
+  `amount` decimal(16,2) NOT NULL,
+  `user_id` int(10) NOT NULL,
+  `create_time` datetime NOT NULL,
+  `status` varchar(20) NOT NULL,
+  `auditor_id` int(10) DEFAULT NULL,
+  `auditor_name` varchar(30) DEFAULT NULL,
+  `review_time` datetime DEFAULT NULL,
+  `refuse_reason` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of apply_draw
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `business_exception`
 -- ----------------------------
 DROP TABLE IF EXISTS `business_exception`;
@@ -129,6 +151,28 @@ CREATE TABLE `operate_log` (
 
 -- ----------------------------
 -- Records of operate_log
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `recharge_apply`
+-- ----------------------------
+DROP TABLE IF EXISTS `recharge_apply`;
+CREATE TABLE `recharge_apply` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `third_order_no` varchar(50) NOT NULL,
+  `amount` decimal(16,2) NOT NULL,
+  `user_id` int(10) NOT NULL,
+  `create_time` datetime NOT NULL,
+  `status` varchar(20) NOT NULL,
+  `auditor_id` int(10) DEFAULT NULL,
+  `auditor_name` varchar(30) DEFAULT NULL,
+  `review_time` datetime DEFAULT NULL,
+  `refuse_reason` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of recharge_apply
 -- ----------------------------
 
 -- ----------------------------
@@ -200,7 +244,7 @@ CREATE TABLE `user_account` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `user_base` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_account
