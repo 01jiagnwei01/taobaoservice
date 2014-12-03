@@ -52,56 +52,67 @@ public class ApplyDrawDaoImpl  extends BaseDAOImpl implements ApplyDrawDao {
 			Date createBeginTime, Date createEndTime, Date reviewBeginTime,
 			Date reviewEndTime, Integer auditorId) throws SQLException {
 		
-		StringBuffer hql = new StringBuffer("  from ApplyDraw where ");
+		StringBuffer hql = new StringBuffer("  from ApplyDraw where 1=1 ");
 		List<Object> params = new ArrayList<Object>();
+		boolean contain = false;
 		if(StringUtils.isNotBlank(thirdOrderNo)){
 			hql.append( " and thirdOrderNo = ?" );
 			params.add(thirdOrderNo);
+			contain = true;
 		}
 		if(amount != null && amount.intValue() != 0){
 			hql.append( " and amount = ?" );
 			params.add(amount);
+			contain = true;
 		}
 		if(userId != null && userId.intValue() != 0){
 			hql.append( " and userId = ?" );
 			params.add(userId);
+			contain = true;
 		}
 		
 		if(status != null ){
 			hql.append( " and status = ?" );
 			params.add(status);
+			contain = true;
 		}
 		
 		if(createBeginTime != null ){
 			hql.append( " and createTime >= ?" );
 			params.add(createBeginTime);
+			contain = true;
 		}
 		
 		if(createEndTime != null ){
 			hql.append( " and createTime <= ?" );
 			params.add(createEndTime);
+			contain = true;
 		}
 		
 		if(reviewBeginTime != null ){
 			hql.append( " and reviewTime >= ?" );
 			params.add(reviewBeginTime);
+			contain = true;
 		}
 		
 		if(reviewEndTime != null ){
 			hql.append( " and reviewTime <= ?" );
 			params.add(reviewEndTime);
+			contain = true;
 		}
 		
 		if(auditorId != null && auditorId.intValue() != 0){
 			hql.append( " and auditorId = ?" );
 			params.add(auditorId);
+			contain = true;
 		}
 		
 		ListPager pager = new ListPager();
 		pager.setPageNo(pageno);
 		pager.setRowsPerPage(pagesize);
-		
-		return this.selectPageByHql(hql.toString(), params.toArray(), pager);
+		String hqlString = hql.toString();
+		if(!contain) hqlString = hqlString.replace("where 1=1", "");
+		return this.selectPageByHql(hqlString, params.toArray(), pager);
 	}
 
 }

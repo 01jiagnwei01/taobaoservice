@@ -1,14 +1,18 @@
 package com.gxkj.taobaoservice.controllers.admin;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +29,14 @@ import com.gxkj.taobaoservice.services.RechargeApplyService;
 @Controller
 @RequestMapping("/admin/rechargeapply")
 public class RRechargeApplyController {
+	
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+ 
+    }
 	
 	@Autowired
 	public RechargeApplyService rechargeApplyService;
@@ -62,10 +74,10 @@ public class RRechargeApplyController {
 			@RequestParam(value="amount",defaultValue="0")  BigDecimal amount,
 			@RequestParam(value="userId",defaultValue="0")  Integer userId,
 			@RequestParam(value="status",defaultValue="")  RechargeApplyStatus status,
-			@RequestParam(value="createBeginTime" )  Date createBeginTime,
-			@RequestParam(value="createEndTime" )  Date createEndTime, 
-			@RequestParam(value="reviewBeginTime" )  Date reviewBeginTime,
-			@RequestParam(value="reviewEndTime" )  Date reviewEndTime,
+			@RequestParam(value="createBeginTime" ,required=false)  Date createBeginTime,
+			@RequestParam(value="createEndTime" ,required=false)  Date createEndTime, 
+			@RequestParam(value="reviewBeginTime" ,required=false)  Date reviewBeginTime,
+			@RequestParam(value="reviewEndTime",required=false )  Date reviewEndTime,
 			@RequestParam(value="auditorId",defaultValue="0")  Integer auditorId,
 			@RequestParam(value="pageno",defaultValue="0") int pageno,
     		@RequestParam(value="limit",defaultValue="20") int pagesize

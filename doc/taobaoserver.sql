@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50620
 File Encoding         : 65001
 
-Date: 2014-12-03 18:35:13
+Date: 2014-12-03 22:49:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,7 +28,7 @@ CREATE TABLE `admin_menu` (
   `btnflag` varchar(32) DEFAULT NULL,
   `pid` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of admin_menu
@@ -51,6 +51,11 @@ INSERT INTO `admin_menu` VALUES ('15', '删除角色', '/admin/role/setstatus', 
 INSERT INTO `admin_menu` VALUES ('16', '分页查看角色', '/admin/role/dopage', null, '1', 'roledopage', '3');
 INSERT INTO `admin_menu` VALUES ('17', '查看某个角色', '/admin/role/get', null, '1', 'roleget', '3');
 INSERT INTO `admin_menu` VALUES ('18', '密码重置', '/admin/user/setpassword', null, '1', 'usersetpassword', '4');
+INSERT INTO `admin_menu` VALUES ('19', '账单管理', '', null, '0', '', '0');
+INSERT INTO `admin_menu` VALUES ('20', '充值管理', '/admin/rechargeapply', null, '0', '', '19');
+INSERT INTO `admin_menu` VALUES ('21', '取款管理', '/admin/applydraw', null, '0', '', '19');
+INSERT INTO `admin_menu` VALUES ('22', '取款分页查询', '/admin/applydraw/dopage', null, '1', 'admin_applydraw_dopage', '21');
+INSERT INTO `admin_menu` VALUES ('23', '充值管理分页查询', '/admin/rechargeapply/dopage', null, '1', 'admin_rechargeapply_dopage', '20');
 
 -- ----------------------------
 -- Table structure for `admin_role`
@@ -61,7 +66,7 @@ CREATE TABLE `admin_role` (
   `name` varchar(32) DEFAULT NULL,
   `status` char(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of admin_role
@@ -73,6 +78,7 @@ INSERT INTO `admin_role` VALUES ('11', 'test', '4');
 INSERT INTO `admin_role` VALUES ('12', 'test', '4');
 INSERT INTO `admin_role` VALUES ('13', 'test', '4');
 INSERT INTO `admin_role` VALUES ('14', 'test', '4');
+INSERT INTO `admin_role` VALUES ('15', '财务管理', '1');
 
 -- ----------------------------
 -- Table structure for `admin_user`
@@ -90,7 +96,7 @@ CREATE TABLE `admin_user` (
 -- ----------------------------
 -- Records of admin_user
 -- ----------------------------
-INSERT INTO `admin_user` VALUES ('1', '01jiangwei01', '980ac217c6b51e7dc41040bec1edfec8', '管理员', '1');
+INSERT INTO `admin_user` VALUES ('1', '01jiangwei01', '63a9f0ea7bb98050796b649e85481845', '管理员', '1');
 
 -- ----------------------------
 -- Table structure for `apply_draw`
@@ -98,7 +104,7 @@ INSERT INTO `admin_user` VALUES ('1', '01jiangwei01', '980ac217c6b51e7dc41040bec
 DROP TABLE IF EXISTS `apply_draw`;
 CREATE TABLE `apply_draw` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `third_order_no` varchar(50) NOT NULL,
+  `third_order_no` varchar(50) DEFAULT NULL,
   `amount` decimal(16,2) NOT NULL,
   `user_id` int(10) NOT NULL,
   `create_time` datetime NOT NULL,
@@ -108,11 +114,12 @@ CREATE TABLE `apply_draw` (
   `review_time` datetime DEFAULT NULL,
   `refuse_reason` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of apply_draw
 -- ----------------------------
+INSERT INTO `apply_draw` VALUES ('1', '0', '1.00', '1', '2014-12-03 21:57:32', 'WAIT_FOR_AUDIT', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `business_exception`
@@ -200,35 +207,42 @@ CREATE TABLE `rel_role_menu` (
   `roleid` int(10) DEFAULT NULL,
   `menuid` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rel_role_menu
 -- ----------------------------
-INSERT INTO `rel_role_menu` VALUES ('1', '8', '19');
-INSERT INTO `rel_role_menu` VALUES ('2', '8', '1');
-INSERT INTO `rel_role_menu` VALUES ('3', '8', '2');
-INSERT INTO `rel_role_menu` VALUES ('4', '8', '9');
-INSERT INTO `rel_role_menu` VALUES ('5', '8', '10');
-INSERT INTO `rel_role_menu` VALUES ('6', '8', '11');
-INSERT INTO `rel_role_menu` VALUES ('7', '8', '12');
-INSERT INTO `rel_role_menu` VALUES ('8', '8', '3');
-INSERT INTO `rel_role_menu` VALUES ('9', '8', '13');
-INSERT INTO `rel_role_menu` VALUES ('10', '8', '14');
-INSERT INTO `rel_role_menu` VALUES ('11', '8', '15');
-INSERT INTO `rel_role_menu` VALUES ('12', '8', '16');
-INSERT INTO `rel_role_menu` VALUES ('13', '8', '17');
-INSERT INTO `rel_role_menu` VALUES ('14', '8', '4');
-INSERT INTO `rel_role_menu` VALUES ('15', '8', '5');
-INSERT INTO `rel_role_menu` VALUES ('16', '8', '6');
-INSERT INTO `rel_role_menu` VALUES ('17', '8', '7');
-INSERT INTO `rel_role_menu` VALUES ('18', '8', '8');
-INSERT INTO `rel_role_menu` VALUES ('19', '8', '18');
 INSERT INTO `rel_role_menu` VALUES ('20', '10', '19');
 INSERT INTO `rel_role_menu` VALUES ('21', '11', '19');
 INSERT INTO `rel_role_menu` VALUES ('22', '12', '19');
 INSERT INTO `rel_role_menu` VALUES ('23', '13', '19');
 INSERT INTO `rel_role_menu` VALUES ('24', '14', '19');
+INSERT INTO `rel_role_menu` VALUES ('25', '15', '19');
+INSERT INTO `rel_role_menu` VALUES ('26', '15', '20');
+INSERT INTO `rel_role_menu` VALUES ('27', '15', '21');
+INSERT INTO `rel_role_menu` VALUES ('49', '8', '19');
+INSERT INTO `rel_role_menu` VALUES ('50', '8', '20');
+INSERT INTO `rel_role_menu` VALUES ('51', '8', '23');
+INSERT INTO `rel_role_menu` VALUES ('52', '8', '21');
+INSERT INTO `rel_role_menu` VALUES ('53', '8', '22');
+INSERT INTO `rel_role_menu` VALUES ('54', '8', '1');
+INSERT INTO `rel_role_menu` VALUES ('55', '8', '2');
+INSERT INTO `rel_role_menu` VALUES ('56', '8', '9');
+INSERT INTO `rel_role_menu` VALUES ('57', '8', '10');
+INSERT INTO `rel_role_menu` VALUES ('58', '8', '11');
+INSERT INTO `rel_role_menu` VALUES ('59', '8', '12');
+INSERT INTO `rel_role_menu` VALUES ('60', '8', '3');
+INSERT INTO `rel_role_menu` VALUES ('61', '8', '13');
+INSERT INTO `rel_role_menu` VALUES ('62', '8', '14');
+INSERT INTO `rel_role_menu` VALUES ('63', '8', '15');
+INSERT INTO `rel_role_menu` VALUES ('64', '8', '16');
+INSERT INTO `rel_role_menu` VALUES ('65', '8', '17');
+INSERT INTO `rel_role_menu` VALUES ('66', '8', '4');
+INSERT INTO `rel_role_menu` VALUES ('67', '8', '5');
+INSERT INTO `rel_role_menu` VALUES ('68', '8', '6');
+INSERT INTO `rel_role_menu` VALUES ('69', '8', '7');
+INSERT INTO `rel_role_menu` VALUES ('70', '8', '8');
+INSERT INTO `rel_role_menu` VALUES ('71', '8', '18');
 
 -- ----------------------------
 -- Table structure for `user_account`

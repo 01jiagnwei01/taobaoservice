@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -20,6 +21,7 @@ import com.gxkj.taobaoservice.enums.RechargeApplyStatus;
 /**
  * 申请取款
  */
+@Entity
 @Table(name = "apply_draw")
 public class ApplyDraw implements Serializable{
 
