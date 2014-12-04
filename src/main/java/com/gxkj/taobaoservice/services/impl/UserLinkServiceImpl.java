@@ -32,6 +32,7 @@ import com.gxkj.taobaoservice.enums.OperateTypes;
 import com.gxkj.taobaoservice.enums.UserBaseStatus;
 import com.gxkj.taobaoservice.enums.UserLinkActiveResult;
 import com.gxkj.taobaoservice.enums.UserLinkStatus;
+import com.gxkj.taobaoservice.enums.UserLinkTypes;
 import com.gxkj.taobaoservice.services.BusinessExceptionService;
 import com.gxkj.taobaoservice.services.UserLinkService;
 import com.gxkj.taobaoservice.util.mail.MailSender;
@@ -114,9 +115,11 @@ public class UserLinkServiceImpl implements UserLinkService {
 			throw new BusinessException(BusinessExceptionInfos.EMAIL_DUPLICATE_EXIST);
 		}
 		UserLink userLink = userLinks.get(0);
+		
 		Date now = new Date();
 		OperateLog operateLog = new OperateLog();
 		operateLog.setOperateTime(now);
+		operateLog.setBeforeValue( userLink.getLinkValue());
 		operateLog.setOperateType(OperateTypes.FIND_PASSWORD_SEND_EMAIL);
 		operateLog.setAfterValue(userLink.getLinkValue());
 		operateLog.setUser_id(userLink.getUserId());
@@ -132,6 +135,71 @@ public class UserLinkServiceImpl implements UserLinkService {
 		entity.setMsg(FindBackPasswordProcessResult.SUCCESS.getName());
 		
 		return entity;
+	}
+
+
+
+	/**
+	 * 修改某个用户的联系方式
+	 * @throws SQLException 
+	 * @throws BusinessException 
+	 */
+	public void updateUserLink(UserBase userBase, UserLinkTypes userLinkType,
+			String value) throws SQLException, BusinessException {
+		/**
+		 * 不支持邮箱更改
+		 */
+		if(userLinkType == UserLinkTypes.EMAIL){
+			throw new BusinessException(BusinessExceptionInfos.EMAIL_LINNK_CANNOT_CHANGE);
+		}
+		UserLink userLink = userLinkDao.getUserLinkByUserIdAndType(userBase.getId(),userLinkType);
+		boolean isAdd = false;
+		
+		if(userLink == null){
+			userLink = new UserLink();
+			isAdd = true;
+		}
+		String beforvalue = userLink.getLinkValue();
+		userLink.setLinkType(userLinkType);
+		userLink.setLinkValue(value);
+		userLink.setUserId(userBase.getId());
+		userLink.setStatus(UserLinkStatus.NORMAL);
+		
+		if(isAdd){
+			userLinkDao.insert(userLink);
+		}else{
+			userLinkDao.update(userLink);
+		}
+		
+		/**
+		 * 添加日志
+		 */
+		OperateTypes operateType = null;
+		switch(userLinkType){
+			case  EMAIL :
+					break;
+			case  QQ :
+				operateType = OperateTypes.UPDATE_QQ;
+				break;
+			case  TELPHONE :
+				operateType = OperateTypes.UPDATE_TELPHONE;
+				break;
+			case  TAOBAO :
+				operateType = OperateTypes.UPDATE_TAOBAOXIAOHAO;
+				break;
+			 
+			
+		}
+		Date now = new Date();
+		OperateLog operateLog = new OperateLog();
+		operateLog.setOperateTime(now);
+		operateLog.setOperateType(operateType);
+		operateLog.setBeforeValue(beforvalue);
+		operateLog.setAfterValue(userLink.getLinkValue());
+		operateLog.setUser_id(userLink.getUserId());
+		operateLog.setIsUsed(0);
+		operateLogDao.insert(operateLog);
+		
 	}
 
 }

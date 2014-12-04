@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.gxkj.common.dao.BaseDAO;
 import com.gxkj.taobaoservice.entitys.UserLink;
+import com.gxkj.taobaoservice.enums.UserLinkTypes;
 
 public interface UserLinkDao extends BaseDAO {
 
@@ -32,4 +33,13 @@ public interface UserLinkDao extends BaseDAO {
 	 * @return
 	 */
 	List<UserLink> getUsersByUserId(Integer userId)throws SQLException;
+
+	/**
+	 * 根据用户ID和查询类型查询用户的联系方式
+	 * @param id
+	 * @param userLinkType
+	 * @return
+	 * @throws SQLException
+	 */
+	UserLink getUserLinkByUserIdAndType(Integer id, UserLinkTypes userLinkType)throws SQLException;
 }

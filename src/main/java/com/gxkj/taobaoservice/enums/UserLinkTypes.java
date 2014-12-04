@@ -1,7 +1,7 @@
 package com.gxkj.taobaoservice.enums;
 
 public enum UserLinkTypes {
-	EMAIL("邮箱"),QQ("QQ"),TELPHONE("电话");
+	EMAIL("邮箱"),QQ("QQ"),TELPHONE("电话"),TAOBAO("淘宝号");
 	
 	private String name; 
 	

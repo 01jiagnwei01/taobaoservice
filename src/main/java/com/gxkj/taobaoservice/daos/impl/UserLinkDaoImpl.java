@@ -14,14 +14,14 @@ public class UserLinkDaoImpl extends BaseDAOImpl implements UserLinkDao {
 
 	@SuppressWarnings("unchecked")
 	public List<UserLink> getUsersByEmail(String email) throws SQLException {
-		String hql = "from UserLink where link_value = ? and link_type =?" ;
+		String hql = "from UserLink where linkValue = ? and linkType =?" ;
 		return ((List<UserLink>) this.selectByHQL(hql, new Object[]{email,UserLinkTypes.EMAIL}));
 	}
 
 	 
 	public UserLink getUserLinkByIdAndEmail(int id, String email)
 			throws SQLException {
-		String hql = "from UserLink where link_value = ? and link_type =? and id = ?" ;
+		String hql = "from UserLink where linkValue = ? and linkType =? and id = ?" ;
 		return (UserLink) this.selectOneByHQL(hql, new Object[]{email,UserLinkTypes.EMAIL,id});
 	}
 
@@ -31,5 +31,13 @@ public class UserLinkDaoImpl extends BaseDAOImpl implements UserLinkDao {
 	public List<UserLink> getUsersByUserId(Integer userId) throws SQLException {
 		 String hql = "from UserLink where userId = ?";
 		return (List<UserLink>) this.selectByHQL(hql, new Object[]{userId});
+	}
+
+
+	 
+	public UserLink getUserLinkByUserIdAndType(Integer userId,
+			UserLinkTypes userLinkType) throws SQLException {
+		 String hql = "from UserLink where userId = ? and linkType=?";
+		return (UserLink) this.selectOneByHQL(hql, new Object[]{userId,userLinkType.getName().toString()});
 	}
 }

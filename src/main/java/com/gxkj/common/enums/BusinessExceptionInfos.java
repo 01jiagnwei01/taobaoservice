@@ -10,7 +10,8 @@ public enum BusinessExceptionInfos {
 	DRAWPAPPLY_STATUS_NOT_WAIT_FOR("6","取款申请的记录的状态不是待审核状态 "),
 	DRAWPAPPLY_THIRDORDERNO_IS_USED("7","该流水号已经被使用过且付款成功"),
 	THIRD_ORDER_NO_IS_NULL("9","流水号不能为空"),
-	ACCOUNT_MONEY_NO_ENOUGH("10","账户余额不足");
+	ACCOUNT_MONEY_NO_ENOUGH("10","账户余额不足"),
+	EMAIL_LINNK_CANNOT_CHANGE("11","不支持邮箱更改");
 	
 	private String errorCode; 
 	

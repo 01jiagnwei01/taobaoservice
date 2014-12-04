@@ -12,7 +12,9 @@ import org.codehaus.jackson.map.JsonMappingException;
 
 import com.gxkj.common.exceptions.BusinessException;
 import com.gxkj.taobaoservice.dto.EntityReturnData;
+import com.gxkj.taobaoservice.entitys.UserBase;
 import com.gxkj.taobaoservice.enums.UserLinkActiveResult;
+import com.gxkj.taobaoservice.enums.UserLinkTypes;
 
 public interface UserLinkService {
 
@@ -38,4 +40,15 @@ public interface UserLinkService {
 	 * @throws AddressException 
 	 */
 	EntityReturnData doFindBackUserPassword(String email) throws SQLException, BusinessException, AddressException, MessagingException;
+
+	/**
+	 * 修改某个用户的联系方式
+	 * @param userBase
+	 * @param userLinkType
+	 * @param value
+	 * @throws SQLException 
+	 * @throws BusinessException 
+	 */
+	void updateUserLink(UserBase userBase, UserLinkTypes userLinkType,
+			String value) throws SQLException, BusinessException;
 }
