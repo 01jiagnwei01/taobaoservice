@@ -13,6 +13,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import com.gxkj.common.exceptions.BusinessException;
 import com.gxkj.taobaoservice.dto.EntityReturnData;
 import com.gxkj.taobaoservice.entitys.UserBase;
+import com.gxkj.taobaoservice.entitys.UserLink;
 import com.gxkj.taobaoservice.enums.UserLinkActiveResult;
 import com.gxkj.taobaoservice.enums.UserLinkTypes;
 
@@ -49,6 +50,6 @@ public interface UserLinkService {
 	 * @throws SQLException 
 	 * @throws BusinessException 
 	 */
-	void updateUserLink(UserBase userBase, UserLinkTypes userLinkType,
+	UserLink updateUserLink(UserBase userBase, UserLinkTypes userLinkType,
 			String value) throws SQLException, BusinessException;
 }

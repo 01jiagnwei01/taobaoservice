@@ -72,7 +72,6 @@ public class UserLinkServiceImpl implements UserLinkService {
 		}
 		 ObjectMapper mapper = new ObjectMapper();  
 		 
-//		userLink.setActiveTime(now);
 		userLink.setStatus(UserLinkStatus.NORMAL);
 		userLinkDao.update(userLink);
 		 
@@ -144,7 +143,7 @@ public class UserLinkServiceImpl implements UserLinkService {
 	 * @throws SQLException 
 	 * @throws BusinessException 
 	 */
-	public void updateUserLink(UserBase userBase, UserLinkTypes userLinkType,
+	public UserLink updateUserLink(UserBase userBase, UserLinkTypes userLinkType,
 			String value) throws SQLException, BusinessException {
 		/**
 		 * 不支持邮箱更改
@@ -199,6 +198,8 @@ public class UserLinkServiceImpl implements UserLinkService {
 		operateLog.setUser_id(userLink.getUserId());
 		operateLog.setIsUsed(0);
 		operateLogDao.insert(operateLog);
+		
+		return userLink;
 		
 	}
 
