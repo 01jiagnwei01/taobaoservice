@@ -67,6 +67,22 @@
 				</div>
 			</div>
 	</div>
+	 <div id="agreewin" class="easyui-window" title="同意" style="width:400px;height:320px" 
+	 	 data-options="modal:true,closed:true,iconCls:'icon-save',collapsible:false,minimizable:false,maximizable:false,resizable:false">
+			<div class="easyui-layout" data-options="fit:true">
+				<div data-options="region:'center'" style="padding:30px 20px 50px 20px">
+					<div style="margin-bottom:20px;">
+							<div>流水号:</div>
+							<input class="easyui-textbox" style="width:80%" id="agreeThirdNo">
+							<input type="hidden" id="agreeId" value="">
+					</div>
+				</div>
+				 <div data-options="region:'south',border:false" style="text-align:right;padding:5px 0 0;">
+					<a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" href="javascript:void(0)" onclick="javascript:submitAgreeFormFn()">保存</a>
+					<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" href="javascript:void(0)" onclick="javascript:closeAgreeWinFn()">取消</a>
+				</div>
+			</div>
+	</div>
 </body>
 <script type="text/javascript">
 $(function(){
@@ -99,7 +115,7 @@ $(function(){
 			{field:'amount',title:'申请金额' ,width:100},
 			{field:'thirdOrderNo',title:'支付宝流水号' ,width:100},
 			{field:'status',title:'状态',width:100,formatter:statusFormat},
-			{field:'auditorName',title:'审核人' ,width:100},
+			{field:'auditorName',title:'审核人' ,width:100,formatter:auditorNameFormat},
 			{field:'reviewTime',title:'审核日期',width:100,formatter:dateFormat},
 			{field:'refuseReason',title:'拒绝理由',width:100},
 			{field:'opt',title:'操作' ,width:100,formatter:optFormat} 
@@ -121,7 +137,9 @@ $(function(){
 		}
 	});
 })
-
+function auditorNameFormat(value,row,index){
+	 return value+"["+row['auditorId']+"]"
+}
 function statusFormat(value,row,index){
 	if(value == 'WAIT_FOR_AUDIT') {
 		return "等待审核";
@@ -140,12 +158,20 @@ function dateFormat(value,row,index){
 	}
 }
 function optFormat(value,row,index){
-	var btns = [];
-	//if(updateUserBtn){
-		btns.push('<a class="easyui-linkbutton l-btn l-btn-plain" onclick="passFn(\''+row['id']+'\')" href="#" plain="true" iconCls="update_btn"><span class="l-btn-left"><span class="l-btn-text update_btn l-btn-icon-left">通过</span></span></a>');
-	//}
-		btns.push('<a class="easyui-linkbutton l-btn l-btn-plain" onclick="disPassFn(\''+row['id']+'\')" href="#" plain="true" iconCls="del_btn"><span class="l-btn-left"><span class="l-btn-text del_btn l-btn-icon-left">拒绝</span></span></a>');
-	return btns.join("&nbsp;");
+	
+	if(row['status'] == 'WAIT_FOR_AUDIT') {
+		var btns = [];
+		//if(updateUserBtn){
+			btns.push('<a class="easyui-linkbutton l-btn l-btn-plain" onclick="passFn(\''+row['id']+'\')" href="#" plain="true" iconCls="update_btn"><span class="l-btn-left"><span class="l-btn-text update_btn l-btn-icon-left">通过</span></span></a>');
+		//}
+			btns.push('<a class="easyui-linkbutton l-btn l-btn-plain" onclick="disPassFn(\''+row['id']+'\')" href="#" plain="true" iconCls="del_btn"><span class="l-btn-left"><span class="l-btn-text del_btn l-btn-icon-left">拒绝</span></span></a>');
+		return btns.join("&nbsp;");
+	}else if(value == 'APPROVE') {
+		 
+	}else if(value == 'REFUSE') {
+		 
+	}
+	
 }
 function searchFn(){
 //	if(!userdopage){
@@ -186,13 +212,112 @@ function disPassFn(id){
 function closeWinFn(){
 	$('#win').window('close');
 }
+function closeAgreeWinFn(){
+	$('#agreewin').window('close');
+}
 function passFn(id){
-	alert("通过");
+	$('#agreeId').val(id);
+	$('#agreeThirdNo').val('');
+	$('#agreewin').window('open');  
+	$('#agreewin').window('center'); 
 }
 function submitFormFn(){
 	var reasonId = $('#reasonId').val();
 	var reason =  $('#reason').val();
-	alert(reasonId +"--" +reason);
+	var rows = $("#dg").datagrid("getRows");
+	var row = null;
+	for(var i=0;i<rows.length;i++){
+		if(rows[i]['id'] == reasonId){
+			row = rows[i];
+			break;
+		}
+	}
+	var updateRowIndex = 	$('#dg').datagrid("getRowIndex",row);
+	if(updateRowIndex <0){
+		alert("错误");
+		return;
+	}
+	$.ajax({ 
+		url: "<%=request.getContextPath() %>/admin/applydraw/doarefuse?d="+new Date().getTime(), 
+		method:'POST',
+		data:{applyId:reasonId,reason:reason},
+		context: document.body, 
+		success: function(json){
+	    	//$(this).addClass("done");
+	    	if(json.result){
+	    		var  entity = json.entity;
+			 	 $('#dg').datagrid('updateRow',{
+			  	 	index:updateRowIndex,
+			  	 	row:entity
+			  	 });
+			 	 $.messager.alert('系统提示','保存成功!','info',closeWinFn);
+	    	}else{
+	    		 $.messager.alert('系统提示','保存失败!'+json.msg,'error',closeWinFn);
+	    	}
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {
+			var msg = XMLHttpRequest.responseText;
+			if(msg && "{msg=no auth, resutlt=false}" == msg){
+				 $.messager.alert('系统提示','您没有权限!','error');
+			}else{
+				 $.messager.alert('系统提示','保存失败，请刷新后重试!','error');
+			}
+		    // 通常 textStatus 和 errorThrown 之中
+		    // 只有一个会包含信息
+		    this; // 调用本次AJAX请求时传递的options参数
+		   
+		}
+	});
+}
+function submitAgreeFormFn(){
+	//$('#agreeId').val(id);
+	//$('#agreeThirdNo').val('');
+	var agreeId = $('#agreeId').val();
+	var agreeThirdNo =  $('#agreeThirdNo').val();
+	var rows = $("#dg").datagrid("getRows");
+	var row = null;
+	for(var i=0;i<rows.length;i++){
+		if(rows[i]['id'] == agreeId){
+			row = rows[i];
+			break;
+		}
+	}
+	var updateRowIndex = 	$('#dg').datagrid("getRowIndex",row);
+	if(updateRowIndex <0){
+		alert("错误");
+		return;
+	}
+	$.ajax({ 
+		url: "<%=request.getContextPath() %>/admin/applydraw/doagree?d="+new Date().getTime(), 
+		method:'POST',
+		data:{thirdOrderNo:agreeThirdNo ,applyId:agreeId},
+		context: document.body, 
+		success: function(json){
+	    	//$(this).addClass("done");
+	    	if(json.result){
+	    		var  entity = json.entity;
+			 	 $('#dg').datagrid('updateRow',{
+			  	 	index:updateRowIndex,
+			  	 	row:entity
+			  	 });
+			 	 $.messager.alert('系统提示','保存成功!','info',closeWinFn);
+	    	}else{
+	    		 $.messager.alert('系统提示','保存失败!'+json.msg,'error',closeWinFn);
+	    	}
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {
+			var msg = XMLHttpRequest.responseText;
+			if(msg && "{msg=no auth, resutlt=false}" == msg){
+				 $.messager.alert('系统提示','您没有权限!','error');
+			}else{
+				 $.messager.alert('系统提示','保存失败，请刷新后重试!','error');
+			}
+		    // 通常 textStatus 和 errorThrown 之中
+		    // 只有一个会包含信息
+		    this; // 调用本次AJAX请求时传递的options参数
+		   
+		}
+	});
 }
 </script>
 </html>

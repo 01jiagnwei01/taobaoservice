@@ -1,6 +1,7 @@
 package com.gxkj.taobaoservice.controllers.admin;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.gxkj.common.exceptions.BusinessException;
 import com.gxkj.common.util.ListPager;
 import com.gxkj.taobaoservice.dto.EntityReturnData;
 import com.gxkj.taobaoservice.dto.SessionConstant;
@@ -65,6 +67,7 @@ public class RRechargeApplyController {
 	 * @param pagesize
 	 * @param modelMap
 	 * @return
+	 * @throws SQLException 
 	 */
 	@RequestMapping(value="/dopage",method={RequestMethod.POST})
 	@ResponseBody
@@ -81,17 +84,13 @@ public class RRechargeApplyController {
 			@RequestParam(value="auditorId",defaultValue="0")  Integer auditorId,
 			@RequestParam(value="pageno",defaultValue="0") int pageno,
     		@RequestParam(value="limit",defaultValue="20") int pagesize
-    		,ModelMap modelMap)  {
+    		,ModelMap modelMap) throws SQLException  {
 			EntityReturnData ret = new EntityReturnData();
 			ret.setResult(true);
-			try {
-				ListPager paper = rechargeApplyService.doPage(pageno, pagesize, thirdOrderNo, amount, userId, status, createBeginTime, createEndTime, reviewBeginTime, reviewEndTime, auditorId);
-				ret.setEntity(paper);
-			} catch (Exception e) {
-				e.printStackTrace();
-				ret.setMsg(e.getMessage());
-				ret.setResult(false);
-			}
+		
+			ListPager paper = rechargeApplyService.doPage(pageno, pagesize, thirdOrderNo, amount, userId, status, createBeginTime, createEndTime, reviewBeginTime, reviewEndTime, auditorId);
+			ret.setEntity(paper);
+			
 			return ret;
 	}
 	
@@ -102,24 +101,22 @@ public class RRechargeApplyController {
 	 * @param applyId
 	 * @param modelMap
 	 * @return
+	 * @throws BusinessException 
+	 * @throws SQLException 
 	 */
 	@RequestMapping(value="/doagree",method={RequestMethod.POST})
 	@ResponseBody
     public EntityReturnData doagree( HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam(value="applyId",defaultValue="0")  Integer applyId
-    		,ModelMap modelMap)  {
+    		,ModelMap modelMap) throws SQLException, BusinessException  {
 			EntityReturnData ret = new EntityReturnData();
 			ret.setResult(true);
-			try {
-				AdminUser adminUser = SessionConstant.getAdminUserInSession(request);
-				RechargeApply entity =rechargeApplyService.doAgreeRechargeApply(applyId, adminUser);
-				ret.setEntity(entity);
-			} catch (Exception e) {
-				e.printStackTrace();
-				ret.setMsg(e.getMessage());
-				ret.setResult(false);
-			}
+			 
+			AdminUser adminUser = SessionConstant.getAdminUserInSession(request);
+			RechargeApply entity =rechargeApplyService.doAgreeRechargeApply(applyId, adminUser);
+			ret.setEntity(entity);
+			 
 			return ret;
 	}
 	/**
@@ -130,6 +127,7 @@ public class RRechargeApplyController {
 	 * @param reason
 	 * @param modelMap
 	 * @return
+	 * @throws SQLException 
 	 */
 	@RequestMapping(value="/doarefuse",method={RequestMethod.POST})
 	@ResponseBody
@@ -137,18 +135,14 @@ public class RRechargeApplyController {
 			HttpServletResponse response,
 			@RequestParam(value="applyId",defaultValue="0")  Integer applyId,
 			@RequestParam(value="reason",defaultValue="")  String reason
-    		,ModelMap modelMap)  {
+    		,ModelMap modelMap) throws SQLException  {
 			EntityReturnData ret = new EntityReturnData();
 			ret.setResult(true);
-			try {
-				AdminUser adminUser = SessionConstant.getAdminUserInSession(request);
-				RechargeApply entity =rechargeApplyService.doRefuseRechargeApply(applyId, adminUser, reason);
-				ret.setEntity(entity);
-			} catch (Exception e) {
-				e.printStackTrace();
-				ret.setMsg(e.getMessage());
-				ret.setResult(false);
-			}
+			 
+			AdminUser adminUser = SessionConstant.getAdminUserInSession(request);
+			RechargeApply entity =rechargeApplyService.doRefuseRechargeApply(applyId, adminUser, reason);
+			ret.setEntity(entity);
+			 
 			return ret;
 	}
 }

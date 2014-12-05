@@ -1,5 +1,7 @@
 package com.gxkj.taobaoservice.controllers.admin;
 
-public class UUserLinkController {
 
+
+public class UUserLinkController {
+	 
 }

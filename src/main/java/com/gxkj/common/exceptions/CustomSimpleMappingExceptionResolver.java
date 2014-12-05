@@ -32,10 +32,15 @@ public class CustomSimpleMappingExceptionResolver extends SimpleMappingException
 	            } else {// JSON格式返回  
 	                try {  
 	                	response.setContentType("text/javascript;charset=UTF-8");  
-	                    PrintWriter writer = response.getWriter();  
+	                    PrintWriter writer = response.getWriter(); 
 	                    Map<String,Object> json = new HashMap<>();
+	                    if (ex instanceof  BusinessException){
+	                    	json.put("msg", ex.getMessage());
+	    				}else {
+	    					json.put("msg", "\'系统问题,请找技术人员解决\'");
+	    				}
 	                    json.put("result", false);
-	                    json.put("msg", ex.getMessage());
+	                   
 	                    writer.write(json.toString());  
 	                    writer.flush();  
 	                } catch (IOException e) {  

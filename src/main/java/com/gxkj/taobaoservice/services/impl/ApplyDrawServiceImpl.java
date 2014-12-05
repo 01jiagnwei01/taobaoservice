@@ -77,7 +77,7 @@ public class ApplyDrawServiceImpl implements ApplyDrawService {
 	 * 审核通过
 	 */
 	public ApplyDraw doAgreeApplyDraw(Integer applyId, AdminUser adminUser,String thirdOrderNo)
-			throws SQLException, BusinessException {
+			throws Exception {
 		 
 		ApplyDraw apply = (ApplyDraw) applyDrawDao.selectById(applyId, ApplyDraw.class);
 		/**
@@ -100,7 +100,7 @@ public class ApplyDrawServiceImpl implements ApplyDrawService {
 		 UserAccount userAccount = userAccountDao.getUserAccountByUserId(userId);
 		 BigDecimal accountAmount = userAccount.getCurrentBalance();
 		 if(accountAmount.compareTo(amount)<0){
-			 throw new BusinessException(BusinessExceptionInfos.THIRD_ORDER_NO_IS_NULL);
+			 throw new BusinessException(BusinessExceptionInfos.ACCOUNT_MONEY_NO_ENOUGH);
 		 }
 		 
 		/**

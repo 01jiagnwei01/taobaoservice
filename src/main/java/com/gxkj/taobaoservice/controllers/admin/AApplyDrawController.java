@@ -1,6 +1,7 @@
 package com.gxkj.taobaoservice.controllers.admin;
 
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.gxkj.common.exceptions.BusinessException;
 import com.gxkj.common.util.ListPager;
 import com.gxkj.taobaoservice.dto.EntityReturnData;
 import com.gxkj.taobaoservice.dto.SessionConstant;
@@ -87,7 +89,11 @@ public class AApplyDrawController {
 				ret.setEntity(paper);
 			} catch (Exception e) {
 				e.printStackTrace();
-				ret.setMsg(e.getMessage());
+				if (e instanceof  BusinessException){
+					ret.setMsg(e.getMessage());
+				}else {
+					ret.setMsg("系统问题,请找技术人员解决");
+				}
 				ret.setResult(false);
 			}
 			return ret;
@@ -100,6 +106,7 @@ public class AApplyDrawController {
 	 * @param applyId
 	 * @param modelMap
 	 * @return
+	 * @throws Exception 
 	 */
 	@RequestMapping(value="/doagree",method={RequestMethod.POST})
 	@ResponseBody
@@ -107,18 +114,14 @@ public class AApplyDrawController {
 			HttpServletResponse response,
 			@RequestParam(value="thirdOrderNo",defaultValue="") String thirdOrderNo,
 			@RequestParam(value="applyId",defaultValue="0")  Integer applyId
-    		,ModelMap modelMap)  {
+    		,ModelMap modelMap) throws Exception  {
 			EntityReturnData ret = new EntityReturnData();
 			ret.setResult(true);
-			try {
-				AdminUser adminUser = SessionConstant.getAdminUserInSession(request);
-				ApplyDraw entity =applyDrawService.doAgreeApplyDraw(applyId, adminUser, thirdOrderNo);
-				ret.setEntity(entity);
-			} catch (Exception e) {
-				e.printStackTrace();
-				ret.setMsg(e.getMessage());
-				ret.setResult(false);
-			}
+			 
+			AdminUser adminUser = SessionConstant.getAdminUserInSession(request);
+			ApplyDraw entity =applyDrawService.doAgreeApplyDraw(applyId, adminUser, thirdOrderNo);
+			ret.setEntity(entity);
+			 
 			return ret;
 	}
 	/**
@@ -129,6 +132,7 @@ public class AApplyDrawController {
 	 * @param reason
 	 * @param modelMap
 	 * @return
+	 * @throws SQLException 
 	 */
 	@RequestMapping(value="/doarefuse",method={RequestMethod.POST})
 	@ResponseBody
@@ -136,18 +140,13 @@ public class AApplyDrawController {
 			HttpServletResponse response,
 			@RequestParam(value="applyId",defaultValue="0")  Integer applyId,
 			@RequestParam(value="reason",defaultValue="")  String reason
-    		,ModelMap modelMap)  {
+    		,ModelMap modelMap) throws Exception  {
 			EntityReturnData ret = new EntityReturnData();
 			ret.setResult(true);
-			try {
-				AdminUser adminUser = SessionConstant.getAdminUserInSession(request);
-				ApplyDraw entity =applyDrawService.doRefuseApplyDraw(applyId, adminUser, reason);
-				ret.setEntity(entity);
-			} catch (Exception e) {
-				e.printStackTrace();
-				ret.setMsg(e.getMessage());
-				ret.setResult(false);
-			}
+			
+			AdminUser adminUser = SessionConstant.getAdminUserInSession(request);
+			ApplyDraw entity =applyDrawService.doRefuseApplyDraw(applyId, adminUser, reason);
+			ret.setEntity(entity);
 			return ret;
 	}
 }

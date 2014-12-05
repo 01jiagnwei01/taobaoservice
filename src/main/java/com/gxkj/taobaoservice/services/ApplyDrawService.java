@@ -38,7 +38,7 @@ public interface ApplyDrawService {
 	  * @throws SQLException
 	 * @throws BusinessException 
 	  */
-	 public ApplyDraw doAgreeApplyDraw(Integer applyId,AdminUser  adminUser,String thirdOrderNo) throws SQLException, BusinessException;
+	 public ApplyDraw doAgreeApplyDraw(Integer applyId,AdminUser  adminUser,String thirdOrderNo) throws Exception;
 	 
 	 /**
 	  * 分页查看充值申请

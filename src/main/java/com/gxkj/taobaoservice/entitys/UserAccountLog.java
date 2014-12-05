@@ -36,7 +36,7 @@ public class UserAccountLog  implements Serializable{
 	/**
 	 * 创建时间
 	 */
-	@Column(name="operate_time" )
+	@Column(name="createTime" )
 	@Temporal(TemporalType.TIMESTAMP )
 	private Date createTime;
 
