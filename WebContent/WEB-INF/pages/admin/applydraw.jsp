@@ -25,7 +25,7 @@
 			<tr width="100%">
 				<td width="100%">
 					支付宝流水号: <input class="easyui-textbox" style="width:160px" id="thirdOrderNo"/>
-					状态: <select id="status" class="easyui-combobox"   style="width:160px;">
+					状态: <select id="status" class="easyui-combobox"   style="width:160px;"  data-options='panelHeight:90'>
 						<option value="">不限</option>
 						<option value="WAIT_FOR_AUDIT">待审</option>
 						<option value="REFUSE">拒绝</option>
@@ -62,7 +62,7 @@
 					</table>
 				</div>
 				 <div data-options="region:'south',border:false" style="text-align:right;padding:5px 0 0;">
-					<a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" href="javascript:void(0)" onclick="javascript:submitFormFn()">保存</a>
+					<a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" href="javascript:void(0)" onclick="javascript:refuseSubmitFormFn()">保存</a>
 					<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" href="javascript:void(0)" onclick="javascript:closeWinFn()">取消</a>
 				</div>
 			</div>
@@ -85,7 +85,11 @@
 	</div>
 </body>
 <script type="text/javascript">
+var admin_applydraw_dopage = "${_adminUser_.btnMap.admin_applydraw_dopage}" == "true" ?true:false;
+var admin_applydraw_doarefuse = "${_adminUser_.btnMap.admin_applydraw_doarefuse}" == "true" ?true:false;
+var admin_applydraw_doagree = "${_adminUser_.btnMap.admin_applydraw_doagree}" == "true"?true:false; 
 $(function(){
+	 
 	$('#dg').datagrid({
 	 	border:false,
 		rownumbers:true,
@@ -101,7 +105,10 @@ $(function(){
 	  	onBeforeLoad:function(param){
 			param['pageno'] =  param['page']-1;
 			param['pagesize']  = param['rows'];
-			
+			 if(!admin_applydraw_dopage){
+				alert("您没有查看权限");
+				return false;
+			 }
 	  		return true ;
 	  	},
 	  	onDblClickRow:function(rowIndex, rowData){
@@ -138,6 +145,7 @@ $(function(){
 	});
 })
 function auditorNameFormat(value,row,index){
+	if(!value)return "";
 	 return value+"["+row['auditorId']+"]"
 }
 function statusFormat(value,row,index){
@@ -161,11 +169,13 @@ function optFormat(value,row,index){
 	
 	if(row['status'] == 'WAIT_FOR_AUDIT') {
 		var btns = [];
-		//if(updateUserBtn){
+		 if(admin_applydraw_doagree){
 			btns.push('<a class="easyui-linkbutton l-btn l-btn-plain" onclick="passFn(\''+row['id']+'\')" href="#" plain="true" iconCls="update_btn"><span class="l-btn-left"><span class="l-btn-text update_btn l-btn-icon-left">通过</span></span></a>');
-		//}
+		 }
+		 if(admin_applydraw_doarefuse){
 			btns.push('<a class="easyui-linkbutton l-btn l-btn-plain" onclick="disPassFn(\''+row['id']+'\')" href="#" plain="true" iconCls="del_btn"><span class="l-btn-left"><span class="l-btn-text del_btn l-btn-icon-left">拒绝</span></span></a>');
-		return btns.join("&nbsp;");
+		 }
+			return btns.join("&nbsp;");
 	}else if(value == 'APPROVE') {
 		 
 	}else if(value == 'REFUSE') {
@@ -174,10 +184,7 @@ function optFormat(value,row,index){
 	
 }
 function searchFn(){
-//	if(!userdopage){
-//		 $.messager.alert('系统提示','您没有权限访问!','info');
-//		return;
-//	}
+ 
 	var userId = $("#userId").numberspinner('getValue');  
 	var createBeginTime = $("#createBeginTime").datebox('getValue');
 	var createEndTime = $("#createEndTime").datebox('getValue');
@@ -221,7 +228,7 @@ function passFn(id){
 	$('#agreewin').window('open');  
 	$('#agreewin').window('center'); 
 }
-function submitFormFn(){
+function refuseSubmitFormFn(){
 	var reasonId = $('#reasonId').val();
 	var reason =  $('#reason').val();
 	var rows = $("#dg").datagrid("getRows");
@@ -260,7 +267,8 @@ function submitFormFn(){
 			if(msg && "{msg=no auth, resutlt=false}" == msg){
 				 $.messager.alert('系统提示','您没有权限!','error');
 			}else{
-				 $.messager.alert('系统提示','保存失败，请刷新后重试!','error');
+				var json =   $.parseJSON(msg);
+				 $.messager.alert('系统提示','保存失败，'+json.msg,'error');
 			}
 		    // 通常 textStatus 和 errorThrown 之中
 		    // 只有一个会包含信息
@@ -300,9 +308,9 @@ function submitAgreeFormFn(){
 			  	 	index:updateRowIndex,
 			  	 	row:entity
 			  	 });
-			 	 $.messager.alert('系统提示','保存成功!','info',closeWinFn);
+			 	 $.messager.alert('系统提示','保存成功!','info',closeAgreeWinFn);
 	    	}else{
-	    		 $.messager.alert('系统提示','保存失败!'+json.msg,'error',closeWinFn);
+	    		 $.messager.alert('系统提示','保存失败!  '+json.msg,'error');
 	    	}
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {
@@ -310,7 +318,9 @@ function submitAgreeFormFn(){
 			if(msg && "{msg=no auth, resutlt=false}" == msg){
 				 $.messager.alert('系统提示','您没有权限!','error');
 			}else{
-				 $.messager.alert('系统提示','保存失败，请刷新后重试!','error');
+				var json =   $.parseJSON(msg);
+				
+				 $.messager.alert('系统提示','保存失败，'+json.msg,'error');
 			}
 		    // 通常 textStatus 和 errorThrown 之中
 		    // 只有一个会包含信息

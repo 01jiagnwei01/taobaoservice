@@ -2,14 +2,15 @@ package com.gxkj.common.exceptions;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gxkj.taobaoservice.dto.EntityReturnData;
 
 public class CustomSimpleMappingExceptionResolver extends SimpleMappingExceptionResolver  {
 	
@@ -30,18 +31,19 @@ public class CustomSimpleMappingExceptionResolver extends SimpleMappingException
 	                }  
 	                return getModelAndView(viewName, ex, request);  
 	            } else {// JSON格式返回  
-	                try {  
+	                try { 
+	                	ObjectMapper mapper = new ObjectMapper();
+	                	EntityReturnData json = new EntityReturnData();
 	                	response.setContentType("text/javascript;charset=UTF-8");  
 	                    PrintWriter writer = response.getWriter(); 
-	                    Map<String,Object> json = new HashMap<>();
-	                    if (ex instanceof  BusinessException){
-	                    	json.put("msg", ex.getMessage());
-	    				}else {
-	    					json.put("msg", "\'系统问题,请找技术人员解决\'");
-	    				}
-	                    json.put("result", false);
 	                   
-	                    writer.write(json.toString());  
+	                    if (ex instanceof  BusinessException){
+	                    	json.setMsg(  ex.getMessage());
+	    				}else {
+	    					 
+	    					json.setMsg(   "系统问题,请找技术人员解决");
+	    				}
+	                    writer.write(mapper.writeValueAsString(json));  
 	                    writer.flush();  
 	                } catch (IOException e) {  
 	                    e.printStackTrace();  

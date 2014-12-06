@@ -118,6 +118,7 @@ public class ApplyDrawServiceImpl implements ApplyDrawService {
 		apply.setStatus(RechargeApplyStatus.APPROVE);
 		apply.setAuditorId(adminUser.getId());
 		apply.setAuditorName(adminUser.getRealName());
+		apply.setThirdOrderNo(thirdOrderNo);
 		applyDrawDao.update(apply);
 		
 		/**

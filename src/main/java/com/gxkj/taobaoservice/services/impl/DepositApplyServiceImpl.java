@@ -12,23 +12,23 @@ import org.springframework.stereotype.Service;
 import com.gxkj.common.enums.BusinessExceptionInfos;
 import com.gxkj.common.exceptions.BusinessException;
 import com.gxkj.common.util.ListPager;
-import com.gxkj.taobaoservice.daos.RechargeApplyDao;
+import com.gxkj.taobaoservice.daos.DepositApplyDao;
 import com.gxkj.taobaoservice.daos.UserAccountDao;
 import com.gxkj.taobaoservice.daos.UserAccountLogDao;
 import com.gxkj.taobaoservice.daos.UserBaseDao;
 import com.gxkj.taobaoservice.entitys.AdminUser;
-import com.gxkj.taobaoservice.entitys.RechargeApply;
+import com.gxkj.taobaoservice.entitys.DepositApply;
 import com.gxkj.taobaoservice.entitys.UserAccount;
 import com.gxkj.taobaoservice.entitys.UserAccountLog;
 import com.gxkj.taobaoservice.entitys.UserBase;
 import com.gxkj.taobaoservice.enums.RechargeApplyStatus;
 import com.gxkj.taobaoservice.enums.UserAccountTypes;
-import com.gxkj.taobaoservice.services.RechargeApplyService;
+import com.gxkj.taobaoservice.services.DepositApplyService;
 @Service
-public class RechargeApplyServiceImpl implements RechargeApplyService {
+public class DepositApplyServiceImpl implements DepositApplyService {
 
 	@Autowired
-	 private RechargeApplyDao rechargeApplyDao;
+	 private DepositApplyDao rechargeApplyDao;
 	
 	@Autowired
 	private UserBaseDao userBaseDao;
@@ -42,8 +42,8 @@ public class RechargeApplyServiceImpl implements RechargeApplyService {
 	/**
 	 * 充值申请
 	 */
-	 public RechargeApply addRechargeApply(String thirdOrderNo,BigDecimal  amount,UserBase userBase) throws SQLException{
-		 RechargeApply apply = new RechargeApply();
+	 public DepositApply addRechargeApply(String thirdOrderNo,BigDecimal  amount,UserBase userBase) throws SQLException{
+		 DepositApply apply = new DepositApply();
 		 apply.setAmount(amount);
 		 apply.setThirdOrderNo(thirdOrderNo);
 		 Date now = new Date();
@@ -57,10 +57,10 @@ public class RechargeApplyServiceImpl implements RechargeApplyService {
 	 /**
 	  * 审核拒绝
 	  */
-	public RechargeApply doRefuseRechargeApply(Integer applyId, AdminUser adminUser,
+	public DepositApply doRefuseRechargeApply(Integer applyId, AdminUser adminUser,
 			String reason) throws SQLException {
 		 
-		RechargeApply apply = (RechargeApply) rechargeApplyDao.selectById(applyId, RechargeApply.class);
+		DepositApply apply = (DepositApply) rechargeApplyDao.selectById(applyId, DepositApply.class);
 		apply.setRefuseReason(reason);
 		apply.setAuditorId(adminUser.getId());
 		apply.setAuditorName(adminUser.getRealName());
@@ -76,15 +76,15 @@ public class RechargeApplyServiceImpl implements RechargeApplyService {
 	/**
 	 * 审核通过
 	 */
-	public RechargeApply doAgreeRechargeApply(Integer applyId, AdminUser adminUser)
+	public DepositApply doAgreeRechargeApply(Integer applyId, AdminUser adminUser)
 			throws SQLException, BusinessException {
 		 
-		RechargeApply apply = (RechargeApply) rechargeApplyDao.selectById(applyId, RechargeApply.class);
+		DepositApply apply = (DepositApply) rechargeApplyDao.selectById(applyId, DepositApply.class);
 		if (apply.getStatus() != RechargeApplyStatus.WAIT_FOR_AUDIT){
 			throw new BusinessException(BusinessExceptionInfos.RECHARDAPPLY_STATUS_NOT_WAIT_FOR);
 		}
 		String thirdOrderNo = apply.getThirdOrderNo();
-		List<RechargeApply> rechargeApplys =  rechargeApplyDao.getRechargeApplyByThirdOrderNoAndNotIDndPassed(thirdOrderNo,applyId);
+		List<DepositApply> rechargeApplys =  rechargeApplyDao.getRechargeApplyByThirdOrderNoAndNotIDndPassed(thirdOrderNo,applyId);
 		if(CollectionUtils.isNotEmpty(rechargeApplys)){
 			throw new BusinessException(BusinessExceptionInfos.THIRDORDERNO_IS_USED);
 		}

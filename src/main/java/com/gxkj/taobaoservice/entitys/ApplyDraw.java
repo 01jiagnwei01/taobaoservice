@@ -39,33 +39,33 @@ public class ApplyDraw implements Serializable{
 	/**
 	 * 第三方订单号
 	 */
-	@Column(name = "third_order_no", unique = true, nullable = false) 
+	@Column(name = "third_order_no", unique = true, nullable = true) 
 	private String  thirdOrderNo;
 	
 	/**
 	 * 取款金额
 	 */
-	@Column(name = "amount" ) 
+	@Column(name = "amount",   nullable = true ) 
 	private BigDecimal  amount;
 	
 	
 	/**
 	 * 申请人ID
 	 */
-	@Column(name = "user_id" ) 
+	@Column(name = "user_id" ,   nullable = true) 
 	private Integer  userId;
 	
 	/**
 	 * 创建时间
 	 */
-	@Column(name = "create_time" )
+	@Column(name = "create_time" ,   nullable = true)
 	@Temporal(TemporalType.TIMESTAMP )
 	private Date createTime;
 	
 	/**
 	 * 状态
 	 */
-	@Column(name = "status" )
+	@Column(name = "status" ,   nullable = true)
 	@Enumerated(EnumType.STRING)
 	private RechargeApplyStatus status;
 	

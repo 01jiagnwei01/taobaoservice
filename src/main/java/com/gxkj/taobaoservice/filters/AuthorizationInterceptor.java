@@ -16,14 +16,18 @@ import javax.servlet.http.HttpServletResponse;
 
 
 
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 //import org.springframework.web.servlet.mvc.multiaction.InternalPathMethodNameResolver;
 //import org.springframework.web.servlet.mvc.multiaction.MethodNameResolver;
 
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gxkj.common.annotation.WithoutAuthorize;
 import com.gxkj.common.util.SystemGlobals;
+import com.gxkj.taobaoservice.dto.EntityReturnData;
 import com.gxkj.taobaoservice.dto.SessionConstant;
 import com.gxkj.taobaoservice.entitys.AdminUser;
 
@@ -86,12 +90,12 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter  {
 			String requestType = req.getHeader("X-Requested-With");
 			if(StringUtils.isNotBlank(requestType )){
 				//是ajax请求，返回json对象
-				Map<String,Object>  json = new HashMap<String,Object>();
-				json.put("resutlt", false);
-				json.put("msg", "no auth");
+				ObjectMapper mapper = new ObjectMapper();
+            	EntityReturnData json = new EntityReturnData();
+            	json.setMsg("no auth"); 
 				 response.setContentType("text/javascript;charset=UTF-8");   
-				 PrintWriter out = response.getWriter();   
-	             out.write(json.toString());
+				 PrintWriter writer = response.getWriter();   
+				 writer.write(mapper.writeValueAsString(json));  
 				
 			} else{
 				response.sendRedirect(req.getContextPath()+"/exception/noauth");

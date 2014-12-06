@@ -25,7 +25,7 @@
 			<tr width="100%">
 				<td width="100%">
 					支付宝流水号: <input class="easyui-textbox" style="width:160px" id="thirdOrderNo"/>
-					状态: <select id="status" class="easyui-combobox"   style="width:160px;">
+					状态: <select id="status" class="easyui-combobox"   style="width:160px;" data-options='panelHeight:90'>
 						<option value="">不限</option>
 						<option value="WAIT_FOR_AUDIT">待审</option>
 						<option value="REFUSE">拒绝</option>
@@ -62,7 +62,7 @@
 					</table>
 				</div>
 				 <div data-options="region:'south',border:false" style="text-align:right;padding:5px 0 0;">
-					<a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" href="javascript:void(0)" onclick="javascript:submitFormFn()">保存</a>
+					<a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" href="javascript:void(0)" onclick="javascript:refuseFormFn()">保存</a>
 					<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" href="javascript:void(0)" onclick="javascript:closeWinFn()">取消</a>
 				</div>
 			</div>
@@ -70,6 +70,9 @@
 	 
 </body>
 <script type="text/javascript">
+var admin_deposit_dopage = "${_adminUser_.btnMap.admin_deposit_dopage}" == "true"?true:false;
+var admin_deposit_doagree = "${_adminUser_.btnMap.admin_deposit_doagree}" == "true" ?true:false;
+var admin_deposit_doarefuse = "${_adminUser_.btnMap.admin_deposit_doarefuse}" == "true"?true:false;
 $(function(){
 	$('#dg').datagrid({
 	 	border:false,
@@ -81,12 +84,15 @@ $(function(){
 		pageSize:20,
 		singleSelect:true,
 		method:'POST',
-	  	url:'<%=request.getContextPath() %>/admin/rechargeapply/dopage?d='+new Date().getTime(),
+	  	url:'<%=request.getContextPath() %>/admin/deposit/dopage?d='+new Date().getTime(),
 	  	queryParams:{ },
 	  	onBeforeLoad:function(param){
 			param['pageno'] =  param['page']-1;
 			param['pagesize']  = param['rows'];
-			
+			if(!admin_deposit_dopage){
+				alert("您没有查看权限");
+				return false;
+			 }
 	  		return true ;
 	  	},
 	  	onDblClickRow:function(rowIndex, rowData){
@@ -141,17 +147,20 @@ function dateFormat(value,row,index){
 	}
 }
 function auditorNameFormat(value,row,index){
+	if(!value) return "";
 	 return value+"["+row['auditorId']+"]"
 }
 function optFormat(value,row,index){
 	
 	if(row['status'] == 'WAIT_FOR_AUDIT') {
 		var btns = [];
-		//if(updateUserBtn){
+		 if(admin_deposit_doagree){
 			btns.push('<a class="easyui-linkbutton l-btn l-btn-plain" onclick="passFn(\''+row['id']+'\')" href="#" plain="true" iconCls="update_btn"><span class="l-btn-left"><span class="l-btn-text update_btn l-btn-icon-left">通过</span></span></a>');
-		//}
+		 }
+		 if(admin_deposit_doarefuse){
 			btns.push('<a class="easyui-linkbutton l-btn l-btn-plain" onclick="disPassFn(\''+row['id']+'\')" href="#" plain="true" iconCls="del_btn"><span class="l-btn-left"><span class="l-btn-text del_btn l-btn-icon-left">拒绝</span></span></a>');
-		return btns.join("&nbsp;");
+		 }
+			return btns.join("&nbsp;");
 	}else if(value == 'APPROVE') {
 		 
 	}else if(value == 'REFUSE') {
@@ -216,12 +225,13 @@ function passFn(id){
 		return;
 	}
 	$.ajax({ 
-		url: "<%=request.getContextPath() %>/admin/rechargeapply/doagree?d="+new Date().getTime(), 
+		url: "<%=request.getContextPath() %>/admin/deposit/doagree?d="+new Date().getTime(), 
 		method:'POST',
 		data:{applyId:id},
 		context: document.body, 
 		success: function(json){
 	    	//$(this).addClass("done");
+	    	 
 	    	if(json.result){
 	    		var  entity = json.entity;
 			 	 $('#dg').datagrid('updateRow',{
@@ -238,7 +248,8 @@ function passFn(id){
 			if(msg && "{msg=no auth, resutlt=false}" == msg){
 				 $.messager.alert('系统提示','您没有权限!','error');
 			}else{
-				 $.messager.alert('系统提示','保存失败，请刷新后重试!','error');
+				var json =   $.parseJSON(msg);
+				 $.messager.alert('系统提示','保存失败，'+json.msg,'error');
 			}
 		    // 通常 textStatus 和 errorThrown 之中
 		    // 只有一个会包含信息
@@ -247,7 +258,7 @@ function passFn(id){
 		}
 	});
 }
-function submitFormFn(){
+function refuseFormFn(){
 	//<input type="hidden" id="reasonId" value="">
 	//<textarea rows="12" cols="40" id='reason'></textarea>
 	var reasonId = $('#reasonId').val();
@@ -266,12 +277,12 @@ function submitFormFn(){
 		return;
 	}
 	$.ajax({ 
-		url: "<%=request.getContextPath() %>/admin/rechargeapply/doarefuse?d="+new Date().getTime(), 
+		url: "<%=request.getContextPath() %>/admin/deposit/doarefuse?d="+new Date().getTime(), 
 		method:'POST',
 		data:{applyId:reasonId  ,reason:reason},
 		context: document.body, 
 		success: function(json){
-	    	//$(this).addClass("done");
+	    	
 	    	if(json.result){
 	    		var  entity = json.entity;
 			 	 $('#dg').datagrid('updateRow',{
@@ -280,17 +291,17 @@ function submitFormFn(){
 			  	 });
 			 	 $.messager.alert('系统提示','保存成功!','info',closeWinFn);
 	    	}else{
-	    		 $.messager.alert('系统提示','保存失败!  '+json.msg,'error',closeWinFn);
+	    		 $.messager.alert('系统提示','保存失败!  '+json.msg,'error');
 	    	}
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {
 			var msg = XMLHttpRequest.responseText;
-			alert(2222);
+		
 			if(msg && "{msg=no auth, resutlt=false}" == msg){
 				 $.messager.alert('系统提示','您没有权限!','error');
 			}else{
 				var json =   $.parseJSON(msg);
-				alert(json);
+				
 				 $.messager.alert('系统提示','保存失败，'+json.msg,'error');
 			}
 		    // 通常 textStatus 和 errorThrown 之中

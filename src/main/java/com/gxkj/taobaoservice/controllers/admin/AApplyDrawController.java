@@ -27,7 +27,11 @@ import com.gxkj.taobaoservice.entitys.AdminUser;
 import com.gxkj.taobaoservice.entitys.ApplyDraw;
 import com.gxkj.taobaoservice.enums.RechargeApplyStatus;
 import com.gxkj.taobaoservice.services.ApplyDrawService;
-
+/**
+ *
+ * 取款管理
+ *
+ */
 @Controller
 @RequestMapping("/admin/applydraw")
 public class AApplyDrawController {

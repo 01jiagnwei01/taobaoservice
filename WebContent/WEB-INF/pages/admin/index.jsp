@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
  <%@ page import="com.gxkj.common.util.SystemGlobals,com.gxkj.taobaoservice.entitys.*,com.gxkj.taobaoservice.dto.*"%>
  <%AdminUser a1= (AdminUser)request.getAttribute(SessionConstant._adminUserFalg);
- String name = a1.getName();%>
+ String name = a1.getName();
+ Integer uid = a1.getId();
+ %>
  <!DOCTYPE html>
 <html lang="zh">
 <head><%--  --%>
@@ -60,7 +62,7 @@ function onContextMenuFn(e, title,index){
 		<table width="100%">
 			<tr width="100%">
 				<td width="50%">
-					 欢迎您:<%=name %>
+					 欢迎您:<%=name %>&nbsp;&nbsp;您的编号是：<%=uid %>
 				</td>
 				<td align="right" width="50%">
 					 <a href="#" class="easyui-linkbutton" onclick="addTabPanel('userhome')" data-options="plain:true,iconCls:'user_btn'">个人中心</a>

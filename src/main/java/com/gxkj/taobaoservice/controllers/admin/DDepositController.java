@@ -24,13 +24,17 @@ import com.gxkj.common.util.ListPager;
 import com.gxkj.taobaoservice.dto.EntityReturnData;
 import com.gxkj.taobaoservice.dto.SessionConstant;
 import com.gxkj.taobaoservice.entitys.AdminUser;
-import com.gxkj.taobaoservice.entitys.RechargeApply;
+import com.gxkj.taobaoservice.entitys.DepositApply;
 import com.gxkj.taobaoservice.enums.RechargeApplyStatus;
-import com.gxkj.taobaoservice.services.RechargeApplyService;
+import com.gxkj.taobaoservice.services.DepositApplyService;
 
+/**
+ * 
+ * 存款管理
+ */
 @Controller
-@RequestMapping("/admin/rechargeapply")
-public class RRechargeApplyController {
+@RequestMapping("/admin/deposit")
+public class DDepositController {
 	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -41,12 +45,12 @@ public class RRechargeApplyController {
     }
 	
 	@Autowired
-	public RechargeApplyService rechargeApplyService;
+	public DepositApplyService rechargeApplyService;
 
 	
 	@RequestMapping(value="",method={RequestMethod.GET})
 	public String index(HttpServletRequest request,HttpServletResponse response,ModelMap modelMap){
-		String mv = "admin/rechargeapply";
+		String mv = "admin/depositapply";
 		return mv;
 	}
 	
@@ -114,7 +118,7 @@ public class RRechargeApplyController {
 			ret.setResult(true);
 			 
 			AdminUser adminUser = SessionConstant.getAdminUserInSession(request);
-			RechargeApply entity =rechargeApplyService.doAgreeRechargeApply(applyId, adminUser);
+			DepositApply entity =rechargeApplyService.doAgreeRechargeApply(applyId, adminUser);
 			ret.setEntity(entity);
 			 
 			return ret;
@@ -140,7 +144,7 @@ public class RRechargeApplyController {
 			ret.setResult(true);
 			 
 			AdminUser adminUser = SessionConstant.getAdminUserInSession(request);
-			RechargeApply entity =rechargeApplyService.doRefuseRechargeApply(applyId, adminUser, reason);
+			DepositApply entity =rechargeApplyService.doRefuseRechargeApply(applyId, adminUser, reason);
 			ret.setEntity(entity);
 			 
 			return ret;

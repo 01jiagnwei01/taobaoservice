@@ -16,17 +16,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gxkj.common.util.SessionUtil;
 import com.gxkj.taobaoservice.dto.EntityReturnData;
-import com.gxkj.taobaoservice.entitys.RechargeApply;
+import com.gxkj.taobaoservice.entitys.DepositApply;
 import com.gxkj.taobaoservice.entitys.UserBase;
 import com.gxkj.taobaoservice.enums.RechargeApplyResults;
-import com.gxkj.taobaoservice.services.RechargeApplyService;
+import com.gxkj.taobaoservice.services.DepositApplyService;
 
 @Controller
 @RequestMapping("/rechargeapply")
 public class RechargeApplyController {
 	
 	@Autowired
-	public RechargeApplyService rechargeApplyService;
+	public DepositApplyService rechargeApplyService;
 	
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public EntityReturnData addRechargeApplyService(HttpServletRequest request,HttpServletResponse response,ModelMap modelMap,
@@ -41,7 +41,7 @@ public class RechargeApplyController {
 			return ret;
 		}
 		UserBase userBase  = SessionUtil.getSiteUserInSession(request);
-		RechargeApply apply = rechargeApplyService.addRechargeApply(thirdOrderNo, amount, userBase);
+		DepositApply apply = rechargeApplyService.addRechargeApply(thirdOrderNo, amount, userBase);
 		ret.setResult(true);
 		ret.setEntity(apply);
 		return ret;	

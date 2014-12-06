@@ -11,12 +11,12 @@ import org.springframework.stereotype.Repository;
 
 import com.gxkj.common.dao.BaseDAOImpl;
 import com.gxkj.common.util.ListPager;
-import com.gxkj.taobaoservice.daos.RechargeApplyDao;
-import com.gxkj.taobaoservice.entitys.RechargeApply;
+import com.gxkj.taobaoservice.daos.DepositApplyDao;
+import com.gxkj.taobaoservice.entitys.DepositApply;
 import com.gxkj.taobaoservice.enums.RechargeApplyStatus;
 @Repository
-public class RechargeApplyDaoImpl extends BaseDAOImpl implements
-		RechargeApplyDao {
+public class DepositApplyDaoImpl extends BaseDAOImpl implements
+		DepositApplyDao {
 
 	/**
 	 * 查询id不是参数applyId 但是流水号为thirdOrderNo的申请且已经申请通过的
@@ -26,10 +26,10 @@ public class RechargeApplyDaoImpl extends BaseDAOImpl implements
 	 * @throws SQLException 
 	 */
 	@SuppressWarnings("unchecked")
-	public List<RechargeApply> getRechargeApplyByThirdOrderNoAndNotIDndPassed(
+	public List<DepositApply> getRechargeApplyByThirdOrderNoAndNotIDndPassed(
 			String thirdOrderNo, Integer applyId) throws SQLException {
-		String hql = "from RechargeApply where thirdOrderNo = ? and id != ? and status = '"+RechargeApplyStatus.APPROVE+"'";
-		return (List<RechargeApply>) this.selectByHQL(hql, new Object[]{thirdOrderNo,applyId});
+		String hql = "from DepositApply where thirdOrderNo = ? and id != ? and status = '"+RechargeApplyStatus.APPROVE+"'";
+		return (List<DepositApply>) this.selectByHQL(hql, new Object[]{thirdOrderNo,applyId});
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class RechargeApplyDaoImpl extends BaseDAOImpl implements
 			Date createBeginTime, Date createEndTime, Date reviewBeginTime,
 			Date reviewEndTime, Integer auditorId) throws SQLException {
 		
-		StringBuffer hql = new StringBuffer("  from RechargeApply where 1=1");
+		StringBuffer hql = new StringBuffer("  from DepositApply where 1=1");
 		List<Object> params = new ArrayList<Object>();
 		boolean contain = false;
 		if(StringUtils.isNotBlank(thirdOrderNo)){
