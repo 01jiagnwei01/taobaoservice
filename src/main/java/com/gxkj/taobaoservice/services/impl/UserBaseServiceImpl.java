@@ -1,6 +1,7 @@
 package com.gxkj.taobaoservice.services.impl;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import com.gxkj.common.enums.BusinessExceptionInfos;
 import com.gxkj.common.exceptions.BusinessException;
+import com.gxkj.common.util.ListPager;
 import com.gxkj.common.util.PWDGenter;
 import com.gxkj.common.util.StringMatchUtil;
 import com.gxkj.taobaoservice.daos.OperateLogDao;
@@ -30,6 +32,7 @@ import com.gxkj.taobaoservice.daos.UserBaseDao;
 import com.gxkj.taobaoservice.daos.UserLinkDao;
 import com.gxkj.taobaoservice.dto.EntityReturnData;
 import com.gxkj.taobaoservice.dto.RegObjDTO;
+import com.gxkj.taobaoservice.entitys.AdminUser;
 import com.gxkj.taobaoservice.entitys.OperateLog;
 import com.gxkj.taobaoservice.entitys.UserAccount;
 import com.gxkj.taobaoservice.entitys.UserBase;
@@ -39,6 +42,7 @@ import com.gxkj.taobaoservice.enums.RegProcessResult;
 import com.gxkj.taobaoservice.enums.UserBaseStatus;
 import com.gxkj.taobaoservice.enums.UserLinkStatus;
 import com.gxkj.taobaoservice.enums.UserLinkTypes;
+import com.gxkj.taobaoservice.enums.YANS;
 import com.gxkj.taobaoservice.services.BusinessExceptionService;
 import com.gxkj.taobaoservice.services.UserBaseService;
 import com.gxkj.taobaoservice.util.mail.MailSender;
@@ -89,6 +93,7 @@ public class UserBaseServiceImpl implements UserBaseService {
 		UserBase userBase = new UserBase();
 		userBase.setPassword(PWDGenter.generateKen(regObjDTO.getPassword()) );
 		userBase.setUserName(regObjDTO.getUserName());
+		userBase.setSupplyMoney(BigDecimal.ZERO);
 		userBase.setRegTime(now);
 		userBase.setStatus(UserBaseStatus.WAIT_FOR_ACTIVE);
 		userBaseDao.insert(userBase);
@@ -254,6 +259,110 @@ public class UserBaseServiceImpl implements UserBaseService {
 		userBase.setUserLinks(userLinks);
 		
 		return userBase;
+	}
+
+	 
+	@SuppressWarnings("unchecked")
+	public ListPager doPage(int pageno, int pagesize, String name,
+			UserBaseStatus status, Date regBeignTime, Date regEndTime,YANS supplyMoneystatus,BigDecimal supplyMoney) throws SQLException {
+	 
+		ListPager pager =  userBaseDao.doPage(pageno, pagesize, name, status, regBeignTime, regEndTime, supplyMoneystatus, supplyMoney);
+		if(pager.getPageData() != null){
+			List<UserBase> datas  = (List<UserBase>) pager.getPageData();
+			for(UserBase userBase :datas){
+				UserAccount uerAccount = userAccountDao.getUserAccountByUserId(userBase.getId());
+				List<UserLink> userLinks = userLinkDao.getUsersByUserId(userBase.getId());
+				userBase.setUserLinks(userLinks);
+				userBase.setUerAccount(uerAccount);
+			}
+			
+		}
+		
+		return pager;
+	}
+
+	/**
+	 *  设置公司补助金额
+	 */
+	public EntityReturnData doSetSupplyMoney(AdminUser adminUser,Integer userId,
+			BigDecimal supplyMoney) throws SQLException, BusinessException {
+		EntityReturnData result = new EntityReturnData();
+		if(BigDecimal.ZERO.compareTo(supplyMoney) >0){
+			throw  new BusinessException(BusinessExceptionInfos.ACCOUNT_CAN_NOT_BE_NEGATIVE);
+		}else if(new BigDecimal("50").compareTo(supplyMoney) <0){
+			throw  new BusinessException(BusinessExceptionInfos.OUT_THE_LARGE_RANGE);
+		}
+		UserBase userBase = (UserBase) userBaseDao.selectById(userId, UserBase.class);
+		
+		if(userBase == null){
+			throw  new BusinessException(BusinessExceptionInfos.NO_USER_FOUND_BY_ID);
+		}
+		BigDecimal beforeValue = userBase.getSupplyMoney();
+		 ObjectMapper mapper = new ObjectMapper();
+		userBase.setSupplyMoney(supplyMoney);
+		userBaseDao.update(userBase);
+		
+		UserAccount uerAccount = userAccountDao.getUserAccountByUserId(userBase.getId());
+		List<UserLink> userLinks = userLinkDao.getUsersByUserId(userBase.getId());
+		userBase.setUserLinks(userLinks);
+		userBase.setUerAccount(uerAccount);
+		try{
+			log.info(String.format("update userBaseDao =%s", mapper.writeValueAsString(userBase)));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		//记录操作日志
+		OperateLog operateLog  = new OperateLog();
+		operateLog.setAfterValue(supplyMoney.toPlainString());
+		operateLog.setBeforeValue(beforeValue.toPlainString());
+		//操作者id
+		operateLog.setUser_id(adminUser.getId());
+		operateLog.setOperateTime(new Date());
+		operateLog.setOperateType(OperateTypes.SET_SUPPLY_MONEY);
+		this.operateLogDao.insert(operateLog);
+		try{
+			log.info(String.format("insert OperateLog =%s", mapper.writeValueAsString(operateLog)));
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		result.setEntity(userBase);
+		result.setResult(true);
+		return result;
+	}
+
+	 /**
+	  * 清空公司对所有已补助的公司的补助支持
+	  */
+	public EntityReturnData doClearSupplyMone(AdminUser adminUser ) throws SQLException {
+		Date now = new Date();
+		EntityReturnData result = new EntityReturnData();
+		List<UserBase> userBases = this.userBaseDao.getAllSupplyUsers();
+		if(CollectionUtils.isNotEmpty(userBases)){
+			for(UserBase userBase :userBases){
+				
+				BigDecimal beforeValue = userBase.getSupplyMoney();
+				
+				userBase.setSupplyMoney(BigDecimal.ZERO);
+				
+				//记录日志
+				OperateLog operateLog  = new OperateLog();
+				operateLog.setAfterValue("0");
+				operateLog.setBeforeValue(beforeValue.toPlainString());
+				//操作者id
+				operateLog.setUser_id(adminUser.getId());
+				operateLog.setOperateTime(now);
+				operateLog.setOperateType(OperateTypes.SET_SUPPLY_MONEY);
+				this.operateLogDao.insert(operateLog);
+				
+			}
+			result.setMsg(userBases.size()+"");
+		}else{
+			result.setMsg( "0");
+		}
+		
+		result.setResult(true);
+		return result;
 	}
 
 }

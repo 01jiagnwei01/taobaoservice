@@ -86,7 +86,7 @@
 									  	loadFilter:function(data){
 											if(data  == null)return null;
 											data.total = data.totalRows;
-											data.rows = $.isArray(data.pageData)?data.pageData:[];
+											data.rows = data.pageData == null?data.pageData:[];
 											return data;
 										}
 									">
@@ -151,7 +151,7 @@ $(function(){
 					}else {
 						var obj = {
 							total:data.entity.totalRows,
-							rows:data.entity.pageData
+							rows:data.entity.pageData ?data.entity.pageData:[]
 						};
 						return obj;
 					} 

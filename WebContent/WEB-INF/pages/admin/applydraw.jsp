@@ -264,12 +264,10 @@ function refuseSubmitFormFn(){
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {
 			var msg = XMLHttpRequest.responseText;
-			if(msg && "{msg=no auth, resutlt=false}" == msg){
-				 $.messager.alert('系统提示','您没有权限!','error');
-			}else{
-				var json =   $.parseJSON(msg);
-				 $.messager.alert('系统提示','保存失败，'+json.msg,'error');
-			}
+			
+			var json =   $.parseJSON(msg);
+			$.messager.alert('系统提示','保存失败，'+json.msg,'error');
+			
 		    // 通常 textStatus 和 errorThrown 之中
 		    // 只有一个会包含信息
 		    this; // 调用本次AJAX请求时传递的options参数
@@ -315,13 +313,11 @@ function submitAgreeFormFn(){
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {
 			var msg = XMLHttpRequest.responseText;
-			if(msg && "{msg=no auth, resutlt=false}" == msg){
-				 $.messager.alert('系统提示','您没有权限!','error');
-			}else{
+			
 				var json =   $.parseJSON(msg);
 				
 				 $.messager.alert('系统提示','保存失败，'+json.msg,'error');
-			}
+			
 		    // 通常 textStatus 和 errorThrown 之中
 		    // 只有一个会包含信息
 		    this; // 调用本次AJAX请求时传递的options参数

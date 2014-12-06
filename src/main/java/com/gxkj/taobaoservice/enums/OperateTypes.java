@@ -9,7 +9,8 @@ public enum OperateTypes {
 	UPDATE_TAOBAOXIAOHAO("修改淘宝小号"),
 	UPDATE_QQ("修改QQ"),
 	ACTIVE_EMAIL("邮箱激活"),
-	FIND_PASSWORD_SEND_EMAIL("找回密码发送邮件") ;
+	FIND_PASSWORD_SEND_EMAIL("找回密码发送邮件"),
+	SET_SUPPLY_MONEY("设置补偿金额");
 	
 	private String name; 
 	private OperateTypes(String name ) {  

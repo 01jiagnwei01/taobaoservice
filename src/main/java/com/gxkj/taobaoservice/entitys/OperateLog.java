@@ -35,7 +35,7 @@ public class OperateLog implements Serializable{
 	/**
 	 * 被操作人ID
 	 */
-	@Column(name="name" )
+	@Column(name="user_id" )
 	private Integer user_id;
 	
 	/**

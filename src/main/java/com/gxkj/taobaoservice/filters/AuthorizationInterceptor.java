@@ -92,7 +92,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter  {
 				//是ajax请求，返回json对象
 				ObjectMapper mapper = new ObjectMapper();
             	EntityReturnData json = new EntityReturnData();
-            	json.setMsg("no auth"); 
+            	json.setMsg("您没有权限"); 
 				 response.setContentType("text/javascript;charset=UTF-8");   
 				 PrintWriter writer = response.getWriter();   
 				 writer.write(mapper.writeValueAsString(json));  

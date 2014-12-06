@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.gxkj.common.util.ListPager;
 
@@ -25,10 +26,15 @@ public interface BaseDAO {
 
 	public List<?> selectByHQL(String hql, Object[] parameters) throws SQLException;
 	
+	public List<?> selectByHQL(String hql, Map<String,Object> parameters) throws SQLException;
+	
 	public List<?> selectBySQL (String sql,Class<?> clazz) throws SQLException;
-
+	
+	public List<?>selectPageByHQL(String hql, Map<String, Object> param,int from, int to)throws SQLException;
 	public ListPager selectPageByHql(String hql, Object[] parameters, ListPager pager)
 			throws SQLException;
+	public ListPager selectPageByHql(String hql, Map<String, Object> param,
+			ListPager pager) throws SQLException;
 	
 	public ListPager selectPageBySQL(String sql, Object[] parameters,Class<?> clazz, ListPager pager)
 			throws SQLException;

@@ -11,12 +11,13 @@ public enum BusinessExceptionInfos {
 	DRAWPAPPLY_THIRDORDERNO_IS_USED("7","该流水号已经被使用过且付款成功"),
 	THIRD_ORDER_NO_IS_NULL("9","流水号不能为空"),
 	ACCOUNT_MONEY_NO_ENOUGH("10","账户余额不足"),
-	EMAIL_LINNK_CANNOT_CHANGE("11","不支持邮箱更改");
+	EMAIL_LINNK_CANNOT_CHANGE("11","不支持邮箱更改"),
+	ACCOUNT_CAN_NOT_BE_NEGATIVE("12","金额不能是负数"),
+	OUT_THE_LARGE_RANGE("13","超出上限了");
 	
 	private String errorCode; 
 	
 	private String errorMsg;
-	
 	private BusinessExceptionInfos(String errorCode, String errorMsg) {  
 		       this.errorCode = errorCode; 
 		       this.errorMsg = errorMsg;

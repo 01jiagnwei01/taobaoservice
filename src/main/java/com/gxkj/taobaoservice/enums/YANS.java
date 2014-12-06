@@ -1,13 +1,12 @@
 package com.gxkj.taobaoservice.enums;
 
-public enum UserBaseStatus {
-	
-	WAIT_FOR_ACTIVE("待激活"),
-	NORMAL("正常"),
-	LOCKED("锁定");
+public enum YANS {
+
+	YES("是"),NO("否");
 	
 	private String name; 
-	private UserBaseStatus(String name ) {  
+	
+	private YANS(String name ) {  
 		       this.name = name; 
 	}
 	public String getName() {
@@ -15,5 +14,5 @@ public enum UserBaseStatus {
 	}
 	public void setName(String name) {
 		this.name = name;
-	} 
+	}
 }

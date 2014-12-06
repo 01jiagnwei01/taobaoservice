@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -117,7 +118,7 @@ public  class BaseDAOImpl    implements BaseDAO {
 	public List<?> selectPageByHQL(String hql, Object[] parameters, int from,
 			int to) throws SQLException {
 		
-		Session session = sessionFactory.getCurrentSession().getSessionFactory().getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery(hql);
 		if(parameters != null){
 			for(int i=0,l = parameters.length;i<l;i++ ){
@@ -131,7 +132,7 @@ public  class BaseDAOImpl    implements BaseDAO {
 	public List<?> selectPageBySQL(String sql, Object[] parameters, int from,Class<?> clazz,
 			int to) throws SQLException {
 		
-		Session session = sessionFactory.getCurrentSession().getSessionFactory().getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		SQLQuery query = session.createSQLQuery(sql);
 		if(parameters != null){
 			for(int i=0,l = parameters.length;i<l;i++ ){
@@ -169,7 +170,7 @@ public  class BaseDAOImpl    implements BaseDAO {
 	public int executeUpdate(String sql, Object[] parameters)
 			throws SQLException {
 		
-		Session session = sessionFactory.getCurrentSession().getSessionFactory().getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		SQLQuery q = session.createSQLQuery(sql); 
 		if(parameters != null){
 			for(int i=0,l = parameters.length;i<l;i++ ){
@@ -195,13 +196,13 @@ public  class BaseDAOImpl    implements BaseDAO {
 	}
 
 	public int executeUpdateBySql(String sql) throws SQLException {
-		Session session = sessionFactory.getCurrentSession().getSessionFactory().getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		Query q = session.createSQLQuery(sql);  
 		return q.executeUpdate();
 	}
 	public int executeUpdateBySql(String sql, Object[] parameters)
 			throws SQLException {
-		Session session = sessionFactory.getCurrentSession().getSessionFactory().getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		SQLQuery q = session.createSQLQuery(sql);
 		if(parameters != null){
 			for(int i=0,l = parameters.length;i<l;i++ ){
@@ -211,12 +212,12 @@ public  class BaseDAOImpl    implements BaseDAO {
 		return q.executeUpdate();
 	}
 	public int executeUpdateByHql(String hql) throws SQLException {
-		Session session = sessionFactory.getCurrentSession().getSessionFactory().getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		return session.createQuery(hql).executeUpdate();
 	}
 	
 	public int executeUpdateByHql(String hql, Object[] parameters) throws SQLException{
-			Session session = sessionFactory.getCurrentSession().getSessionFactory().getCurrentSession();
+			Session session = sessionFactory.getCurrentSession();
 			Query q = session.createQuery(hql); 
 			if(parameters != null){
 				for(int i=0,l = parameters.length;i<l;i++ ){
@@ -228,7 +229,7 @@ public  class BaseDAOImpl    implements BaseDAO {
 
 	public long selectTotalRowCount(String sql, Object[] parameters)
 			throws SQLException {
-		Session session = sessionFactory.getCurrentSession().getSessionFactory().getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		Query countQuery = session.createQuery(getCounthql(sql));
 		if(parameters != null){
 			for(int i=0,l = parameters.length;i<l;i++ ){
@@ -290,7 +291,7 @@ public  class BaseDAOImpl    implements BaseDAO {
 
 	 
 	public Object selectOneBySQL(String sql,Class<?> clazz) throws SQLException {
-		Session session = sessionFactory.getCurrentSession().getSessionFactory().getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		SQLQuery q = session.createSQLQuery(sql); 
 		if(clazz != null){
 			//q.setResultTransformer(Transformers.aliasToBean(clazz));  
@@ -305,7 +306,7 @@ public  class BaseDAOImpl    implements BaseDAO {
 	public Object selectOneBySQL(String sql, Object[] parameters,Class<?> clazz)
 			throws SQLException {
 		 
-		Session session = sessionFactory.getCurrentSession().getSessionFactory().getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		SQLQuery q = session.createSQLQuery(sql); 
 		if(parameters != null){
 			for(int i=0,l = parameters.length;i<l;i++ ){
@@ -324,8 +325,59 @@ public  class BaseDAOImpl    implements BaseDAO {
  
 	public void deleteById(Serializable  id,Class<?> clazz) throws SQLException {
 	 
-		Session session = sessionFactory.getCurrentSession().getSessionFactory().getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();
 		session.delete(session.get(clazz, id) );
+	}
+
+ 
+	public List<?> selectByHQL(String hql, Map<String, Object> parameters)
+			throws SQLException {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery(hql);
+		if (parameters != null){
+			for (String key : parameters.keySet()) {
+				query.setParameter(key, parameters.get(key));
+			}
+		}
+		return query.list();
+	}
+
+	 
+	public ListPager selectPageByHql(String hql, Map<String, Object> param,
+			ListPager pager) throws SQLException {
+		Session session = sessionFactory.getCurrentSession();
+		Query countQuery = session.createQuery(getCounthql(hql));
+		if (param != null){
+			for (String key : param.keySet()) {
+				countQuery.setParameter(key, param.get(key));
+			}
+		}
+		List<?> temp = countQuery.list();
+		long totalRows = temp!=null&&temp.size()>0?Long.parseLong(temp.get(0)+""):0L;
+		pager.setTotalRows(totalRows);
+		if(totalRows == 0){
+			pager.setPageData(null);
+			return pager; 
+		}
+		List<?> pageData = this.selectPageByHQL(hql,param,
+				(pager.getPageNo()-1)*pager.getRowsPerPage(),pager.getRowsPerPage());
+		pager.setPageData(pageData);
+		return pager;
+	}
+
+	 
+	public List<?> selectPageByHQL(String hql, Map<String, Object> param,
+			int from, int to) throws SQLException {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery(hql);
+		if(param != null){
+			for (String key : param.keySet()) {
+				query.setParameter(key, param.get(key));
+			}
+		}
+		 query.setFirstResult(from);   
+		 query.setMaxResults(to);  
+		 return query.list();
 	}
 
  
