@@ -41,7 +41,7 @@ public class UserAccount implements Serializable{
 	 * 剩余点数
 	 */
 	@Column(name = "current_rest_points")
-	private int currentRestPoints = 0;
+	private BigDecimal currentRestPoints = BigDecimal.ZERO;
 	
 	/**
 	 * 锁定金额
@@ -53,7 +53,7 @@ public class UserAccount implements Serializable{
 	 * 锁定点数
 	 */
 	@Column(name = "locked_points")
-	private int lockedPoints = 0;
+	private BigDecimal lockedPoints = BigDecimal.ZERO;
 
 	public Integer getId() {
 		return id;
@@ -71,11 +71,11 @@ public class UserAccount implements Serializable{
 		this.currentBalance = currentBalance;
 	}
 
-	public int getCurrentRestPoints() {
+	public BigDecimal getCurrentRestPoints() {
 		return currentRestPoints;
 	}
 
-	public void setCurrentRestPoints(int currentRestPoints) {
+	public void setCurrentRestPoints(BigDecimal currentRestPoints) {
 		this.currentRestPoints = currentRestPoints;
 	}
 
@@ -87,11 +87,11 @@ public class UserAccount implements Serializable{
 		this.lockedBalance = lockedBalance;
 	}
 
-	public int getLockedPoints() {
+	public BigDecimal getLockedPoints() {
 		return lockedPoints;
 	}
 
-	public void setLockedPoints(int lockedPoints) {
+	public void setLockedPoints(BigDecimal lockedPoints) {
 		this.lockedPoints = lockedPoints;
 	}
 

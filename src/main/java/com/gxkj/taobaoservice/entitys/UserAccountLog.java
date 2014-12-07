@@ -63,7 +63,7 @@ public class UserAccountLog  implements Serializable{
 	 * 操作点数
 	 */
 	@Column(name="points")
-	private int  points;
+	private BigDecimal  points;
 	
 	/**
 	 * 操作前可用余额
@@ -75,7 +75,7 @@ public class UserAccountLog  implements Serializable{
 	 * 操作前可用点数
 	 */
 	@Column(name="before_rest_points")
-	private int beforeRestPoints;
+	private BigDecimal beforeRestPoints;
 	
 	/**
 	 * 操作前锁定金额
@@ -87,7 +87,7 @@ public class UserAccountLog  implements Serializable{
 	 * 操作前锁定点数
 	 */
 	@Column(name="before_locked_points")
-	private int beforeLockedPoints;
+	private BigDecimal beforeLockedPoints;
 	
 	/**
 	 * 操作后可用金额
@@ -99,7 +99,7 @@ public class UserAccountLog  implements Serializable{
 	 * 操作后可用点数
 	 */
 	@Column(name="after_rest_points")
-	private int afterRestPoints;
+	private BigDecimal afterRestPoints;
 	
 	/**
 	 * 操作后锁定金额
@@ -111,7 +111,7 @@ public class UserAccountLog  implements Serializable{
 	 * 操作后锁定点数
 	 */
 	@Column(name="after_locked_points")
-	private int afterLockedPoints;
+	private BigDecimal afterLockedPoints;
 	
 	/**
 	 * 介入的管理员ID
@@ -124,7 +124,9 @@ public class UserAccountLog  implements Serializable{
 	 */
 	@Column(name="task_id")
 	private Integer taskId;
-
+	
+	
+	
 	public Integer getId() {
 		return id;
 	}
@@ -165,11 +167,11 @@ public class UserAccountLog  implements Serializable{
 		this.amount = amount;
 	}
 
-	public int getPoints() {
+	public BigDecimal getPoints() {
 		return points;
 	}
 
-	public void setPoints(int points) {
+	public void setPoints(BigDecimal points) {
 		this.points = points;
 	}
 
@@ -181,11 +183,11 @@ public class UserAccountLog  implements Serializable{
 		this.beforeRestAmount = beforeRestAmount;
 	}
 
-	public int getBeforeRestPoints() {
+	public BigDecimal getBeforeRestPoints() {
 		return beforeRestPoints;
 	}
 
-	public void setBeforeRestPoints(int beforeRestPoints) {
+	public void setBeforeRestPoints(BigDecimal beforeRestPoints) {
 		this.beforeRestPoints = beforeRestPoints;
 	}
 
@@ -197,11 +199,11 @@ public class UserAccountLog  implements Serializable{
 		this.beforeLockedAmount = beforeLockedAmount;
 	}
 
-	public int getBeforeLockedPoints() {
+	public BigDecimal getBeforeLockedPoints() {
 		return beforeLockedPoints;
 	}
 
-	public void setBeforeLockedPoints(int beforeLockedPoints) {
+	public void setBeforeLockedPoints(BigDecimal beforeLockedPoints) {
 		this.beforeLockedPoints = beforeLockedPoints;
 	}
 
@@ -213,11 +215,11 @@ public class UserAccountLog  implements Serializable{
 		this.afterRestAmount = afterRestAmount;
 	}
 
-	public int getAfterRestPoints() {
+	public BigDecimal getAfterRestPoints() {
 		return afterRestPoints;
 	}
 
-	public void setAfterRestPoints(int afterRestPoints) {
+	public void setAfterRestPoints(BigDecimal afterRestPoints) {
 		this.afterRestPoints = afterRestPoints;
 	}
 
@@ -229,11 +231,11 @@ public class UserAccountLog  implements Serializable{
 		this.afterLockedAmount = afterLockedAmount;
 	}
 
-	public int getAfterLockedPoints() {
+	public BigDecimal getAfterLockedPoints() {
 		return afterLockedPoints;
 	}
 
-	public void setAfterLockedPoints(int afterLockedPoints) {
+	public void setAfterLockedPoints(BigDecimal afterLockedPoints) {
 		this.afterLockedPoints = afterLockedPoints;
 	}
 
@@ -252,8 +254,6 @@ public class UserAccountLog  implements Serializable{
 	public void setTaskId(Integer taskId) {
 		this.taskId = taskId;
 	}
-	
-	
-	
 
+	 
 }

@@ -20,13 +20,17 @@ import com.gxkj.taobaoservice.entitys.DepositApply;
 import com.gxkj.taobaoservice.entitys.UserBase;
 import com.gxkj.taobaoservice.enums.RechargeApplyResults;
 import com.gxkj.taobaoservice.services.DepositApplyService;
-
+/**
+ * 
+ * 充值申请
+ *
+ */
 @Controller
-@RequestMapping("/rechargeapply")
-public class RechargeApplyController {
+@RequestMapping("/depositapply")
+public class DepositeApplyController {
 	
 	@Autowired
-	public DepositApplyService rechargeApplyService;
+	public DepositApplyService depositApplyService;
 	
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public EntityReturnData addRechargeApplyService(HttpServletRequest request,HttpServletResponse response,ModelMap modelMap,
@@ -41,7 +45,7 @@ public class RechargeApplyController {
 			return ret;
 		}
 		UserBase userBase  = SessionUtil.getSiteUserInSession(request);
-		DepositApply apply = rechargeApplyService.addRechargeApply(thirdOrderNo, amount, userBase);
+		DepositApply apply = depositApplyService.addRechargeApply(thirdOrderNo, amount, userBase);
 		ret.setResult(true);
 		ret.setEntity(apply);
 		return ret;	

@@ -59,7 +59,7 @@ public interface UserBaseService {
 			UserBaseStatus status, Date regBeignTime, Date regEndTime,YANS supplyMoneystatus,BigDecimal supplyMoney) throws SQLException;
 
 	/**
-	 * 设置公司补助金额
+	 * 设置公司补助金额(该方法废弃，不使用)
 	 * @param userId
 	 * @param supplyMoney
 	 * @param adminUser  操作人员
@@ -67,6 +67,7 @@ public interface UserBaseService {
 	 * @throws SQLException
 	 * @throws BusinessException 
 	 */
+	@Deprecated
 	EntityReturnData doSetSupplyMoney(AdminUser adminUser ,Integer userId, BigDecimal supplyMoney) throws SQLException, BusinessException;
 
 	/**
@@ -74,7 +75,30 @@ public interface UserBaseService {
 	 * @param adminUser  操作人员
 	 * @return
 	 */
+	@Deprecated
 	EntityReturnData doClearSupplyMone(AdminUser adminUser) throws SQLException;
+
+	/**
+	 * 兑换平台币
+	 * @param userBase
+	 * @param amount
+	 * @return
+	 * @throws SQLException
+	 * @throws BusinessException 
+	 */
+	EntityReturnData exchangePublishMoney(UserBase userBase, BigDecimal amount)throws SQLException, BusinessException;
+
+	/**
+	 * 设置支持用户点数
+	 * @param adminUser
+	 * @param userId
+	 * @param supplyMoney
+	 * @return
+	 * @throws SQLException
+	 * @throws BusinessException
+	 */
+	void doSupplypoint(AdminUser adminUser, Integer userId,
+			BigDecimal supplyMoney)throws SQLException, BusinessException;
 	
 	
 

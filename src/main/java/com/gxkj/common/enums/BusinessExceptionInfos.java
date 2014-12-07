@@ -13,7 +13,10 @@ public enum BusinessExceptionInfos {
 	ACCOUNT_MONEY_NO_ENOUGH("10","账户余额不足"),
 	EMAIL_LINNK_CANNOT_CHANGE("11","不支持邮箱更改"),
 	ACCOUNT_CAN_NOT_BE_NEGATIVE("12","金额不能是负数"),
-	OUT_THE_LARGE_RANGE("13","超出上限了");
+	OUT_THE_LARGE_RANGE("13","超出上限了"),
+	NO_SET_COMPANY_ACCOUNT("14","没有设置公司帐号"),
+	SET_SUPPLY_POINT_CANNOT_BE_NEGATIVE("15","补助用户帐户点数不能为负数"),
+	SET_SUPPLY_POINT_OUT_THE_LARGE_RANGE("16","补助用户帐户点数超限制了");
 	
 	private String errorCode; 
 	

@@ -13,8 +13,8 @@
 		<table id="dg"></table>
 	</div>
 	<div id="tb" style="padding:5px;height:auto">
-		<table width="100%">
-			<tr width="100%">
+		<table style="width:100%">
+			<tr style="width:100%">
 				<td width="100%"  colspan="2">
 					用户名: <input class="easyui-spinner" style="width:160px" id="userName"/>
 					注册始日期: <input class="easyui-datebox" style="width:160px" id="regBeignTime"/>
@@ -25,32 +25,19 @@
 						<option value="WAIT_FOR_ACTIVE">待审</option>
 						<option value="LOCKED">锁定</option>
 					</select> 
+					<a href="#"  class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="searchFn()">查看</a>
 				 </td>
 					
 			</tr>
-			<tr  >
-				<td width="80%" >
-				补助状态: <select id="supplyMoneystatus" class="easyui-combobox"   style="width:160px;"  data-options='panelHeight:90'>
-						<option value="">不限</option>
-						<option value="YES">补助</option> 
-						<option value="NO">不补助</option> 
-					</select>
-					补助金额: <input class="easyui-numberspinner" style="width:160px" id="supplyMoney"/>
-					<a href="#"  class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="searchFn()">查看</a>
-				</td>
-				<td width="20%" >
-				<a href="#"   onclick="clearSupplyFn()"  id= "clearSupplyBtn" class="easyui-linkbutton" data-options="plain:true,iconCls:'del_btn'">清空补助账户</a>
-				</td>
-			
-			</tr>
+			 
 		</table>
 	</div>
-	 <div id="set_supply_win" class="easyui-window" title="设置补偿金" style="width:400px;height:320px" 
+	 <div id="set_supply_win" class="easyui-window" title="设置赞助点数" style="width:400px;height:320px" 
 	 	 data-options="modal:true,closed:true,iconCls:'icon-save',collapsible:false,minimizable:false,maximizable:false,resizable:false">
 			<div class="easyui-layout" data-options="fit:true">
 				<div data-options="region:'center'" style="padding:30px 20px 50px 20px">
 					<div style="margin-bottom:20px;">
-							<div>补偿金额度:</div>
+							<div>赞助点数:</div>
 							<input class="easyui-numberbox" style="width:80%" id="apply_amount">
 							<input type="hidden" id="apply_user_id" value="">
 					</div>
@@ -64,12 +51,10 @@
 </body>
 <script type="text/javascript">
 var admin_siteuser_dopage = "${_adminUser_.btnMap.admin_siteuser_dopage}"== "true"?true:false;
-var admin_siteuser_clearSupplyMone = "${_adminUser_.btnMap.admin_siteuser_clearSupplyMone}"== "true"?true:false;
-var admin_siteuser_supplyMoney = "${_adminUser_.btnMap.admin_siteuser_supplyMoney}"== "true"?true:false;
+ 
+var admin_siteuser_supplypoint = "${_adminUser_.btnMap.admin_siteuser_supplypoint}"== "true"?true:false;
 $(function(){
-			if(!admin_siteuser_clearSupplyMone){
-				$("#clearSupplyBtn").hide();
-			}
+			 
 			$('#dg').datagrid({
 			 	border:false,
 				rownumbers:true,
@@ -104,7 +89,7 @@ $(function(){
 					{field:'uerAccount.lockedBalance',title:'当前锁定金额' ,width:100,formatter:lockedBalanceFormat},
 					{field:'uerAccount.currentRestPoints',title:'当前点数' ,width:100,formatter:currentRestPointsFormat},
 					{field:'uerAccount.lockedPoints',title:'当前锁定点数' ,width:100,formatter:lockedPointsFormat},
-					{field:'supplyMoney',title:'公司补助金额' ,width:100,formatter:supplyMoneyFormat},
+					 
 					{field:'opt',title:'操作' ,width:200,formatter:optFormat} 
 				]],
 				toolbar: '#tb',
@@ -147,14 +132,12 @@ function dateFormat(value,row,index){
 }
 function optFormat(value,row,index){
 	var btns = [];
-	 if(admin_siteuser_supplyMoney){
-		btns.push('<a class="easyui-linkbutton l-btn l-btn-plain" onclick="setApplyFn(\''+row['id']+'\')" href="#" plain="true" iconCls="update_btn"><span class="l-btn-left"><span class="l-btn-text update_btn l-btn-icon-left">设置补偿金</span></span></a>');
+	 if(admin_siteuser_supplypoint){
+		btns.push('<a class="easyui-linkbutton l-btn l-btn-plain" onclick="setSupplyFn(\''+row['id']+'\')" href="#" plain="true" iconCls="update_btn"><span class="l-btn-left"><span class="l-btn-text update_btn l-btn-icon-left">赞助点数</span></span></a>');
  	}
 	return btns.join("&nbsp;");
 }
-function supplyMoneyFormat(value,row,index){
-	return value == 0 ? "不补助":"补助"+value  ;	
-}
+ 
 function currentBalanceFormat(value,row,index){
 	var v = row['uerAccount']['currentBalance'];
 	return v=='0'?"":v;
@@ -177,19 +160,16 @@ function searchFn(){
 	var regEndTime = $("#regEndTime").datebox('getValue');
 	var status = $('#status').combobox('getValue');
 	
-	var supplyMoneystatus = $('#supplyMoneystatus').combobox('getValue');
-	var supplyMoney = $("#supplyMoney").numberspinner('getValue');
+	 
 	$('#dg').datagrid('load',{
 		name:userName,
 		regBeignTime:regBeignTime,
 		regEndTime:regEndTime, 
-		status:status,
-		supplyMoneystatus:supplyMoneystatus,
-		supplyMoney:supplyMoney,
+		status:status, 
 		d:new Date().getTime()
 	});
 }
-function setApplyFn(id){
+function setSupplyFn(id){
 	
 	$('#apply_user_id').val(id);
 	$('#apply_amount').val('');
@@ -205,10 +185,10 @@ function submitApplyFormFn(){
 	var id = $('#apply_user_id').val();
 	var amount = $("#apply_amount").numberspinner('getValue');
 	if(amount<0){
-		$.messager.alert('系统提示','金额不能小于0!','info');
+		$.messager.alert('系统提示','点数目不能小于0!','info');
 		return;
 	}else if(amount>50){
-		$.messager.alert('系统提示','金额不能大于50!','info');
+		$.messager.alert('系统提示','点数目不能大于50!','info');
 		return;
 	}
 	var rows = $("#dg").datagrid("getRows");
@@ -221,9 +201,9 @@ function submitApplyFormFn(){
 	}
 	var updateRowIndex = 	$('#dg').datagrid("getRowIndex",row);
 	$.ajax({ 
-		url: "<%=request.getContextPath() %>/admin/siteuser/supplyMoney?d="+new Date().getTime(), 
+		url: "<%=request.getContextPath() %>/admin/siteuser/supplypoint?d="+new Date().getTime(), 
 		method:'POST',
-		data:{userId:id ,supplyMoney:amount},
+		data:{userId:id , supplyPoint:amount},
 		context: document.body, 
 		success: function(json){
 	    	//$(this).addClass("done");
@@ -233,7 +213,7 @@ function submitApplyFormFn(){
 			  	 	index:updateRowIndex,
 			  	 	row:entity
 			  	 });
-			 	 $.messager.alert('系统提示','保存成功!','info',closeApplyWinFn);
+			 	 $.messager.alert('系统提示','保存成功!','info',function(){$('#dg').datagrid('reload');closeApplyWinFn();});
 	    	}else{
 	    		 $.messager.alert('系统提示','保存失败!  '+json.msg,'error');
 	    	}
@@ -251,30 +231,7 @@ function submitApplyFormFn(){
 		}
 	});
 }
-function clearSupplyFn(){
-	$.messager.confirm('系统提示','您确定要清空所有的补助账户吗?',
-			function(r){   if (r){
-				$.ajax({ 
-					url: "<%=request.getContextPath() %>/admin/siteuser/clearSupplyMone?d="+new Date().getTime(), 
-					method:'POST',
-					context: document.body, 
-					success: function(json){
-				    	//$(this).addClass("done");
-				    	if(json.result){
-						 	 $.messager.alert('系统提示','保存成功!','info',function(){$('#dg').datagrid('reload');});
-				    	}else{
-				    		 $.messager.alert('系统提示','保存失败!  '+json.msg,'error');
-				    	}
-					},
-					error:function (XMLHttpRequest, textStatus, errorThrown) {
-						var msg = XMLHttpRequest.responseText;
-							var json =   $.parseJSON(msg);
-							 $.messager.alert('系统提示','保存失败，'+json.msg,'error');
-					}
-				});
-			 }
-	});
-}
+ 
 
 
 

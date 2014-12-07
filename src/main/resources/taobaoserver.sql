@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50620
 File Encoding         : 65001
 
-Date: 2014-12-06 10:10:18
+Date: 2014-12-07 20:03:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,7 +28,7 @@ CREATE TABLE `admin_menu` (
   `btnflag` varchar(32) DEFAULT NULL,
   `pid` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of admin_menu
@@ -60,9 +60,19 @@ INSERT INTO `admin_menu` VALUES ('24', '取款拒绝', '/admin/applydraw/doarefu
 INSERT INTO `admin_menu` VALUES ('25', '取款同意', '/admin/applydraw/doagree', null, '1', 'admin_applydraw_doagree', '21');
 INSERT INTO `admin_menu` VALUES ('26', '充值同意', '/admin/deposit/doagree', null, '1', 'admin_deposit_doagree', '20');
 INSERT INTO `admin_menu` VALUES ('27', '充值拒绝', '/admin/deposit/doarefuse', null, '1', 'admin_deposit_doarefuse', '20');
-INSERT INTO `admin_menu` VALUES ('28', '前台用户管理', '', null, '0', '', '29');
+INSERT INTO `admin_menu` VALUES ('28', '前台用户管理', '/admin/siteuser', null, '0', '', '29');
 INSERT INTO `admin_menu` VALUES ('29', '用户列表', '/admin/siteuser', null, '0', '', '0');
 INSERT INTO `admin_menu` VALUES ('30', '前台用户分页查看', '/admin/siteuser/dopage', null, '1', 'admin_siteuser_dopage', '28');
+INSERT INTO `admin_menu` VALUES ('32', '设置赞助用户点数', '/admin/siteuser/supplypoint', null, '1', 'admin_siteuser_supplypoint', '28');
+INSERT INTO `admin_menu` VALUES ('33', '任务管理', '', null, '0', '', '0');
+INSERT INTO `admin_menu` VALUES ('34', '已结束的任务', '/admin/task/haveclose', null, '0', '', '33');
+INSERT INTO `admin_menu` VALUES ('35', '未结束的任务', '/admin/task/noclose', null, '0', '', '33');
+INSERT INTO `admin_menu` VALUES ('36', '已完成的任务分页查看', '/admin/task/haveclose/dopage', null, '1', 'admin_task_haveclose_dopage', '34');
+INSERT INTO `admin_menu` VALUES ('37', '未结束的任务分页查看', '/admin/task/noclose/dopage', null, '1', 'admin_task_noclose_dopage', '35');
+INSERT INTO `admin_menu` VALUES ('38', '新建任务', '/admin/task/create', null, '0', '', '33');
+INSERT INTO `admin_menu` VALUES ('39', '赞助用户记录', '/admin/log/COMPANY_SUPPLY', null, '0', '', '19');
+INSERT INTO `admin_menu` VALUES ('40', '赞助用户记录分页', '/admin/log/dopage/COMPANY_SUPPLY', null, '1', 'admin_log_dopage_COMPANY_SUPPLY', '39');
+INSERT INTO `admin_menu` VALUES ('41', '公司收支情况', '/admin/company_account/get', null, '0', '', '19');
 
 -- ----------------------------
 -- Table structure for `admin_role`
@@ -150,6 +160,23 @@ CREATE TABLE `business_exception` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for `company_account`
+-- ----------------------------
+DROP TABLE IF EXISTS `company_account`;
+CREATE TABLE `company_account` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `sell_points` double(10,2) NOT NULL,
+  `get_points` double(10,2) NOT NULL,
+  `supply_points` double(10,2) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of company_account
+-- ----------------------------
+INSERT INTO `company_account` VALUES ('1', '0.00', '0.00', '2.00');
+
+-- ----------------------------
 -- Table structure for `deposit_apply`
 -- ----------------------------
 DROP TABLE IF EXISTS `deposit_apply`;
@@ -186,14 +213,23 @@ CREATE TABLE `operate_log` (
   `operate_type` varchar(50) NOT NULL,
   `before_value` varchar(100) DEFAULT NULL,
   `after_value` varchar(100) NOT NULL,
-  `ip` varchar(30) NOT NULL,
+  `ip` varchar(30) DEFAULT NULL,
   `isused` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of operate_log
 -- ----------------------------
+INSERT INTO `operate_log` VALUES ('1', '1', '2014-12-06 21:12:28', 'SET_SUPPLY_MONEY', '0', '50', null, '0');
+INSERT INTO `operate_log` VALUES ('2', '1', '2014-12-06 21:14:39', 'SET_SUPPLY_MONEY', '50', '50', null, '0');
+INSERT INTO `operate_log` VALUES ('3', '1', '2014-12-06 21:22:04', 'SET_SUPPLY_MONEY', '50', '50', null, '0');
+INSERT INTO `operate_log` VALUES ('4', '1', '2014-12-06 21:22:08', 'SET_SUPPLY_MONEY', '50', '50', null, '0');
+INSERT INTO `operate_log` VALUES ('5', '1', '2014-12-06 21:22:09', 'SET_SUPPLY_MONEY', '50', '50', null, '0');
+INSERT INTO `operate_log` VALUES ('6', '1', '2014-12-06 21:30:49', 'SET_SUPPLY_MONEY', '50', '49', null, '0');
+INSERT INTO `operate_log` VALUES ('7', '1', '2014-12-06 21:30:55', 'SET_SUPPLY_MONEY', '49', '0', null, '0');
+INSERT INTO `operate_log` VALUES ('8', '1', '2014-12-06 21:35:15', 'SET_SUPPLY_MONEY', '0', '21', null, '0');
+INSERT INTO `operate_log` VALUES ('9', '1', '2014-12-06 21:35:18', 'SET_SUPPLY_MONEY', '21', '0', null, '0');
 
 -- ----------------------------
 -- Table structure for `rel_admin_user_role`
@@ -220,7 +256,7 @@ CREATE TABLE `rel_role_menu` (
   `roleid` int(10) DEFAULT NULL,
   `menuid` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=167 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=207 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rel_role_menu
@@ -230,33 +266,6 @@ INSERT INTO `rel_role_menu` VALUES ('21', '11', '19');
 INSERT INTO `rel_role_menu` VALUES ('22', '12', '19');
 INSERT INTO `rel_role_menu` VALUES ('23', '13', '19');
 INSERT INTO `rel_role_menu` VALUES ('24', '14', '19');
-INSERT INTO `rel_role_menu` VALUES ('104', '8', '19');
-INSERT INTO `rel_role_menu` VALUES ('105', '8', '20');
-INSERT INTO `rel_role_menu` VALUES ('106', '8', '23');
-INSERT INTO `rel_role_menu` VALUES ('107', '8', '26');
-INSERT INTO `rel_role_menu` VALUES ('108', '8', '27');
-INSERT INTO `rel_role_menu` VALUES ('109', '8', '21');
-INSERT INTO `rel_role_menu` VALUES ('110', '8', '22');
-INSERT INTO `rel_role_menu` VALUES ('111', '8', '24');
-INSERT INTO `rel_role_menu` VALUES ('112', '8', '25');
-INSERT INTO `rel_role_menu` VALUES ('113', '8', '1');
-INSERT INTO `rel_role_menu` VALUES ('114', '8', '2');
-INSERT INTO `rel_role_menu` VALUES ('115', '8', '9');
-INSERT INTO `rel_role_menu` VALUES ('116', '8', '10');
-INSERT INTO `rel_role_menu` VALUES ('117', '8', '11');
-INSERT INTO `rel_role_menu` VALUES ('118', '8', '12');
-INSERT INTO `rel_role_menu` VALUES ('119', '8', '3');
-INSERT INTO `rel_role_menu` VALUES ('120', '8', '13');
-INSERT INTO `rel_role_menu` VALUES ('121', '8', '14');
-INSERT INTO `rel_role_menu` VALUES ('122', '8', '15');
-INSERT INTO `rel_role_menu` VALUES ('123', '8', '16');
-INSERT INTO `rel_role_menu` VALUES ('124', '8', '17');
-INSERT INTO `rel_role_menu` VALUES ('125', '8', '4');
-INSERT INTO `rel_role_menu` VALUES ('126', '8', '5');
-INSERT INTO `rel_role_menu` VALUES ('127', '8', '6');
-INSERT INTO `rel_role_menu` VALUES ('128', '8', '7');
-INSERT INTO `rel_role_menu` VALUES ('129', '8', '8');
-INSERT INTO `rel_role_menu` VALUES ('130', '8', '18');
 INSERT INTO `rel_role_menu` VALUES ('131', '9', '19');
 INSERT INTO `rel_role_menu` VALUES ('132', '9', '20');
 INSERT INTO `rel_role_menu` VALUES ('133', '9', '23');
@@ -293,6 +302,97 @@ INSERT INTO `rel_role_menu` VALUES ('163', '15', '21');
 INSERT INTO `rel_role_menu` VALUES ('164', '15', '22');
 INSERT INTO `rel_role_menu` VALUES ('165', '15', '24');
 INSERT INTO `rel_role_menu` VALUES ('166', '15', '25');
+INSERT INTO `rel_role_menu` VALUES ('167', '8', '19');
+INSERT INTO `rel_role_menu` VALUES ('168', '8', '20');
+INSERT INTO `rel_role_menu` VALUES ('169', '8', '23');
+INSERT INTO `rel_role_menu` VALUES ('170', '8', '26');
+INSERT INTO `rel_role_menu` VALUES ('171', '8', '27');
+INSERT INTO `rel_role_menu` VALUES ('172', '8', '21');
+INSERT INTO `rel_role_menu` VALUES ('173', '8', '22');
+INSERT INTO `rel_role_menu` VALUES ('174', '8', '24');
+INSERT INTO `rel_role_menu` VALUES ('175', '8', '25');
+INSERT INTO `rel_role_menu` VALUES ('176', '8', '39');
+INSERT INTO `rel_role_menu` VALUES ('177', '8', '40');
+INSERT INTO `rel_role_menu` VALUES ('178', '8', '41');
+INSERT INTO `rel_role_menu` VALUES ('179', '8', '29');
+INSERT INTO `rel_role_menu` VALUES ('180', '8', '28');
+INSERT INTO `rel_role_menu` VALUES ('181', '8', '30');
+INSERT INTO `rel_role_menu` VALUES ('182', '8', '32');
+INSERT INTO `rel_role_menu` VALUES ('183', '8', '33');
+INSERT INTO `rel_role_menu` VALUES ('184', '8', '34');
+INSERT INTO `rel_role_menu` VALUES ('185', '8', '36');
+INSERT INTO `rel_role_menu` VALUES ('186', '8', '35');
+INSERT INTO `rel_role_menu` VALUES ('187', '8', '37');
+INSERT INTO `rel_role_menu` VALUES ('188', '8', '38');
+INSERT INTO `rel_role_menu` VALUES ('189', '8', '1');
+INSERT INTO `rel_role_menu` VALUES ('190', '8', '2');
+INSERT INTO `rel_role_menu` VALUES ('191', '8', '9');
+INSERT INTO `rel_role_menu` VALUES ('192', '8', '10');
+INSERT INTO `rel_role_menu` VALUES ('193', '8', '11');
+INSERT INTO `rel_role_menu` VALUES ('194', '8', '12');
+INSERT INTO `rel_role_menu` VALUES ('195', '8', '3');
+INSERT INTO `rel_role_menu` VALUES ('196', '8', '13');
+INSERT INTO `rel_role_menu` VALUES ('197', '8', '14');
+INSERT INTO `rel_role_menu` VALUES ('198', '8', '15');
+INSERT INTO `rel_role_menu` VALUES ('199', '8', '16');
+INSERT INTO `rel_role_menu` VALUES ('200', '8', '17');
+INSERT INTO `rel_role_menu` VALUES ('201', '8', '4');
+INSERT INTO `rel_role_menu` VALUES ('202', '8', '5');
+INSERT INTO `rel_role_menu` VALUES ('203', '8', '6');
+INSERT INTO `rel_role_menu` VALUES ('204', '8', '7');
+INSERT INTO `rel_role_menu` VALUES ('205', '8', '8');
+INSERT INTO `rel_role_menu` VALUES ('206', '8', '18');
+
+-- ----------------------------
+-- Table structure for `task_appreciation`
+-- ----------------------------
+DROP TABLE IF EXISTS `task_appreciation`;
+CREATE TABLE `task_appreciation` (
+  `id` int(10) NOT NULL,
+  `task_title` varchar(100) NOT NULL,
+  `enable` int(1) NOT NULL,
+  `need_dot` double(10,2) NOT NULL,
+  `type` varchar(30) NOT NULL,
+  `task_desc` varchar(100) NOT NULL,
+  `benefit_type` varchar(30) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of task_appreciation
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `task_basic`
+-- ----------------------------
+DROP TABLE IF EXISTS `task_basic`;
+CREATE TABLE `task_basic` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) NOT NULL,
+  `create_time` datetime NOT NULL,
+  `taobao_xiaohao` varchar(50) NOT NULL,
+  `user_qq` varchar(255) NOT NULL,
+  `product_link` varchar(500) NOT NULL,
+  `product_title` varchar(100) NOT NULL,
+  `pay_method` int(10) NOT NULL,
+  `guarantee_price` double(10,2) NOT NULL,
+  `basic_publish_dot` double(10,2) NOT NULL,
+  `task_type` varchar(20) NOT NULL,
+  `good_comment` varchar(500) NOT NULL,
+  `good_comment_time_limit` varchar(255) NOT NULL,
+  `good_comment_time_dot` double(10,2) NOT NULL,
+  `shops_scores_use` int(11) NOT NULL,
+  `zengzhi_receiver_gain_points` double(11,2) NOT NULL,
+  `zengzhi_pingtai_gain_points` double(11,2) NOT NULL,
+  `basic_receiver_gain_point` double(11,2) NOT NULL,
+  `basic_pingtai_gain_point` double(11,2) NOT NULL,
+  `company_supply_point` double(11,2) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of task_basic
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `user_account`
@@ -301,9 +401,9 @@ DROP TABLE IF EXISTS `user_account`;
 CREATE TABLE `user_account` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `current_balance` double(10,2) DEFAULT NULL,
-  `current_rest_points` int(10) DEFAULT NULL,
+  `current_rest_points` double(10,2) DEFAULT NULL,
   `locked_balance` double(10,2) DEFAULT NULL,
-  `locked_points` int(10) DEFAULT NULL COMMENT '帐户表',
+  `locked_points` double(10,2) DEFAULT NULL COMMENT '帐户表',
   `user_id` int(10) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
@@ -313,7 +413,7 @@ CREATE TABLE `user_account` (
 -- ----------------------------
 -- Records of user_account
 -- ----------------------------
-INSERT INTO `user_account` VALUES ('1', '19.00', '0', '0.00', '0', '1');
+INSERT INTO `user_account` VALUES ('1', '19.00', '2.00', '0.00', '0.00', '1');
 
 -- ----------------------------
 -- Table structure for `user_account_log`
@@ -327,24 +427,26 @@ CREATE TABLE `user_account_log` (
   `amount` double(10,2) DEFAULT '0.00',
   `points` int(10) DEFAULT '0',
   `before_rest_amount` double(10,2) NOT NULL DEFAULT '0.00',
-  `before_rest_points` int(10) NOT NULL DEFAULT '0',
+  `before_rest_points` double(10,2) NOT NULL DEFAULT '0.00',
   `before_locked_amount` double(10,2) NOT NULL DEFAULT '0.00',
-  `before_locked_points` int(10) NOT NULL DEFAULT '0',
+  `before_locked_points` double(10,2) NOT NULL DEFAULT '0.00',
   `after_rest_amount` double(10,2) NOT NULL,
-  `after_rest_points` int(10) NOT NULL DEFAULT '0',
+  `after_rest_points` double(10,2) NOT NULL DEFAULT '0.00',
   `after_locked_amount` double(10,2) NOT NULL,
-  `after_locked_points` int(10) NOT NULL DEFAULT '0',
+  `after_locked_points` double(10,2) NOT NULL DEFAULT '0.00',
   `admin_user_id` int(10) DEFAULT NULL,
   `task_id` int(10) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_account_log
 -- ----------------------------
-INSERT INTO `user_account_log` VALUES ('1', '2014-12-05 23:21:38', '1', 'RECHARGE', '10.00', '0', '0.00', '0', '0.00', '0', '10.00', '0', '0.00', '0', '1', null);
-INSERT INTO `user_account_log` VALUES ('2', '2014-12-06 08:38:03', '1', 'RECHARGE', '10.00', '0', '10.00', '0', '0.00', '0', '20.00', '0', '0.00', '0', '1', null);
-INSERT INTO `user_account_log` VALUES ('3', '2014-12-06 09:42:38', '1', 'WITHDRAW', '1.00', '0', '20.00', '0', '0.00', '0', '19.00', '0', '0.00', '0', '1', null);
+INSERT INTO `user_account_log` VALUES ('1', '2014-12-05 23:21:38', '1', 'RECHARGE', '10.00', '0', '0.00', '0.00', '0.00', '0.00', '10.00', '0.00', '0.00', '0.00', '1', null);
+INSERT INTO `user_account_log` VALUES ('2', '2014-12-06 08:38:03', '1', 'RECHARGE', '10.00', '0', '10.00', '0.00', '0.00', '0.00', '20.00', '0.00', '0.00', '0.00', '1', null);
+INSERT INTO `user_account_log` VALUES ('3', '2014-12-06 09:42:38', '1', 'WITHDRAW', '1.00', '0', '20.00', '0.00', '0.00', '0.00', '19.00', '0.00', '0.00', '0.00', '1', null);
+INSERT INTO `user_account_log` VALUES ('4', '2014-12-07 16:21:06', '1', 'COMPANY_SUPPLY', null, '1', '19.00', '0.00', '0.00', '0.00', '19.00', '1.00', '0.00', '0.00', '1', null);
+INSERT INTO `user_account_log` VALUES ('5', '2014-12-07 16:22:44', '1', 'COMPANY_SUPPLY', null, '1', '19.00', '1.00', '0.00', '0.00', '19.00', '2.00', '0.00', '0.00', '1', null);
 
 -- ----------------------------
 -- Table structure for `user_base`
@@ -356,13 +458,14 @@ CREATE TABLE `user_base` (
   `password` varchar(36) NOT NULL,
   `regTime` datetime NOT NULL COMMENT '用户基本信息表',
   `status` varchar(10) NOT NULL,
+  `supply_money` double(2,0) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_base
 -- ----------------------------
-INSERT INTO `user_base` VALUES ('1', 'x1', 'ec6ef230f1828039ee794566b9c58adc', '2014-12-02 17:59:15', 'NORMAL');
+INSERT INTO `user_base` VALUES ('1', 'x1', 'ec6ef230f1828039ee794566b9c58adc', '2014-12-02 17:59:15', 'NORMAL', '0');
 
 -- ----------------------------
 -- Table structure for `user_link`

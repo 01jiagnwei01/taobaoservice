@@ -85,15 +85,15 @@ public class SiteUserController {
 	 * @throws SQLException 
 	 * @throws BusinessException 
 	 */
-	@RequestMapping(value="/supplyMoney",method={RequestMethod.POST})
-	 @ResponseBody
-	public EntityReturnData supplyMoney(HttpServletRequest request,
-			HttpServletResponse response, ModelMap modelMap,
-			@RequestParam(value="userId",required=true) Integer userId,
-			@RequestParam(value="supplyMoney",required=true) BigDecimal supplyMoney) throws SQLException, BusinessException{
-		AdminUser adminUser = SessionConstant.getAdminUserInSession(request);
-		return userBaseService.doSetSupplyMoney(adminUser,userId,supplyMoney);
-	}
+//	@RequestMapping(value="/supplyMoney",method={RequestMethod.POST})
+//	 @ResponseBody
+//	public EntityReturnData supplyMoney(HttpServletRequest request,
+//			HttpServletResponse response, ModelMap modelMap,
+//			@RequestParam(value="userId",required=true) Integer userId,
+//			@RequestParam(value="supplyMoney",required=true) BigDecimal supplyMoney) throws SQLException, BusinessException{
+//		AdminUser adminUser = SessionConstant.getAdminUserInSession(request);
+//		return userBaseService.doSetSupplyMoney(adminUser,userId,supplyMoney);
+//	}
 	/**
 	 * 清空公司对所有已支持的公司的补助
 	 * @param request
@@ -104,12 +104,36 @@ public class SiteUserController {
 	 * @return
 	 * @throws SQLException 
 	 */
-	@RequestMapping(value="/clearSupplyMone",method={RequestMethod.POST})
-	 @ResponseBody
-	public EntityReturnData clearSupplyMoney(HttpServletRequest request,
-			HttpServletResponse response, ModelMap modelMap  ) throws SQLException{
+//	@RequestMapping(value="/clearSupplyMone",method={RequestMethod.POST})
+//	 @ResponseBody
+//	public EntityReturnData clearSupplyMoney(HttpServletRequest request,
+//			HttpServletResponse response, ModelMap modelMap  ) throws SQLException{
+//		AdminUser adminUser = SessionConstant.getAdminUserInSession(request);
+//		return userBaseService.doClearSupplyMone(adminUser);
+//	}
+	/**
+	 * 设置支持某个用户多少点数
+	 * @param request
+	 * @param response
+	 * @param modelMap
+	 * @param userId
+	 * @param supplyMoney
+	 * @return
+	 * @throws SQLException
+	 * @throws BusinessException
+	 */
+	@RequestMapping(value="/supplypoint",method={RequestMethod.POST})
+	@ResponseBody
+	public EntityReturnData supplypoint(HttpServletRequest request,
+			HttpServletResponse response, ModelMap modelMap,
+			@RequestParam(value="userId",required=true) Integer userId,
+			@RequestParam(value="supplyPoint",required=true) BigDecimal supplyPoint) throws SQLException, BusinessException{
 		AdminUser adminUser = SessionConstant.getAdminUserInSession(request);
-		return userBaseService.doClearSupplyMone(adminUser);
+		 userBaseService.doSupplypoint(adminUser,userId, supplyPoint);
+		 EntityReturnData ret = new EntityReturnData();
+		 ret.setResult(true);
+		 return ret;
+		 
 	}
 
 }
