@@ -36,13 +36,13 @@ public class AdminMenu  implements Serializable  {
 	
 	 
 	@Column(name = "isbutton" )  
-	private int isbutton;
+	private Integer isbutton;
 	 
 	@Column(name = "btnflag", length = 50)
 	private String btnflag;
 	
 	@Column(name = "pid" )
-	private int pid;
+	private Integer pid;
 
 	
 	
@@ -50,9 +50,7 @@ public class AdminMenu  implements Serializable  {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
+	 
 
 	public String getName() {
 		return name;
@@ -74,7 +72,7 @@ public class AdminMenu  implements Serializable  {
 		return isbutton;
 	}
 
-	public void setIsbutton(int isbutton) {
+	public void setIsbutton(Integer isbutton) {
 		this.isbutton = isbutton;
 	}
 
@@ -94,13 +92,10 @@ public class AdminMenu  implements Serializable  {
 		return pid;
 	}
 
-	public void setPid(int pid) {
+	public void setPid(Integer pid) {
 		this.pid = pid;
 	}
-	
-	
-	
-	
+	 
 	
 
 }
