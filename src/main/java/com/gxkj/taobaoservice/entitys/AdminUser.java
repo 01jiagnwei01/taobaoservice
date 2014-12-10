@@ -29,7 +29,7 @@ public class AdminUser implements Serializable{
 	@GenericGenerator(name = "generator", strategy = "increment")
 	@GeneratedValue(generator = "generator")
 	@Column(name = "id", unique = true, nullable = false) 
-	private int id;
+	private Integer id;
 	
 	@Column(name="name" )
 	private String name;
@@ -42,7 +42,7 @@ public class AdminUser implements Serializable{
 	private String realName;
 	
 	@Column(name="status" )
-	private int status;
+	private Integer status;
 	
 	@Transient
 	private AdminRole role;
@@ -59,14 +59,14 @@ public class AdminUser implements Serializable{
 	/**
 	 * @return the id
 	 */
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -115,14 +115,14 @@ public class AdminUser implements Serializable{
 	/**
 	 * @return the status
 	 */
-	public int getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
 	/**
 	 * @param status the status to set
 	 */
-	public void setStatus(int status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 

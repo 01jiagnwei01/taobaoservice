@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.gxkj.common.dao.BaseDAOImpl;
 import com.gxkj.common.util.ListPager;
 import com.gxkj.taobaoservice.daos.UserAccountLogDao;
+import com.gxkj.taobaoservice.entitys.UserAccountLog;
 import com.gxkj.taobaoservice.enums.UserAccountTypes;
 @Repository
 public class UserAccountLogDaoImpl extends BaseDAOImpl implements
@@ -44,7 +45,7 @@ public class UserAccountLogDaoImpl extends BaseDAOImpl implements
 		ListPager pager = new ListPager();
 		pager.setPageNo(pageno);
 		pager.setRowsPerPage(pagesize);
-		return this.selectPageBySQL(sql, param.toArray(),null, pager);
+		return this.selectPageBySQL(sql, param.toArray(),UserAccountLog.class, pager);
 	}
 
 }

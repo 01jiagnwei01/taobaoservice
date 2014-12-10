@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -124,6 +125,13 @@ public class UserAccountLog  implements Serializable{
 	 */
 	@Column(name="task_id")
 	private Integer taskId;
+	
+	
+	@Transient
+	private String adminName;
+	
+	@Transient
+	private String userName;
 	
 	
 	
@@ -254,6 +262,24 @@ public class UserAccountLog  implements Serializable{
 	public void setTaskId(Integer taskId) {
 		this.taskId = taskId;
 	}
+
+	public String getAdminName() {
+		return adminName;
+	}
+
+	public void setAdminName(String adminName) {
+		this.adminName = adminName;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	
+	
 
 	 
 }

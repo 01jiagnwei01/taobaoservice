@@ -13,6 +13,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.transform.Transformers;
 
+import com.gxkj.common.transform.HibernateResultTransformer;
 import com.gxkj.common.util.ListPager;
  
 public  class BaseDAOImpl    implements BaseDAO {
@@ -140,9 +141,10 @@ public  class BaseDAOImpl    implements BaseDAO {
 			}
 		}
 		if(clazz != null){
-//			query.setResultTransformer(Transformers.aliasToBean(clazz));  
-			query.addEntity(clazz);
+ 			query.setResultTransformer(new HibernateResultTransformer(clazz));  
+			//query.addEntity(clazz);
 		}else{
+			//org.hibernate.transform.AliasToBeanResultTransformer;
 			query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
 		}
 		 query.setFirstResult(from);   
@@ -253,7 +255,8 @@ public  class BaseDAOImpl    implements BaseDAO {
 		SQLQuery q = session.createSQLQuery(sql);
 		if(clazz != null){
 			//q.setResultTransformer(Transformers.aliasToBean(clazz));  
-			q.addEntity(clazz);
+			//q.addEntity(clazz);
+			q.setResultTransformer(new HibernateResultTransformer(clazz));  
 			 
 		}else{
 			 q.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
@@ -295,7 +298,8 @@ public  class BaseDAOImpl    implements BaseDAO {
 		SQLQuery q = session.createSQLQuery(sql); 
 		if(clazz != null){
 			//q.setResultTransformer(Transformers.aliasToBean(clazz));  
-			q.addEntity(clazz);
+			//q.addEntity(clazz);
+			q.setResultTransformer(new HibernateResultTransformer(clazz));  
 		}else{
 			 q.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
 		}
@@ -315,7 +319,8 @@ public  class BaseDAOImpl    implements BaseDAO {
 		}
 		if(clazz != null){
 			//q.setResultTransformer(Transformers.aliasToBean(clazz));  
-			q.addEntity(clazz);
+			//q.addEntity(clazz);
+			q.setResultTransformer(new HibernateResultTransformer(clazz));  
 		}else{
 			 q.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
 		}

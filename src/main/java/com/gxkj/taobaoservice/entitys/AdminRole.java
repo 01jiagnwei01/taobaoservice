@@ -26,22 +26,22 @@ public class AdminRole implements Serializable{
 	@GeneratedValue(generator = "generator")
 	@Id
 	@Column(name = "id", unique = true, nullable = false) 
-	private int id;
+	private Integer id;
 	
 	@Column(name="name" )
 	private String name;
 	
 	@Column(name="status")
-	private int status;
+	private Integer status;
 	
 	@Transient
 	List<AdminMenu> relMenus;
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -55,7 +55,7 @@ public class AdminRole implements Serializable{
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
