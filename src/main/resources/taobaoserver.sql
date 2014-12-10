@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50620
 File Encoding         : 65001
 
-Date: 2014-12-07 20:03:29
+Date: 2014-12-10 13:51:52
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,7 +24,7 @@ CREATE TABLE `admin_menu` (
   `name` varchar(30) DEFAULT NULL,
   `path` varchar(100) DEFAULT NULL,
   `orders` double(10,2) DEFAULT NULL,
-  `isbutton` char(1) DEFAULT '0',
+  `isbutton` int(1) DEFAULT '0',
   `btnflag` varchar(32) DEFAULT NULL,
   `pid` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -81,7 +81,7 @@ DROP TABLE IF EXISTS `admin_role`;
 CREATE TABLE `admin_role` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) DEFAULT NULL,
-  `status` char(1) DEFAULT NULL,
+  `status` int(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
@@ -106,7 +106,7 @@ CREATE TABLE `admin_user` (
   `name` varchar(60) DEFAULT NULL,
   `password` varchar(60) DEFAULT NULL,
   `real_name` varchar(60) DEFAULT NULL,
-  `status` char(1) DEFAULT NULL,
+  `status` int(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
