@@ -48,21 +48,21 @@ var fenye = "${_adminUser_.btnMap.admin_log_dopage_COMPANY_SUPPLY}"== "true"?tru
 								<th data-options="field:'id',width:30" rowspan="2">id</th>
 								<th data-options="field:'createTime',formatter:dateFormat,width:120" rowspan="2">操作时间</th>
 								<th data-options="field:'userName',formatter:userIdFormat,width:150" rowspan="2">用户</th>
-								<th data-options="field:'admin_user_id',formatter:adminUserIdFormat,width:150" rowspan="2">管理员</th>
+								<th data-options="field:'adminUserId',formatter:adminUserIdFormat,width:150" rowspan="2">管理员</th>
 								<th data-options="field:'points'" rowspan="2">点数</th>
 								<th colspan="4">操作前</th>
 								<th colspan="4">操作后</th>
 					</tr>
 					<tr>
-							<th data-options="field:'before_rest_amount',width:80,align:'right'">可用金额</th>
-							<th data-options="field:'before_rest_points',width:80,align:'right'">可用点数</th>
-							<th data-options="field:'before_locked_amount',width:80">锁定金额</th>
-							<th data-options="field:'before_locked_points',width:60,align:'center'">锁定点数</th>
+							<th data-options="field:'beforeRestAmount',width:80,align:'center',formatter:dataFormat">可用金额</th>
+							<th data-options="field:'beforeRestPoints',width:80,align:'center',formatter:dataFormat">可用点数</th>
+							<th data-options="field:'beforeLockedAmount',width:80,formatter:dataFormat">锁定金额</th>
+							<th data-options="field:'beforeLockedPoints',width:60,align:'center',formatter:dataFormat">锁定点数</th>
 							
-							<th data-options="field:'after_rest_amount',width:80,align:'right'">可用金额</th>
-							<th data-options="field:'after_rest_points',width:80,align:'right'">可用点数</th>
-							<th data-options="field:'after_locked_amount',width:80">锁定金额</th>
-							<th data-options="field:'after_locked_points',width:60,align:'center'">锁定点数</th>
+							<th data-options="field:'afterRestAmount',width:80,align:'center',formatter:dataFormat">可用金额</th>
+							<th data-options="field:'afterRestPoints',width:80,align:'center',formatter:dataFormat">可用点数</th>
+							<th data-options="field:'afterLockedAmount',width:80,formatter:dataFormat">锁定金额</th>
+							<th data-options="field:'afterLockedPoints',width:60,align:'center',formatter:dataFormat">锁定点数</th>
 					 </tr>
 				</thead>
 			</table>
@@ -116,13 +116,17 @@ function userIdFormat(value,row,index){
 		return value;
 	}
 	 
-	return row['userName']+"["+row['user_id']+"]"
+	return row['userName']+"["+row['userId']+"]"
 }
 function adminUserIdFormat(value,row,index){
 	if(typeof value == 'undefined'){
 		return value;
 	} 
-	return row['adminName']+"["+row['admin_user_id']+"]"
+	return row['adminName']+"["+row['adminUserId']+"]"
+}
+function dataFormat(value,row,index){
+	if(!value )return "";
+	return value;
 }
 
 	</script>

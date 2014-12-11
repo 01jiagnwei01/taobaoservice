@@ -3,7 +3,7 @@ package com.gxkj.common.transform;
 import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,7 +48,7 @@ public class HibernateResultTransformer  extends AliasedTupleSubsetResultTransfo
 	private boolean isInitialized;
 	private String[] aliases;
 	private Setter[] setters;
-	private Class<?>[] propertyClasses;
+	private Class<?> [] propertyClasses;
 	
 	private Map<String,PropertyBean> column2PropertyMap;
 
@@ -67,20 +67,69 @@ public class HibernateResultTransformer  extends AliasedTupleSubsetResultTransfo
 
 	public Object transformTuple(Object[] tuple, String[] aliases) {
 		Object result;
-
 		try {
 			if ( ! isInitialized ) {
 				initialize( aliases );
 			}
 			else {
-				check( aliases );
+				
+				PropertyBean propertyBean = null;
+				String[] newaliases = new String[aliases.length];
+				for ( int i = 0; i < aliases.length; i++ ) {
+					String alias = aliases[ i ];
+					propertyBean = column2PropertyMap.get(alias.toUpperCase());
+					if ( alias != null  ) {
+						if(propertyBean !=null){
+							newaliases[ i ] = propertyBean.getPropertyName();
+						} 
+					}
+					alias = null;
+					propertyBean = null;
+				}
+				check( newaliases );
 			}
 			result = resultClass.newInstance();
 
 			for ( int i = 0; i < aliases.length; i++ ) {
-				if ( setters[i] != null ) {
-					if ((HibernateResultTransformer.isBaseType(this.propertyClasses[i]) &&  !tuple[i].getClass().equals(this.propertyClasses[i]))){
-						throw new BusinessException(String.format("类：%s的属性%s的配置类型与数据库不匹配配,数据库类型：%s,属性类型：%s", this.resultClass.getName(),  aliases[i],tuple[i].getClass().getName(),this.propertyClasses[i].getName()));
+				if(aliases[i] == null) continue;
+				if ( setters[i] != null  ) {
+					
+					if ((HibernateResultTransformer.isBaseType(this.propertyClasses[i])       )){
+						if (tuple[i] !=null){
+							if(tuple[i].getClass().getName().equals("java.sql.Timestamp") && this.propertyClasses[i].getName().equals("java.util.Date")){
+								 //什么都不做
+							}else  if (!tuple[i].getClass().equals(this.propertyClasses[i])){
+								throw new BusinessException(String.format("类：%s的属性%s的配置类型与数据库不匹配配,数据库类型：%s,属性类型：%s", this.resultClass.getName(),  aliases[i],tuple[i].getClass().getName(),this.propertyClasses[i].getName()));
+							}
+						}
+					}else if(this.propertyClasses[i].isEnum()   ){
+						if (tuple[i] !=null){
+							Object[] ts = this.propertyClasses[i].getEnumConstants(); 
+							boolean find = false;
+					        for (Object t : ts) {  
+					            Enum<?> e = (Enum<?>) t;  
+					           if(e.name().equals(tuple[i].toString())){
+					        	   tuple[i] = e;
+					        	   find = true;
+					        	   break;
+					           }
+					        }
+					        if(!find){
+					        	throw new BusinessException(String.format("类：%s的属性%s的数据库类型在枚举类%s里没有找到配配的类型,数据库值：%s", 
+					        			this.resultClass.getName(),  
+					        			aliases[i],
+					        			this.propertyClasses[i].getName(),
+					        			tuple[i].toString()));
+					        }
+						}
+					}
+					/**
+					 * 特别处理
+					 */
+					if(this.propertyClasses[i].getName().equals("java.math.BigDecimal")){
+						if (tuple[i] !=null){
+							tuple[i] = new BigDecimal(tuple[i].toString());
+						}
 					}
 					setters[i].set( result, tuple[i], null );
 				}
@@ -114,10 +163,16 @@ public class HibernateResultTransformer  extends AliasedTupleSubsetResultTransfo
 		for ( int i = 0; i < aliases.length; i++ ) {
 			String alias = aliases[ i ];
 			propertyBean = column2PropertyMap.get(alias.toUpperCase());
-			if ( alias != null && propertyBean != null) {
-				this.aliases[ i ] = propertyBean.getPropertyName();
-				this.propertyClasses[i] = propertyBean.getPropertyClass();
-				setters[ i ] = propertyAccessor.getSetter( resultClass, propertyBean.getPropertyName() );
+			if ( alias != null  ) {
+				if(propertyBean !=null){
+					this.aliases[ i ] = propertyBean.getPropertyName();
+					this.propertyClasses[i] = propertyBean.getPropertyClass();
+					setters[ i ] = propertyAccessor.getSetter( resultClass, propertyBean.getPropertyName() );
+				}else{
+					//this.aliases[ i ]  = alias;
+					//setters[ i ] = propertyAccessor.getSetter( resultClass, alias);
+				}
+				
 			}
 			alias = null;
 			propertyBean = null;
@@ -129,8 +184,7 @@ public class HibernateResultTransformer  extends AliasedTupleSubsetResultTransfo
 	private void check(String[] aliases) {
 		if ( ! Arrays.equals( aliases, this.aliases ) ) {
 			throw new IllegalStateException(
-					"aliases are different from what is cached; aliases=" + Arrays.asList( aliases ) +
-							" cached=" + Arrays.asList( this.aliases ) );
+					String.format("%s aliases are different from what is cached; aliases=%s cached=%s",this.resultClass.getName(), Arrays.asList( aliases ),Arrays.asList( this.aliases ) ));
 		}
 	}
 
@@ -165,7 +219,7 @@ public class HibernateResultTransformer  extends AliasedTupleSubsetResultTransfo
 		Field field = null;
 		String propertyName = null;
 		String columnName = null;
-		int modifier = 0;
+//		int modifier = 0;
 		Annotation annotation = null;
 		Map<String,PropertyBean> column2Property = new HashMap<String,PropertyBean>();
 		while (clazz != null && !clazz.getName().equals(Object.class.getName())) {
@@ -181,14 +235,14 @@ public class HibernateResultTransformer  extends AliasedTupleSubsetResultTransfo
 					e.printStackTrace();
 				}
 				if (field != null) {
-					modifier = field.getModifiers();
-					if ((modifier & Modifier.FINAL) > 0
-							|| (modifier & Modifier.NATIVE) > 0
-							|| (modifier & Modifier.STATIC) > 0
-							|| (modifier & Modifier.TRANSIENT) > 0
-							|| (modifier & Modifier.VOLATILE) > 0) {
-						continue;
-					}
+//					modifier = field.getModifiers();
+//					if ((modifier & Modifier.FINAL) > 0
+//							|| (modifier & Modifier.NATIVE) > 0
+//							|| (modifier & Modifier.STATIC) > 0
+//							|| (modifier & Modifier.TRANSIENT) > 0
+//							|| (modifier & Modifier.VOLATILE) > 0) {
+//						continue;
+//					}
 					if(field.isAnnotationPresent(Column.class )){
 						annotation = field.getAnnotation(Column.class);
 						columnName = ((Column) annotation).name();
@@ -216,5 +270,15 @@ public class HibernateResultTransformer  extends AliasedTupleSubsetResultTransfo
 		}
 		 
 		return column2Property;
+	}
+	 
+	public static void main(String[] args) {
+//		Class ref = BenefitTypes.class;
+//		Object[] ts = ref.getEnumConstants();  
+//        for (Object t : ts) {  
+//            Enum<?> e = (Enum<?>) t;  
+//           // map.put(e.ordinal(), e.name()); 
+//            System.out.println(e.name());
+//        } 
 	}
 }
