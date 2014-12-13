@@ -1,28 +1,15 @@
 package com.gxkj.taobaoservice.filters;
 
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-
-
-
-
-
-
-
-
-
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 //import org.springframework.web.servlet.mvc.multiaction.InternalPathMethodNameResolver;
 //import org.springframework.web.servlet.mvc.multiaction.MethodNameResolver;
-
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gxkj.common.annotation.WithoutAuthorize;

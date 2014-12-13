@@ -12,8 +12,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gxkj.common.exceptions.BusinessException;
+import com.gxkj.common.util.RandomValidateCode;
 import com.gxkj.common.util.SessionUtil;
 import com.gxkj.taobaoservice.dto.EntityReturnData;
 import com.gxkj.taobaoservice.entitys.UserBase;
@@ -35,27 +37,36 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.POST)
+	@ResponseBody
 	public EntityReturnData dologin(HttpServletRequest request,
 			HttpServletResponse response, ModelMap modelMap,
-			@RequestParam("username") String username, @RequestParam("password") String password) throws BusinessException, SQLException {
+			@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("yanzhengma") String yanzhengma) throws BusinessException, SQLException {
  
 		EntityReturnData ret = new EntityReturnData();
 		if(StringUtils.isBlank(username)){
 			ret.setMsg(LoginProcessResults.USER_NAME_BLANK_FAILURE.getName());
 		}else if(StringUtils.isBlank(password)){
 			ret.setMsg(LoginProcessResults.PASSWORD_BLANK_FAILURE.getName());
+		}else if(StringUtils.isBlank(yanzhengma)){
+			ret.setMsg(LoginProcessResults.YANGZHENGMA_BLANK_FAILURE.getName());
 		}else{
-			 
-			 UserBase userBase =	userBaseService.doLogin(username,password);
-			 if(userBase == null){
-				 ret.setMsg(LoginProcessResults.USER_NAME_OR_PASSWORD_ERROR_FAILURE.getName());
-			 }else{
-				 ret.setResult(true);
-				 ret.setMsg(LoginProcessResults.SUCCESS.getName());
-				 ret.setEntity(userBase);
-				 //将用户信息放到session里 
-				 SessionUtil.setSiteUser2Session(request, userBase);
-			 }
+			String yanzhengMaInSession = (String) request.getSession().getAttribute(RandomValidateCode.RANDOMCODEKEY); 
+			if(!yanzhengMaInSession.equalsIgnoreCase(yanzhengma)){
+				ret.setMsg(LoginProcessResults.YANGZHENGMA_ERROR.getName());
+			}else{
+				 UserBase userBase =	userBaseService.doLogin(username,password);
+				 if(userBase == null){
+					 ret.setMsg(LoginProcessResults.USER_NAME_OR_PASSWORD_ERROR_FAILURE.getName());
+				 }else{
+					 ret.setResult(true);
+					 ret.setMsg(LoginProcessResults.SUCCESS.getName());
+					 ret.setEntity(userBase);
+					 //将用户信息放到session里 
+					 SessionUtil.setSiteUser2Session(request, userBase);
+				 }
+			}
+			
+			
 		}
 		
 		return ret;

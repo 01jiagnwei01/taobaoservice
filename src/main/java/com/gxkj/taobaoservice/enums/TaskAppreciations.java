@@ -22,7 +22,9 @@ public enum TaskAppreciations {
 	ZHI_DING_JIE_SHOU_REN(7,"指定任务接手人","需额外支付{needDot}个发布点奖",
 			1,1,TaskAppreciationTypes.ZHI_DING_JIE_SHOU_REN,BenefitTypes.PING_TAI),
 	PI_LIANG_FA_BU(8,"批量发布任务","需额外支付{needDot}个发布点奖",
-					1,1,TaskAppreciationTypes.PI_LIANG_FA_BU,BenefitTypes.PING_TAI)
+					1,1,TaskAppreciationTypes.PI_LIANG_FA_BU,BenefitTypes.PING_TAI),
+	NEED_WANGWANG_TALK(9,"需要旺旺聊天","需额外支付{needDot}个发布点奖",
+							1,1,TaskAppreciationTypes.PI_LIANG_FA_BU,BenefitTypes.PING_TAI)
 													;
 	
 	private int id; 

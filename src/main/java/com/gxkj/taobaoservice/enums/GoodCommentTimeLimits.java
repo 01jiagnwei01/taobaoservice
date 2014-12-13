@@ -10,14 +10,14 @@ import java.math.BigDecimal;
 public enum GoodCommentTimeLimits {
 	
 	IMMEDIATELY ("立刻好评",BigDecimal.ZERO),
-	THIRTYMMinuteLater ("30分钟后好评 0.5个发布点",new BigDecimal("0.5")),
-	ONE_DAY_LATER ("1天后好评 0.6个发布点",new BigDecimal("0.6")),
-	TWO_DAY_LATER ("2天后好评  0.7个发布点",new BigDecimal("0.7")),
-	THREE_DAY_LATER ("3天后好评 0.8个发布点",new BigDecimal("0.8")),
-	FOURE_DAY_LATER ("4天后好评 0.9个发布点",new BigDecimal("0.9")),
-	FIVE_DAY_LATER ("5天后好评 1个发布点",new BigDecimal("1")),
-	SIX_DAY_LATER ("6天后好评 1.1个发布点",new BigDecimal("1.1")),
-	SEVEN_DAY_LATER ("7天后好评 1.2个发布点",new BigDecimal("1.2"));
+	THIRTYMMinuteLater ("30分钟后好评%f个发布点",new BigDecimal("0.5")),
+	ONE_DAY_LATER ("1天后好评%f个发布点",new BigDecimal("0.6")),
+	TWO_DAY_LATER ("2天后好评  %f个发布点",new BigDecimal("0.7")),
+	THREE_DAY_LATER ("3天后好评 %f个发布点",new BigDecimal("0.8")),
+	FOURE_DAY_LATER ("4天后好评 %f个发布点",new BigDecimal("0.9")),
+	FIVE_DAY_LATER ("5天后好评%d个发布点",new BigDecimal("1")),
+	SIX_DAY_LATER ("6天后好评 %f个发布点",new BigDecimal("1.1")),
+	SEVEN_DAY_LATER ("7天后好评%f个发布点",new BigDecimal("1.2"));
 	
 	private String name; 
 	
