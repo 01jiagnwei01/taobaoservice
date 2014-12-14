@@ -34,15 +34,18 @@ public class CustomSimpleMappingExceptionResolver extends SimpleMappingException
 	                try { 
 	                	ObjectMapper mapper = new ObjectMapper();
 	                	EntityReturnData json = new EntityReturnData();
-	                	response.setContentType("text/javascript;charset=UTF-8");  
-	                    PrintWriter writer = response.getWriter(); 
+	                	response.setStatus(601);
+	                	response.setContentType("text/javascript;charset=UTF-8"); 
+	                	PrintWriter writer = response.getWriter(); 
 	                   
 	                    if (ex instanceof  BusinessException){
 	                    	json.setMsg(  ex.getMessage());
 	    				}else {
-	    					 
 	    					json.setMsg(   "系统问题,请找技术人员解决");
 	    				}
+	                    if(json.getEntity() == null){
+	                    	json.setEntity("");
+	                    }
 	                    writer.write(mapper.writeValueAsString(json));  
 	                    writer.flush();  
 	                } catch (IOException e) {  

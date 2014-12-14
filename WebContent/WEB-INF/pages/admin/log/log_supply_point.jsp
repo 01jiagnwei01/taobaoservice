@@ -46,8 +46,8 @@ var fenye = "${_adminUser_.btnMap.admin_log_dopage_COMPANY_SUPPLY}"== "true"?tru
 		        <thead> 
 		        	<tr>
 								<th data-options="field:'id',width:30" rowspan="2">id</th>
-								<th data-options="field:'createTime',formatter:dateFormat,width:120" rowspan="2">操作时间</th>
-								<th data-options="field:'userName',formatter:userIdFormat,width:150" rowspan="2">用户</th>
+								<th data-options="field:'createTime',formatter:dateFormat,width:150" rowspan="2">操作时间</th>
+								<th data-options="field:'userName',formatter:userIdFormat,width:120" rowspan="2">用户</th>
 								<th data-options="field:'adminUserId',formatter:adminUserIdFormat,width:150" rowspan="2">管理员</th>
 								<th data-options="field:'points'" rowspan="2">点数</th>
 								<th colspan="4">操作前</th>

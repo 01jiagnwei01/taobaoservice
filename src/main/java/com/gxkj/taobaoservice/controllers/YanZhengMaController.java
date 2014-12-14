@@ -7,8 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gxkj.common.util.RandomValidateCode;
+import com.gxkj.taobaoservice.dto.EntityReturnData;
 
 @Controller
 @RequestMapping("/yanzhengma")
@@ -26,5 +28,15 @@ public class YanZhengMaController {
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
+	}
+	
+	@RequestMapping(value = "/get", method = RequestMethod.GET)
+	@ResponseBody
+	public EntityReturnData getYanZhengma(HttpServletRequest request,HttpServletResponse response,ModelMap modelMap){
+		EntityReturnData ret = new EntityReturnData();
+		String yanzhengma = (String) request.getSession().getAttribute(RandomValidateCode.RANDOMCODEKEY);
+		ret.setEntity(yanzhengma);
+		ret.setResult(true);
+		 return ret;
 	}
 }

@@ -172,7 +172,8 @@ function searchFn(){
 function setSupplyFn(id){
 	
 	$('#apply_user_id').val(id);
-	$('#apply_amount').val('');
+	$('#apply_amount').numberbox('setValue', 0);
+
 	$('#set_supply_win').window('open');  
 	$('#set_supply_win').window('center');
 	

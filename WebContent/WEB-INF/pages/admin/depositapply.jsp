@@ -102,7 +102,7 @@ $(function(){
 		columns:[[ 
 			{field:'id',title:'id'},
 			{field:'userId',title:'申请用户ID' ,width:80},
-			{field:'createTime',title:'申请日期',width:100,formatter:dateFormat},
+			{field:'createTime',title:'申请日期',width:120,formatter:dateFormat},
 			{field:'amount',title:'申请金额' ,width:100},
 			{field:'thirdOrderNo',title:'支付宝流水号' ,width:100},
 			{field:'status',title:'状态',width:100,formatter:statusFormat},
