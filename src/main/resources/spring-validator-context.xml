@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+     xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd"
+	default-autowire="byName" default-lazy-init="true">
+
+	 
+	 <!-- Saves a locale change using a session-->    
+ 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />  
+
+	<bean id="validator" 
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		        <property name="providerClass"  value="org.hibernate.validator.HibernateValidator"/>
+		        <!-- 如果不加默认到 使用classpath下的 ValidationMessages.properties -->
+		        <property name="validationMessageSource" ref="messageSource"/>
+		</bean>
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
+		p:fallbackToSystemLocale="true" 
+		p:useCodeAsDefaultMessage="false"
+		p:defaultEncoding="UTF-8">
+		<description>Base message source to handle internationalization
+		</description>
+		<property name="basenames">
+			<list>
+				<value>classpath:spring/validation/ValidationMessages</value>
+			</list>
+		</property>
+	</bean>
+</beans>

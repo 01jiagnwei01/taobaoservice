@@ -1,4 +1,4 @@
-package com.gxkj.taobaoservice.entitys;
+package com.gxkj.taobaoservice.enums;
 
 public enum TaskTypes {
 	VIRTUAL("虚拟"), PRACTICALITY ("实物");

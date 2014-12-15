@@ -13,12 +13,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.gxkj.taobaoservice.enums.GoodCommentTimeLimits;
 import com.gxkj.taobaoservice.enums.PayMethods;
 import com.gxkj.taobaoservice.enums.TaskOrderStatus;
+import com.gxkj.taobaoservice.enums.TaskTypes;
 
 /**
  * 创建任务订单 
@@ -42,11 +47,13 @@ public class TaskOrder implements Serializable{
 	 * 用户ID
 	 */
 	@Column(name="user_id" )
+	@Min(value=1)
 	private Integer userId;
 	
 	/**
 	 * 创建时间
 	 */
+	@NotNull
 	@Column(name="create_time" )
 	private  Date createTime;
 	
@@ -54,24 +61,30 @@ public class TaskOrder implements Serializable{
 	 * 任务发布人淘宝号
 	 */
 	@Column(name="taobao_xiaohao" )
+	@NotEmpty
 	private String taobaoXiaohao;
 	
 	/**
 	 * 任务发布人QQ
 	 */
 	@Column(name="user_qq" )
+	@NotEmpty
 	private String userQq;
 	
 	/**
 	 * 商品地址
 	 */
 	@Column(name="product_link" )
+	@NotEmpty
+	@Length(min=10)
 	private String productLink;
 	
 	/**
 	 * 商品标题
 	 */
 	@Column(name="product_title" )
+	@NotEmpty
+	@Length(min=10)
 	private String productTitle ;
 	
 	/**
@@ -79,18 +92,22 @@ public class TaskOrder implements Serializable{
 	 */
 	@Column(name="pay_method" )
 	@Enumerated(EnumType.STRING)
+	@NotNull
 	private PayMethods payMethod ;
 	
 	/**
 	 * 担保金
 	 */
 	@Column(name="guarantee_price" )
+	@NotNull
+	@Min(2)
 	private BigDecimal guaranteePrice ;
 	
 	/**
 	 * 基本发布点
 	 */
 	@Column(name="basic_publish_dot" )
+	@NotNull
 	private BigDecimal basicPublishDot;
 	
 	/**
@@ -98,12 +115,14 @@ public class TaskOrder implements Serializable{
 	 */
 	@Column(name="task_type" )
 	@Enumerated(EnumType.STRING)
+	@NotNull
 	private  TaskTypes taskType;
 	
 	/**
 	 * 产品好评内容
 	 */
 	@Column(name="good_comment" )
+	@NotNull
 	private  String goodComment;
 	
 	/**
@@ -111,12 +130,15 @@ public class TaskOrder implements Serializable{
 	 */
 	@Column(name="good_comment_time_limit" )
 	@Enumerated(EnumType.STRING)
+	@NotNull
 	private  GoodCommentTimeLimits goodCommentTimeLimit;
 	
 	/**
 	 * 好评需要发布点数
 	 */
 	@Column(name="good_comment_time_dot" )
+	@NotNull
+	@Min(value=0)
 	private  BigDecimal goodCommentTimeDot;
 	
 	/**
@@ -124,17 +146,22 @@ public class TaskOrder implements Serializable{
 	 */
 	@Column(name="status" )
 	@Enumerated(EnumType.STRING)
-	private TaskOrderStatus status;
+	@NotNull
+	private TaskOrderStatus status = TaskOrderStatus.WAIT_FOR_SURE;
 	
 	/**
 	 * 完成增值任务，接收方受益点数
 	 */
 	@Column(name="zengzhi_receiver_gain_points" )
+	@NotNull
+	@Min(value=0)
 	private  BigDecimal zengzhiReceiverGain_points = BigDecimal.ZERO;
 	/**
 	 * 完成增值任务，平台受益点数
 	 */
 	@Column(name="zengzhi_pingtai_gain_points" )
+	@NotNull
+	@Min(value=0)
 	private  BigDecimal zengzhiPingtaiGain_points = BigDecimal.ZERO;
 	
 	/**
@@ -146,12 +173,16 @@ public class TaskOrder implements Serializable{
 	 * 完成基本任务，平台受益点数
 	 */
 	@Column(name="basic_pingtai_gain_point" )
+	@NotNull
+	@Min(value=0)
 	private  BigDecimal basicPingtaiGainPoint = BigDecimal.ZERO;
 	
 	/**
 	 * 重复次数
 	 */
 	@Column(name="repeate_times" )
+	@NotNull
+	@Min(value=1)
 	private Integer repeateTimes = new Integer("1");
 	
 	
