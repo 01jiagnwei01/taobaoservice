@@ -51,7 +51,7 @@
 			  		//json = jQuery.parseJSON(json);
 				 	 var result = json["result"];
 				 	 if(result){
-				 	 	window.location = "<%=request.getContextPath()%>/index";
+				 	 	window.location = "<%=request.getContextPath()%>";
 				 	 }else{
 				 	 	 var msg = json.msg;
 				 	 	var options = {"text":msg,"layout":"topRight","type":"error"};

@@ -20,6 +20,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import com.gxkj.common.enums.BusinessExceptionInfos;
 import com.gxkj.common.exceptions.BusinessException;
@@ -233,11 +234,9 @@ public class UserBaseServiceImpl implements UserBaseService {
 	 * @throws BusinessException 
 	 */
 	public UserBase doLogin(String username, String password) throws SQLException, BusinessException {
-		if(StringUtils.isBlank(username)){
-			 return null;
-		}else if(StringUtils.isBlank(password)){
-			return null;
-		} 
+		Assert.notNull(username);
+		Assert.notNull(password);
+		 
 		
 		List<UserBase>  userBases =   userBaseDao.getUsersByUserName(username);
 		if(CollectionUtils.isEmpty(userBases)){
