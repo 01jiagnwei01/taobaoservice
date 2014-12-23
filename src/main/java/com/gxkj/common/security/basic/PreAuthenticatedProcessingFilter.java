@@ -30,7 +30,7 @@ public class PreAuthenticatedProcessingFilter extends GenericFilterBean {
                 FilterChain chain) throws IOException, ServletException {
             HttpServletRequest req = (HttpServletRequest) request;
 
-            Object flag = req.getServletContext().getAttribute(
+            Object flag =  req.getServletContext().getAttribute(
                 ThreadConsts.LOGIN_FLAG);
             PreAuthenticatedProcessingFilter.log.debug(req.getContextPath() + ", "
                 + ThreadConsts.LOGIN_FLAG + ": " + flag);
