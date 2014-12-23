@@ -8,7 +8,7 @@ webAppDirName = 'WebContent'    // 设置 WebApp 根目录
 [compileJava,compileTestJava,javadoc]*.options*.encoding = "UTF-8"
 
 repositories {
-    mavenCentral()
+	mavenCentral() // 中央库
 }
 
 dependencies {
@@ -16,6 +16,7 @@ dependencies {
 	
 	compile 'log4j:log4j:1.2.17'
 	 //springframework
+	//compile 'org.springframework:spring-context-support:4.1.2.RELEASE'
 	compile 'org.springframework:spring-webmvc:4.1.2.RELEASE'
 	compile 'org.springframework:spring-tx:4.1.2.RELEASE'
 	compile 'org.springframework:spring-aop:4.1.2.RELEASE'
@@ -24,6 +25,7 @@ dependencies {
 	compile 'org.springframework:spring-jdbc:4.1.2.RELEASE'
 	compile 'org.springframework.batch:spring-batch-core:3.0.2.RELEASE'
 	compile 'org.springframework:spring-orm:4.1.2.RELEASE'
+	//
 	compile 'org.springframework:spring-support:2.0.8'
 	
 	//jackson
@@ -71,7 +73,8 @@ test {
 eclipse.classpath.defaultOutputDir=file("${project.projectDir}/WebContent/WEB-INF/classes");
 eclipse {
 	project {
-		natures += ['org.eclipse.wst.jsdt.core.jsNature' ,'com.sysdeo.eclipse.tomcat.tomcatnature']
+		//增加tomcat插件,groovyNature属性
+		natures += ['org.eclipse.wst.jsdt.core.jsNature' ,'com.sysdeo.eclipse.tomcat.tomcatnature','org.eclipse.jdt.groovy.core.groovyNature']
 		buildCommand 'org.eclipse.wst.jsdt.core.javascriptValidator'
 		buildCommand 'org.eclipse.jdt.core.javabuilder'
 		buildCommand 'org.eclipse.wst.common.project.facet.core.builder'
@@ -100,17 +103,34 @@ eclipse {
 	}
 }
 /***/
+//<classpathentry exported="true" kind="con" path="GROOVY_SUPPORT"/>
+//<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
 eclipse.classpath.file.withXml {
 		def node = it.asNode();
+		//println "node.children().size1="+node.children().size();
+		node.children().removeAll() { c ->
+			//println  c.attribute("kind")+"  "+c.attribute("path");
+			
+			//return true;
+			
+		}
+		println "node.children().size2="+node.children().size();
+		//增加
+		//<classpathentry exported="true" kind="con" path="GROOVY_SUPPORT"/>
+		//<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
+		def groovy_map = ['exported':'true','kind':'con','path':'GROOVY_SUPPORT'];
+		def GROOVY_SUPPORT_NODE = new Node(node, "classpathentry",groovy_map);
 		
-//		node.children().removeAll() { c ->
-//			def path = c.attribute('path');
-//			  if(path !=null && path.toString().contains("GROOVY_SUPPORT"))return true;
-//		}
+		def groovy_dsl_map = ['exported':'true','kind':'con','path':'GROOVY_DSL_SUPPORT'];
+		def GROOVY_DSL_SUPPORT_node = new Node(node, "classpathentry",groovy_dsl_map);
+		
+		println "node.children().size="+node.children().size();
+		
 //		for (Node n : node.children()) {
 //			if ("lib".equals(n.attribute("kind"))) {
 //				def node_attributes = new Node(n, "attributes");
 //				def map = new HashMap();
+//				
 //				map.put("name", "org.eclipse.jst.component.dependency");
 //				map.put("value", "/WEB-INF/lib");
 //				def node_attribute = new Node(node_attributes, "attribute", map);
@@ -118,7 +138,7 @@ eclipse.classpath.file.withXml {
 //		}
 	}
 eclipse.classpath.file.beforeMerged  {classpath ->
-	//println classpath;
+	println classpath;
 }
 uploadArchives {
     repositories {
