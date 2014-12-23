@@ -66,7 +66,7 @@ public class AsyncToken<T>  {
 	private String tokenName;
 	private long tokenId;
 	
-	private List<IResponder> _responders = new ArrayList(2);
+	private List<IResponder<?>> _responders = new ArrayList<IResponder<?>>(2);
 	
 	private UncaughtExceptionHandler uncaughtExceptionHandler;
 	private T _result;
@@ -141,7 +141,7 @@ public class AsyncToken<T>  {
 		}
 	}
 	
-	public List<IResponder> getResponders() {
+	public List<IResponder<?>> getResponders() {
 		return _responders;
 	}
 	

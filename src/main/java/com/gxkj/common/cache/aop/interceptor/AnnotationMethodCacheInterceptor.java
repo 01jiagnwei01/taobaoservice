@@ -98,7 +98,7 @@ public class AnnotationMethodCacheInterceptor implements MethodInterceptor,BeanF
 		}else if(arg.getClass().isArray()) {
 			argString = "["+StringUtils.join(((Object[])arg), ',')+"]";
 		}else if(arg instanceof Iterable) {
-			argString = "["+StringUtils.join(((Iterable)arg).iterator(), ',')+"]";
+			argString = "["+StringUtils.join(((Iterable<?>)arg).iterator(), ',')+"]";
 		}else {
 			argString = arg.toString();
 		}
