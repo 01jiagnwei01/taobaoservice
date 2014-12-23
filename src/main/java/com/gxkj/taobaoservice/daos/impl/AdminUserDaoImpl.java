@@ -36,10 +36,9 @@ public class AdminUserDaoImpl extends BaseDAOImpl implements AdminUserDao {
 		pager.setPageNo(pageno);
 		pager.setRowsPerPage(pagesize );
 
-		List<Class<?>> clazzs = new ArrayList<Class<?>>();
-		clazzs.add(AdminUser.class);
+		 
 		
-		ListPager page = this.selectPageBySQL(sql.toString(), parameters.toArray(),clazzs,pager);
+		ListPager page = this.selectPageBySQL(sql.toString(), parameters.toArray(),AdminUser.class,pager);
 		return page;
 	}
 
@@ -59,11 +58,7 @@ public class AdminUserDaoImpl extends BaseDAOImpl implements AdminUserDao {
 		 StringBuffer sql = new StringBuffer("select * from admin_user where name = ?");
 		 List<Object> parameters = new ArrayList<Object>();
 		 parameters.add(name);
-		 
-		 List<Class<?>> clazzs = new ArrayList<Class<?>>();
-		 clazzs.add(AdminUser.class);
-			
-		 return ((List<AdminUser>) this.selectBySql (sql.toString(), parameters.toArray(), clazzs));
+		 return ((List<AdminUser>) this.selectBySql (sql.toString(), parameters.toArray(), AdminUser.class));
 	}
 
 

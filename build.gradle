@@ -39,8 +39,8 @@ dependencies {
 	//aspect
 	compile 'aspectj:aspectjweaver:1.5.4'
 	//json-lib
-	//compile 'net.sf.json-lib:json-lib:2.4'
-	//compile 'net.sf.ezmorph:ezmorph:1.0.6'
+	compile 'net.sf.json-lib:json-lib:2.4'
+	compile 'net.sf.ezmorph:ezmorph:1.0.6'
 
 	
 	//hibernate

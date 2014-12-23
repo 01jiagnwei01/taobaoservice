@@ -38,18 +38,15 @@ public class UserAccountLogDaoImpl extends BaseDAOImpl implements
 			param.add(beginTime);
 		}
 		if(endTime != null){
-			sql += " and user_account_log.createTime <= :endTime ";
+			sql += " and user_account_log.createTime <= ? ";
 			param.add(endTime);
 		}
 		sql += " order by user_account_log.id desc";
 		ListPager pager = new ListPager();
 		pager.setPageNo(pageno);
 		pager.setRowsPerPage(pagesize);
-		
-		List<Class<?>> clazzs = new ArrayList<Class<?>>();
-		 clazzs.add(UserAccountLog.class);
 		 
-		return this.selectPageBySQL(sql, param.toArray(),clazzs, pager);
+		return this.selectPageBySQL(sql, param.toArray(),UserAccountLog.class, pager);
 	}
 
 }

@@ -18,8 +18,7 @@ public class AdminRoleDaoImpl extends BaseDAOImpl implements AdminRoleDao {
 
 	
 	public ListPager doPage(int pageno, int pagesize, String name,int status) throws SQLException {
-			List<Class<?>> clazzs = new ArrayList<Class<?>>();
-			clazzs.add(AdminRole.class);
+			 
 		
 			List<Object> parameters = new ArrayList<Object>();
 			StringBuffer sql = new StringBuffer("select * from admin_role   ");
@@ -39,7 +38,7 @@ public class AdminRoleDaoImpl extends BaseDAOImpl implements AdminRoleDao {
 			pager.setPageNo(pageno);
 			pager.setRowsPerPage(pagesize );
 			
-			 pager = (ListPager) this.selectPageBySQL(sql.toString(), parameters.toArray(),clazzs,pager);
+			 pager = (ListPager) this.selectPageBySQL(sql.toString(), parameters.toArray(),AdminRole.class,pager);
 			return pager;
 		}
 

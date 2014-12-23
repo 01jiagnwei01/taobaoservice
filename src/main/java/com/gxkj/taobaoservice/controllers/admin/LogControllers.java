@@ -1,5 +1,7 @@
 package com.gxkj.taobaoservice.controllers.admin;
 
+import groovy.json.JsonOutput;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -64,6 +66,7 @@ public class LogControllers {
 			ret.setResult(true);
 			try {
 				ListPager paper = userAccountLogService.doPage(pageno, pagesize, userID, adminId, userAccountType, beginTime,endTime);
+				System.out.println(JsonOutput.toJson(paper));
 				ret.setEntity(paper);
 			} catch (Exception e) {
 				e.printStackTrace();
