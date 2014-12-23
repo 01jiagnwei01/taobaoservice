@@ -72,7 +72,6 @@ public class HibernateResultTransformer  extends AliasedTupleSubsetResultTransfo
 				initialize( aliases );
 			}
 			else {
-				
 				PropertyBean propertyBean = null;
 				String[] newaliases = new String[aliases.length];
 				for ( int i = 0; i < aliases.length; i++ ) {

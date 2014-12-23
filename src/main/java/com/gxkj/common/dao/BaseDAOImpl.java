@@ -375,11 +375,15 @@ public  class BaseDAOImpl    implements BaseDAO {
 	}
 	
 	private void _transFormResult(SQLQuery query,Class<?> clazz){
-		//q.setResultTransformer(Transformers.aliasToBean(clazz));  
-		query.setResultTransformer(new HibernateResultTransformer(clazz));  
-//		for(Class<?> clazz :clazzs){
-//			query.addEntity(clazz);
-//		}
+		 if(clazz.getName().equals("java.util.HashMap")){
+			 query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+		 }else{
+			 query.setResultTransformer(new HibernateResultTransformer(clazz));  
+		 }
+	}
+	public static void main(String[] args) {
+//		Map n = new HashMap();
+//		System.out.println(n.getClass().getName());
 	}
 	 
 
