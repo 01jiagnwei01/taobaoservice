@@ -46,7 +46,7 @@ public class SharedRenderVariableInterceptor extends HandlerInterceptorAdapter i
 		HashMap<String,Object> model = new HashMap<String,Object>();
 		
 		model.put("share_current_request_time", new Date());
-		model.put("share_current_login_username", "badqiu");
+		//model.put("share_current_login_username", "badqiu");
 		model.put("ctx", request.getContextPath());
 		model.put("flash", Flash.current().getData());
 		
