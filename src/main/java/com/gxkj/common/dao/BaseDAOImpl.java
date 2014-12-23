@@ -13,7 +13,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.transform.Transformers;
 
-import com.gxkj.common.transform.HibernateResultTransformer;
 import com.gxkj.common.util.ListPager;
  
 public  class BaseDAOImpl    implements BaseDAO {
@@ -92,7 +91,7 @@ public  class BaseDAOImpl    implements BaseDAO {
 		return pager;
 	}
 	
-	public  ListPager selectPageBySQL(String sql, Object[] parameters,Class<?> clazz,
+	public  ListPager selectPageBySQL(String sql, Object[] parameters,List<Class<?>> clazzs,
 			ListPager pager) throws SQLException {
 		
 		Session session = sessionFactory.getCurrentSession();
@@ -107,11 +106,10 @@ public  class BaseDAOImpl    implements BaseDAO {
 		pager.setTotalRows(totalRows.longValue());
 		if(totalRows.intValue() == 0){
 			pager.setPageData(null);
-			
 			return pager; 
 		}
 		List<?> pageData = this.selectPageBySQL(sql,parameters,
-				(pager.getPageNo()-1)*pager.getRowsPerPage(),clazz,pager.getRowsPerPage());
+				(pager.getPageNo()-1)*pager.getRowsPerPage(),clazzs,pager.getRowsPerPage());
 		pager.setPageData(pageData);
 		return pager;
 	}
@@ -130,7 +128,7 @@ public  class BaseDAOImpl    implements BaseDAO {
 		 query.setMaxResults(to);  
 		  return query.list();
 	}
-	public List<?> selectPageBySQL(String sql, Object[] parameters, int from,Class<?> clazz,
+	public List<?> selectPageBySQL(String sql, Object[] parameters, int from,List<Class<?>> clazzs,
 			int to) throws SQLException {
 		
 		Session session = sessionFactory.getCurrentSession();
@@ -140,9 +138,12 @@ public  class BaseDAOImpl    implements BaseDAO {
 				query.setParameter(i, parameters[i]);
 			}
 		}
-		if(clazz != null){
- 			query.setResultTransformer(new HibernateResultTransformer(clazz));  
+		if(clazzs != null && !clazzs.isEmpty()){
+ 			//query.setResultTransformer(new HibernateResultTransformer(clazz));  
 			//query.addEntity(clazz);
+			for(Class<?> clazz :clazzs){
+				query.addEntity(clazz);
+			}
 		}else{
 			//org.hibernate.transform.AliasToBeanResultTransformer;
 			query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
@@ -243,20 +244,20 @@ public  class BaseDAOImpl    implements BaseDAO {
 		return totalRows;
 	}
 
-	public Object executeQueryOne(String sql, Object[] parameters, Class<?> clazz)
+	public Object executeQueryOne(String sql, Object[] parameters,List<Class<?>> clazzs)
 			throws SQLException {
-		List<?> datas = this.executeQuery(sql, parameters, clazz);
+		List<?> datas = this.executeQuery(sql, parameters, clazzs);
 		return  datas == null ?null :datas.get(0 );
 	}
 	public List<?> executeQuery(String sql, Object[] parameters,
-			Class<?> clazz) throws SQLException {
+			List<Class<?>>  clazzs) throws SQLException {
 		Session session = sessionFactory.getCurrentSession() ;
 		 
 		SQLQuery q = session.createSQLQuery(sql);
-		if(clazz != null){
-			//q.setResultTransformer(Transformers.aliasToBean(clazz));  
-			//q.addEntity(clazz);
-			q.setResultTransformer(new HibernateResultTransformer(clazz));  
+		if(clazzs != null && !clazzs.isEmpty()){
+			for(Class<?> clazz :clazzs){
+				q.addEntity(clazz);
+			}
 			 
 		}else{
 			 q.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
@@ -266,7 +267,6 @@ public  class BaseDAOImpl    implements BaseDAO {
 				q.setParameter(i, parameters[i]);
 			}
 		}
-		
 		List<?> datas =  q.list();
 		return   datas;
 	}
@@ -283,23 +283,25 @@ public  class BaseDAOImpl    implements BaseDAO {
     }
 
 	 
-	public List<?> selectBySQL(String sql, Class<?> clazz) throws SQLException {
-		return this.executeQuery(sql, null, clazz);
+	public List<?> selectBySQL(String sql,List<Class<?>> clazzs) throws SQLException {
+		return this.executeQuery(sql, null, clazzs);
 	}
 
-	public List<?> selectBySql(String sql, Object[] parameters, Class<?> clazz)
+	public List<?> selectBySql(String sql, Object[] parameters, List<Class<?>> clazzs)
 			throws SQLException {
-		return this.executeQuery(sql, parameters, clazz);
+		return this.executeQuery(sql, parameters, clazzs);
 	}
-
 	 
-	public Object selectOneBySQL(String sql,Class<?> clazz) throws SQLException {
+	public Object selectOneBySQL(String sql,List<Class<?>> clazzs) throws SQLException {
 		Session session = sessionFactory.getCurrentSession();
 		SQLQuery q = session.createSQLQuery(sql); 
-		if(clazz != null){
+		if(clazzs != null && !clazzs.isEmpty()){
 			//q.setResultTransformer(Transformers.aliasToBean(clazz));  
 			//q.addEntity(clazz);
-			q.setResultTransformer(new HibernateResultTransformer(clazz));  
+			//q.setResultTransformer(new HibernateResultTransformer(clazz)); 
+			for(Class<?> clazz :clazzs){
+				q.addEntity(clazz);
+			} 
 		}else{
 			 q.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
 		}
@@ -307,7 +309,7 @@ public  class BaseDAOImpl    implements BaseDAO {
 	}
 
 	 
-	public Object selectOneBySQL(String sql, Object[] parameters,Class<?> clazz)
+	public Object selectOneBySQL(String sql, Object[] parameters,List<Class<?>> clazzs)
 			throws SQLException {
 		 
 		Session session = sessionFactory.getCurrentSession();
@@ -317,10 +319,13 @@ public  class BaseDAOImpl    implements BaseDAO {
 				q.setParameter(i, parameters[i]);
 			}
 		}
-		if(clazz != null){
+		if(clazzs != null && !clazzs.isEmpty()){
 			//q.setResultTransformer(Transformers.aliasToBean(clazz));  
 			//q.addEntity(clazz);
-			q.setResultTransformer(new HibernateResultTransformer(clazz));  
+			//q.setResultTransformer(new HibernateResultTransformer(clazz)); 
+			for(Class<?> clazz :clazzs){
+				q.addEntity(clazz);
+			}
 		}else{
 			 q.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
 		}
@@ -385,6 +390,6 @@ public  class BaseDAOImpl    implements BaseDAO {
 		 return query.list();
 	}
 
+	 
  
-
 }

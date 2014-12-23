@@ -10,13 +10,14 @@ import com.gxkj.common.util.ListPager;
 
 public interface BaseDAO {
 
+	public void deleteById(Serializable  id,Class<?> clazz) throws SQLException;
+	
 	public Object selectById(Serializable id, Class<?> clazz)
 			throws SQLException;
 
 	public void insert(final Object entity) throws SQLException;
 
 	public void delete(Object entity) throws SQLException;
-	public void deleteById(Serializable  id,Class<?> clazz) throws SQLException;
 
 	public void update(Object entity) throws SQLException;
 
@@ -28,21 +29,24 @@ public interface BaseDAO {
 	
 	public List<?> selectByHQL(String hql, Map<String,Object> parameters) throws SQLException;
 	
-	public List<?> selectBySQL (String sql,Class<?> clazz) throws SQLException;
+	
+	
+	public List<?> selectBySQL (String sql,List<Class<?>> clazzs) throws SQLException;
 	
 	public List<?>selectPageByHQL(String hql, Map<String, Object> param,int from, int to)throws SQLException;
+	
 	public ListPager selectPageByHql(String hql, Object[] parameters, ListPager pager)
 			throws SQLException;
 	public ListPager selectPageByHql(String hql, Map<String, Object> param,
 			ListPager pager) throws SQLException;
 	
-	public ListPager selectPageBySQL(String sql, Object[] parameters,Class<?> clazz, ListPager pager)
+	public ListPager selectPageBySQL(String sql, Object[] parameters,List<Class<?>> clazzs, ListPager pager)
 			throws SQLException;
 
 	public List<?> selectPageByHQL(String hql, Object[] parameters, int from, int to)
 			throws SQLException;
 	
-	public List<?> selectPageBySQL(String sql, Object[] parameters, int from,Class<?> clazz,
+	public List<?> selectPageBySQL(String sql, Object[] parameters, int from,List<Class<?>> clazzs,
 			int to)
 			throws SQLException;
 	
@@ -52,9 +56,9 @@ public interface BaseDAO {
 
 	public Object selectOneByHQL(String hql) throws SQLException;
 	
-	public Object selectOneBySQL(String sql,Class<?> clazz) throws SQLException;
+	public Object selectOneBySQL(String sql,List<Class<?>> clazzs) throws SQLException;
 	
-	public Object selectOneBySQL(String sql, Object[] parameters,Class<?> clazz)
+	public Object selectOneBySQL(String sql, Object[] parameters,List<Class<?>> clazzs)
 			throws SQLException;
 
 	public int executeUpdate(String sql, Object[] parameters)
@@ -80,9 +84,9 @@ public interface BaseDAO {
 			throws SQLException;
 
 	public Object executeQueryOne(String sql, Object[] parameters,
-			Class<?> clazz) throws SQLException;
+			List<Class<?>>  clazzs) throws SQLException;
 
-	public List<?> executeQuery(String sql, Object[] parameters, Class<?> clazz)
+	public List<?> executeQuery(String sql, Object[] parameters, List<Class<?>>  clazzs)
 			throws SQLException;
 
 }

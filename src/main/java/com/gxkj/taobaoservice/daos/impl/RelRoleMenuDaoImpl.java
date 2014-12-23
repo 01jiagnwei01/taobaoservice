@@ -1,6 +1,7 @@
 package com.gxkj.taobaoservice.daos.impl;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -23,7 +24,11 @@ public class RelRoleMenuDaoImpl extends BaseDAOImpl implements RelRoleMenuDao {
 	@SuppressWarnings("unchecked")
 	public List<AdminMenu> getMenuByRoleId(int roleid) throws SQLException {
 		 String sql =String.format("select menu.* from admin_menu menu,rel_role_menu rel where rel.roleid=%d and rel.menuid = menu.id ", roleid);
-		return ((List<AdminMenu>) this.selectBySQL(sql, AdminMenu.class));
+		
+		 List<Class<?>> clazzs = new ArrayList<Class<?>>();
+		 clazzs.add(AdminMenu.class);
+		 
+		 return ((List<AdminMenu>) this.selectBySQL(sql, clazzs));
 	}
 
 	 

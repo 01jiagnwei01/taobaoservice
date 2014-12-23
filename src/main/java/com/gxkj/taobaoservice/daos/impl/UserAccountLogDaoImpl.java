@@ -45,7 +45,11 @@ public class UserAccountLogDaoImpl extends BaseDAOImpl implements
 		ListPager pager = new ListPager();
 		pager.setPageNo(pageno);
 		pager.setRowsPerPage(pagesize);
-		return this.selectPageBySQL(sql, param.toArray(),UserAccountLog.class, pager);
+		
+		List<Class<?>> clazzs = new ArrayList<Class<?>>();
+		 clazzs.add(UserAccountLog.class);
+		 
+		return this.selectPageBySQL(sql, param.toArray(),clazzs, pager);
 	}
 
 }

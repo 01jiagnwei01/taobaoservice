@@ -22,7 +22,9 @@ public class AdminMenuDaoImpl extends BaseDAOImpl implements AdminMenuDao {
 	
 	@SuppressWarnings("unchecked")
 	public List<AdminMenu> getAllMenu() throws SQLException{
-		return ((List<AdminMenu>) this.executeQuery(getAllsql, null, AdminMenu.class));
+		List<Class<?>> clazzs = new ArrayList<Class<?>>();
+		clazzs.add(AdminMenu.class);
+		return ((List<AdminMenu>) this.executeQuery(getAllsql, null, clazzs));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -34,7 +36,9 @@ public class AdminMenuDaoImpl extends BaseDAOImpl implements AdminMenuDao {
 			sql.append( " and id != ?");
 			parameters.add(entity.getId());
 		}
-		return ((List<AdminMenu>) this.selectBySql(sql.toString(), parameters.toArray(), AdminMenu.class));
+		List<Class<?>> clazzs = new ArrayList<Class<?>>();
+		clazzs.add(AdminMenu.class);
+		return ((List<AdminMenu>) this.selectBySql(sql.toString(), parameters.toArray(), clazzs));
 	}
 
 }
