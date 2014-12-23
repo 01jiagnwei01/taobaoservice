@@ -7,9 +7,9 @@
 
 
 <!-- 用于持有ApplicationContext,可以使用ApplicationContextHolder.getBean('xxxx')的静态方法得到spring bean对象 -->
-	<!-- -->
+	<!-- 
 	 <bean class="com.gxkj.common.util.ApplicationContextHolder"/>
-	
+	-->
 	<bean id="placeholderProperties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
 		 >
 		<property name="location" value="classpath:mysql.properties" />

@@ -18,20 +18,7 @@
 		        <!-- 如果不加默认到 使用classpath下的 ValidationMessages.properties -->
 		        <property name="validationMessageSource" ref="messageSource"/>
 		</bean>
-	<bean id="messageSource"
-		class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
-		p:fallbackToSystemLocale="true" 
-		p:useCodeAsDefaultMessage="false"
-		p:defaultEncoding="UTF-8">
-		<description>Base message source to handle internationalization
-		</description>
-		<property name="basenames">
-			<list>
-				<value>classpath:spring/validation/ValidationMessages</value>
-			</list>
-		</property>
-	</bean>
-	
+	 
 	<!-- 国际化,并且可以批定文件编码,可以使用classpath: 或者WEB-INF/ 前缀 -->
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
     	<property name="basenames">
