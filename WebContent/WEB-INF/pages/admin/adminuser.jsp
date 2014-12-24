@@ -267,7 +267,7 @@ function delFn(id){
 	var delRowIndex = 	$('#dg').datagrid("getRowIndex",row);
 	 $.messager.confirm('系统提示', '您确定要删除这条记录吗?', function(r){
 		if (r){
-				var url = "<%=SystemGlobals.getPreference("system.index.url") %>/admin/user/dodel";
+				var url = "<%=request.getContextPath() %>/admin/user/dodel";
 		  		 $.ajax({
 		  	  	  type:'post',
 				  url: url,

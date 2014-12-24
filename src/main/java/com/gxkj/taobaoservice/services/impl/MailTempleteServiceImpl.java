@@ -5,8 +5,10 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindException;
 
 import com.gxkj.common.util.ListPager;
+import com.gxkj.common.util.SpringValidatorHolder;
 import com.gxkj.taobaoservice.daos.MailTempleteDao;
 import com.gxkj.taobaoservice.entitys.AdminUser;
 import com.gxkj.taobaoservice.entitys.MailTemplete;
@@ -18,20 +20,23 @@ public class MailTempleteServiceImpl implements MailTempleteService {
 	@Autowired
 	private MailTempleteDao mailTempleteDao;
 
-	public MailTemplete doAddMailTemplete(MailTemplete entity,AdminUser adminUser) throws SQLException {
+	public MailTemplete doAddMailTemplete(MailTemplete entity,AdminUser adminUser) throws SQLException, BindException {
 		Date now = new Date();
 		entity.setUpdateTime(now);
 		entity.setUpdateUserId(adminUser.getId());
 		entity.setStatus(MailTempleteStatus.NORMAL);
+		SpringValidatorHolder.validate(entity);
 		mailTempleteDao.insert(entity);
 		return entity;
 	}
 
-	public MailTemplete doUpdateMailTemplete(MailTemplete entity,AdminUser adminUser) throws SQLException {
+	public MailTemplete doUpdateMailTemplete(MailTemplete entity,AdminUser adminUser) throws SQLException, BindException {
 		Date now = new Date();
 		entity.setUpdateTime(now);
 		entity.setUpdateUserId(adminUser.getId());
 		entity.setStatus(MailTempleteStatus.NORMAL);
+		
+		SpringValidatorHolder.validate(entity);
 		mailTempleteDao.update(entity);
 		return entity;
 	}
@@ -44,6 +49,7 @@ public class MailTempleteServiceImpl implements MailTempleteService {
 		entity.setUpdateTime(now);
 		entity.setUpdateUserId(adminUser.getId());
 		entity.setStatus(MailTempleteStatus.DELETE);
+		
 		mailTempleteDao.update(entity);
 		return true;
 	}

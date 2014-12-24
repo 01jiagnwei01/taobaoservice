@@ -5,14 +5,14 @@
 <head><%--  --%>
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" content="ie=edge"/>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>邮箱内容管理 </title>
+<title>邮箱模板管理 </title>
 <%@include file="../../common/easyui-html5.jsp" %>
 <script type="text/javascript">
-var fenye = "${_adminUser_.btnMap.admin_mail_content_dopage}"== "true"?true:false;
-var add = "${_adminUser_.btnMap.admin_mail_content_doadd}"== "true"?true:false;
-var update = "${_adminUser_.btnMap.admin_mail_content_doupdate}"== "true"?true:false;
-var del = "${_adminUser_.btnMap.admin_mail_content_dodel}"== "true"?true:false;
-var detail = "${_adminUser_.btnMap.admin_mail_content_get}"== "true"?true:false;
+var fenye = "${_adminUser_.btnMap.admin_mail_templete_dopage}"== "true"?true:false;
+var add = "${_adminUser_.btnMap.admin_mail_templete_doadd}"== "true"?true:false;
+var update = "${_adminUser_.btnMap.admin_mail_templete_doupdate}"== "true"?true:false;
+var del = "${_adminUser_.btnMap.admin_mail_templete_dodel}"== "true"?true:false;
+var detail = "${_adminUser_.btnMap.admin_mail_templete_get}"== "true"?true:false;
 </script>
 </head>
 <body class="easyui-layout">
@@ -20,7 +20,7 @@ var detail = "${_adminUser_.btnMap.admin_mail_content_get}"== "true"?true:false;
 		<table class="easyui-datagrid"   
 					id ='dg' 
 		           data-options="fit:true,fitColumns:true,border:false,rownumbers:true,checkOnSelect:true,singleSelect:true,pagination:true,
-		           pageSize:20,url:'<%=request.getContextPath() %>/admin/mail/content/dopage?d='+new Date().getTime(),method:'POST'
+		           pageSize:20,url:'<%=request.getContextPath() %>/admin/mail/templete/dopage?d='+new Date().getTime(),method:'POST'
 		           ,onBeforeLoad:function(param){
 		           
 				param['pageno'] =  param['page']-1;
@@ -49,10 +49,8 @@ var detail = "${_adminUser_.btnMap.admin_mail_content_get}"== "true"?true:false;
 		        <thead> 
 		        	<tr>
 								<th data-options="field:'id',width:30" >id</th>
-								<th data-options="field:'templeteId',hidden:true"  >模板ID</th>
-								<th data-options="field:'title',width:150"  >标题</th>
-								<th data-options="field:'updateUserId',formatter:adminUserIdFormat,width:150"  >管理员</th>
-								<th data-options="field:'updateTime',formatter:dateFormat,width:150"  >修改时间</th> 
+								<th data-options="field:'templeteName',width:150"  >名称</th>
+								<th data-options="field:'templetePath',width:150"  >保存路径</th>
 								<th data-options="field:'opt',formatter:optFormat,width:150"  >操作</th> 
 					</tr>
 					
@@ -63,7 +61,7 @@ var detail = "${_adminUser_.btnMap.admin_mail_content_get}"== "true"?true:false;
 		<table style="width:100%">
 			<tr >
 				<td width="50%">
-					标题: <input class="easyui-spinner" style="width:160px" id="title"/>
+					名称: <input class="easyui-spinner" style="width:160px" id="templeteName"/>
 					<a href="#"  class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="searchFn()">查看</a>
 				</td>
 				<td align="right" width="50%">
@@ -73,7 +71,7 @@ var detail = "${_adminUser_.btnMap.admin_mail_content_get}"== "true"?true:false;
 			</tr>
 		</table>
 	</div>
-	 <div id="mail_w" class="easyui-window" title="系统管理员" data-options="modal:true,closed:true,iconCls:'icon-save',
+	 <div id="templete_w" class="easyui-window" title="创建模板" data-options="modal:true,closed:true,iconCls:'icon-save',
 		collapsible:false,minimizable:false,maximizable:false,resizable:false" 
 			style="width:600px;height:420px;padding:10px;">
 		<div class="easyui-layout" data-options="fit:true">
@@ -85,58 +83,19 @@ var detail = "${_adminUser_.btnMap.admin_mail_content_get}"== "true"?true:false;
 				    			<td><input class="easyui-validatebox" type="text" id="id" name="id" data-options="required:false"></input></td>
 				    		</tr>
 				    		<tr>
-				    			<td>标题:</td>
+				    			<td>名称:</td>
 				    			<td>
-				    				<input style="width:300px;" class="easyui-validatebox" type="text" id="form_title" name="title" data-options="required:true"></input>
-				    			</td>
-				    		</tr>
-				    		<tr >
-				    			<td>模板:</td>
-				    			<td>
-				    				 <input id="templeteid" name="templeteId" class="easyui-combogrid" style="width:200px;" data-options="
-										panelWidth: 380,
-										textField: 'templeteName',
-										idField:'id',
-										editable:false,
-										mode: 'remote',
-										method:'post',
-										fit:true,
-										pageSize:20,
-										url:'<%=request.getContextPath() %>/admin/mail/templete/dopage?d='+new Date().getTime(),
-										method: 'post',
-										columns: [[
-											{field:'id',title:'id',width:80,hidden:true},
-											{field:'templeteName',title:'名字',width:120} 
-										]],
-										fitColumns: true,
-										pagination:true,
-										pageSize:20,
-										onBeforeLoad:function(param){
-											 param['pageno'] =  param['page']-1;
-											param['limit']  = param['rows'];
-									  		return true ;
-									  	},
-									  	loadFilter:function(data){
-											var result = data.result;
-											if(!result){
-												return {total:0,rows:[]};
-											}else {
-												var obj = {
-													total:data.entity.totalRows,
-													rows:data.entity.pageData ?data.entity.pageData:[]
-												};
-												return obj;
-											} 
-										}
-									">
+				    				<input style="width:300px;" class="easyui-validatebox" type="text" id="form_templeteName" name="templeteName" data-options="required:true"></input>
 				    			</td>
 				    		</tr>
 				    		<tr>
-				    			<td>邮件内容:</td>
+				    			<td>保存路径:</td>
 				    			<td>
-				    				<textarea rows="16" cols="56" id="content" name="content" ></textarea>
+				    				<input style="width:300px;" class="easyui-validatebox" type="text" id="templetePath" name="templetePath" data-options="required:true"></input>
 				    			</td>
 				    		</tr>
+				    		 
+				    		
 				    	</table>
 				 </form>
 			 </div>
@@ -153,9 +112,9 @@ $(function(){
  
 });
 function searchFn(){
-	var title = $("#title").val(); 
+	var templeteName = $("#templeteName").val(); 
 	$('#dg').datagrid('load',{
-		title:title, 
+		templeteName:templeteName, 
 		d:new Date().getTime()
 	});
 }
@@ -198,12 +157,12 @@ function optFormat(value,row,index){
 }
 var saveType = "add";
 function closeWinFn(){
-			$('#mail_w').window('close');
+			$('#templete_w').window('close');
 }
 function addFn(){
 	saveType = "add";
 	 $("#ff").form("reset");
-	 $('#mail_w').window('open').panel('setTitle',"创建邮件");
+	 $('#templete_w').window('open').panel('setTitle',"创建模板");
 	 $('#savebtn').show();
 }
 function updateFn(id){
@@ -222,49 +181,36 @@ function updateFn(id){
 	updateRowIndex = rowIndex;
 	 
 	$("#id").val(row['id']);
-	$("#form_title").val(row['title']);
-	$("#content").val(row['content']);
-	 if(row['templeteId']){
-	 	var templeteId = row['templeteId'];
-	 	var templeteName = row['templeteName'] == null ?"": row['templeteName'] ;
-	 	 
-	 	//var roleName = role.name;
-	 	 $('#templeteid').combogrid('setValue', templeteId);
-		 $('#templeteid').combogrid('setText', templeteName);
-		  
-	 }
-	$('#mail_w').window('open').panel('setTitle',"修改邮件") ;
-	$('#mail_w').window('center');
+	$("#form_templeteName").val(row['templeteName']);
+	$("#templetePath").val(row['templetePath']);
+	  
+	$('#templete_w').window('open').panel('setTitle',"修改模板") ;
+	$('#templete_w').window('center');
 	$('#savebtn').show();
 }
 function submitFormFn(){
 	var u_id = $("#id").val();
-	var title = $("#form_title").val();
-	var content = $("#content").val();
-	var templeteid = $('#templeteid').combogrid('getValue');
-	var templeteName = $('#templeteid').combogrid('getText'); 
-	if(title.length == 0){
-		 $.messager.alert('系统提示','标题不能为空!','info');
+	var form_templeteName = $("#form_templeteName").val();
+	var templetePath = $("#templetePath").val();
+	 
+	if(form_templeteName.length == 0){
+		 $.messager.alert('系统提示','名称不能为空!','info');
 		 return;
 	}
-	if(templeteid == null ||  templeteid.length == 0 || templeteid == 0){
-		 $.messager.alert('系统提示','请选择模板!','info');
+	if(templetePath == null  ){
+		 $.messager.alert('系统提示','路径不能为空!','info');
 		 return;
 	}
-	if(content.length == 0  ){
-		 $.messager.alert('系统提示','内容不能为空!','info');
-		 return;
-	}
+	 
 	var saveObj = {};
 	saveObj.id=$.trim(u_id).length==0?0:u_id;
-	saveObj.templeteId= templeteid;
-	saveObj.content=content;
-	saveObj.title = title;
+	saveObj.templeteName= form_templeteName;
+	saveObj.templetePath=templetePath; 
 	 
 	if(saveType == 'add'){ insertIntoDb(saveObj); }else if(saveType == 'update'){ updateIntoDb(saveObj); }
 }
 function insertIntoDb(saveObj){
-	var url =  "<%=request.getContextPath()%>/admin/mail/content/doadd";
+	var url =  "<%=request.getContextPath()%>/admin/mail/templete/doadd";
   	 $.ajax({
   	  	  type:'post',
 		  url: url,
@@ -309,7 +255,7 @@ function insertIntoDb(saveObj){
 	});
 }
 function updateIntoDb(saveObj){
-	var url =  "<%=request.getContextPath() %>/admin/mail/content/doupdate";
+	var url =  "<%=request.getContextPath() %>/admin/mail/templete/doupdate";
   	 $.ajax({
   	  	  type:'post',
 		  url: url,
@@ -371,23 +317,13 @@ function getFn(id){
 			break;
 		}
 	}
-	var rowIndex = 	$('#dg').datagrid("getRowIndex",row);
 	 
 	 
 	$("#id").val(row['id']);
-	$("#form_title").val(row['title']);
-	$("#content").val(row['content']);
-	 if(row['templeteId']){
-	 	var templeteId = row['templeteId'];
-	 	var templeteName = row['templeteName'] == null ?"": row['templeteName'] ;
-	 	 
-	 	//var roleName = role.name;
-	 	 $('#templeteid').combogrid('setValue', templeteId);
-		 $('#templeteid').combogrid('setText', templeteName);
-		  
-	 }
-	$('#mail_w').window('open').panel('setTitle',"查看邮件") ;
-	$('#mail_w').window('center');
+	$("#form_templeteName").val(row['templeteName']);
+	$("#templetePath").val(row['templetePath']);
+	$('#templete_w').window('open').panel('setTitle',"查看模板") ;
+	$('#templete_w').window('center');
 	$('#savebtn').hide();
 }
 
@@ -404,7 +340,7 @@ function delFn(id){
 	
 	$.messager.confirm('系统提示', '您确定要删除这条记录吗?', function(r){
 		if (r){
-				var url = "<%=request.getContextPath() %>/admin/mail/content/dodel";
+				var url = "<%=request.getContextPath() %>/admin/mail/templete/dodel";
 		  		 $.ajax({
 		  	  	  type:'post',
 				  url: url,

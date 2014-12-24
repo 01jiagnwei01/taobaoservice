@@ -59,7 +59,7 @@ public class MailTemplete implements Serializable {
 	private MailTempleteStatus status;
 	
 	@Column(name = "updateUserId",   nullable = false )
-	private int updateUserId;
+	private Integer updateUserId;
 	
 	@Transient
 	private String updateUserName;
@@ -115,12 +115,12 @@ public class MailTemplete implements Serializable {
 	}
 
 
-	public int getUpdateUserId() {
+	public Integer getUpdateUserId() {
 		return updateUserId;
 	}
 
 
-	public void setUpdateUserId(int updateUserId) {
+	public void setUpdateUserId(Integer updateUserId) {
 		this.updateUserId = updateUserId;
 	}
 

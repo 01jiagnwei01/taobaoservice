@@ -74,6 +74,9 @@ public class MailContent implements Serializable {
 		
 		@Transient
 		private String updateUserName;
+		
+		@Transient
+		private String templeteName;
 
 		public Integer getId() {
 			return id;
@@ -138,6 +141,15 @@ public class MailContent implements Serializable {
 		public void setUpdateUserName(String updateUserName) {
 			this.updateUserName = updateUserName;
 		}
+
+		public String getTempleteName() {
+			return templeteName;
+		}
+
+		public void setTempleteName(String templeteName) {
+			this.templeteName = templeteName;
+		}
+		
 		
 		
 

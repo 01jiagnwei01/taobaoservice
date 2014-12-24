@@ -9,9 +9,12 @@ import org.springframework.validation.BindException;
 
 import com.gxkj.common.util.ListPager;
 import com.gxkj.common.util.SpringValidatorHolder;
+import com.gxkj.taobaoservice.daos.AdminUserDao;
 import com.gxkj.taobaoservice.daos.MailContentDao;
+import com.gxkj.taobaoservice.daos.MailTempleteDao;
 import com.gxkj.taobaoservice.entitys.AdminUser;
 import com.gxkj.taobaoservice.entitys.MailContent;
+import com.gxkj.taobaoservice.entitys.MailTemplete;
 import com.gxkj.taobaoservice.enums.MailContentStatus;
 import com.gxkj.taobaoservice.services.MailContentService;
 @Service
@@ -20,32 +23,47 @@ public class MailContentServiceImpl implements MailContentService {
 	@Autowired
 	private MailContentDao mailContentDao;
 	
+	@Autowired
+	private AdminUserDao adminUserDao;
+	
+	@Autowired
+	private MailTempleteDao mailTempleteDao;
+	
 	public MailContent doAddMailContent(MailContent entity, AdminUser adminUser)
 			throws SQLException, BindException {
 		 Date now = new Date();
 		 entity.setUpdateTime(now);
 		 entity.setUpdateUserId(adminUser.getId());
 		 entity.setStatus(MailContentStatus.NORMAL);
+		 entity.setUpdateUserName(adminUser.getName());
 		 
-		 try {
-			SpringValidatorHolder.validate(entity);
-			 mailContentDao.insert(entity);
-		} catch (BindException e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-			throw e;
-		}
+		SpringValidatorHolder.validate(entity);
+		 mailContentDao.insert(entity);
+		 
+		 MailTemplete mailTemplete = (MailTemplete) mailTempleteDao.selectById(entity.getTempleteId(), MailTemplete.class);
+			if(mailTemplete != null){
+				entity.setTempleteName(mailTemplete.getTempleteName());
+			}
+		 
 		
 		return entity;
 	}
 
 	public MailContent doUpdateMailContent(MailContent entity,
-			AdminUser adminUser) throws SQLException {
+			AdminUser adminUser) throws SQLException, BindException {
 		Date now = new Date();
 		entity.setUpdateTime(now);
 		entity.setUpdateUserId(adminUser.getId());
 		entity.setStatus(MailContentStatus.NORMAL);
+		 entity.setUpdateUserName(adminUser.getName());
+		 
+		 SpringValidatorHolder.validate(entity);
+		 
 		mailContentDao.update(entity);
+		MailTemplete mailTemplete = (MailTemplete) mailTempleteDao.selectById(entity.getTempleteId(), MailTemplete.class);
+		if(mailTemplete != null){
+			entity.setTempleteName(mailTemplete.getTempleteName());
+		}
 		return entity;
 	}
 
@@ -59,12 +77,22 @@ public class MailContentServiceImpl implements MailContentService {
 		entity.setUpdateUserId(adminUser.getId());
 		entity.setStatus(MailContentStatus.DELETE);
 		mailContentDao.update(entity);
+		
 		return true;
 	}
 
 	public MailContent getMailContentById(int id) throws SQLException {
 		 
-		return (MailContent) mailContentDao.selectById(id, MailContent.class);
+		MailContent entity = (MailContent) mailContentDao.selectById(id, MailContent.class);
+		AdminUser adminUser = (AdminUser) adminUserDao.selectById(id, AdminUser.class);
+		if(adminUser != null){
+			entity.setUpdateUserName(adminUser.getName());
+		}
+		MailTemplete mailTemplete = (MailTemplete) mailTempleteDao.selectById(entity.getTempleteId(), MailTemplete.class);
+		if(mailTemplete != null){
+			entity.setTempleteName(mailTemplete.getTempleteName());
+		}
+		return entity;
 	}
 
 	 

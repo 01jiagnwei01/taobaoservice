@@ -26,8 +26,9 @@ public interface MailContentService {
 	 * @param adminUser
 	 * @return
 	 * @throws SQLException
+	 * @throws BindException 
 	 */
-	public MailContent doUpdateMailContent(MailContent entity,AdminUser adminUser) throws SQLException;
+	public MailContent doUpdateMailContent(MailContent entity,AdminUser adminUser) throws SQLException, BindException;
 	
 	/**
 	 * 删除邮件内容

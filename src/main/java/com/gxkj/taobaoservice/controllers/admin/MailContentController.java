@@ -71,7 +71,7 @@ public class MailContentController {
 	public EntityReturnData doUpdate( HttpServletRequest request,
 			HttpServletResponse response,
 			MailContent mailContent,
-			ModelMap modelMap) throws SQLException  {
+			ModelMap modelMap) throws SQLException, BindException  {
 			EntityReturnData ret = new EntityReturnData();
 			ret.setMsg("执行成功");
 			ret.setResult(true);
@@ -82,6 +82,20 @@ public class MailContentController {
 			
 			return ret;
 	}	
+	
+	@RequestMapping(value="/dodel",method={RequestMethod.POST})
+	@ResponseBody
+	public EntityReturnData dodel( HttpServletRequest request,
+			HttpServletResponse response,
+			int id,
+			ModelMap modelMap) throws SQLException  {
+			EntityReturnData ret = new EntityReturnData();
+			AdminUser adminUser = SessionConstant.getAdminUserInSession(request);
+			boolean result =   mailContentService.doDelMailContent(id, adminUser);
+			ret.setResult(result);
+			
+			return ret;
+	}
 	
 
 }
