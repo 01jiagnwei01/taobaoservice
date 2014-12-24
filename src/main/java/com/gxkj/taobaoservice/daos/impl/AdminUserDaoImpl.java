@@ -35,9 +35,6 @@ public class AdminUserDaoImpl extends BaseDAOImpl implements AdminUserDao {
 		ListPager pager = new ListPager();
 		pager.setPageNo(pageno);
 		pager.setRowsPerPage(pagesize );
-
-		 
-		
 		ListPager page = this.selectPageBySQL(sql.toString(), parameters.toArray(),AdminUser.class,pager);
 		return page;
 	}
