@@ -176,6 +176,16 @@ public class HttpInclude {
                 public void write(byte[] b, int off, int len)throws IOException {
                     customOutputStream.write(b, off, len);
                 }
+				@Override
+				public boolean isReady() {
+					// TODO Auto-generated method stub
+					return false;
+				}
+				@Override
+				public void setWriteListener(WriteListener writeListener) {
+					// TODO Auto-generated method stub
+					
+				}
             };
         }
         @Override
