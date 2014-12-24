@@ -1,11 +1,19 @@
 package com.gxkj.common.exceptions;
 
+import groovy.json.JsonOutput;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
@@ -40,7 +48,22 @@ public class CustomSimpleMappingExceptionResolver extends SimpleMappingException
 	                   
 	                    if (ex instanceof  BusinessException){
 	                    	json.setMsg(  ex.getMessage());
-	    				}else {
+	    				}else if (ex instanceof  BindException){
+	    					List<FieldError> filedErrors = ((BindException) ex).getFieldErrors();
+	    					 
+	    					
+	    					
+	    					List<Map<String,String>> listErrors = new ArrayList<Map<String,String>>();
+	    					for(FieldError error : filedErrors){
+	    						 Map<String,String> errMap = new HashMap<String,String>();
+	    						 errMap.put("key", error.getField());
+	    						 errMap.put("errortype",error.getCode());
+	    						 errMap.put("errorMsg", error.getDefaultMessage());
+	    						 listErrors.add(errMap);
+	    						 
+	    					}
+	                    	json.setMsg( JsonOutput.toJson(listErrors));
+	    				}else{
 	    					json.setMsg(   "系统问题,请找技术人员解决");
 	    				}
 	                    if(json.getEntity() == null){

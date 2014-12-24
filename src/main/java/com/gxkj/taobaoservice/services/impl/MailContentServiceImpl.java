@@ -4,26 +4,38 @@ import java.sql.SQLException;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.validation.BindException;
 
 import com.gxkj.common.util.ListPager;
+import com.gxkj.common.util.SpringValidatorHolder;
 import com.gxkj.taobaoservice.daos.MailContentDao;
 import com.gxkj.taobaoservice.entitys.AdminUser;
 import com.gxkj.taobaoservice.entitys.MailContent;
 import com.gxkj.taobaoservice.enums.MailContentStatus;
 import com.gxkj.taobaoservice.services.MailContentService;
-
+@Service
 public class MailContentServiceImpl implements MailContentService {
 	
 	@Autowired
 	private MailContentDao mailContentDao;
 	
 	public MailContent doAddMailContent(MailContent entity, AdminUser adminUser)
-			throws SQLException {
+			throws SQLException, BindException {
 		 Date now = new Date();
 		 entity.setUpdateTime(now);
 		 entity.setUpdateUserId(adminUser.getId());
 		 entity.setStatus(MailContentStatus.NORMAL);
-		 mailContentDao.insert(entity);
+		 
+		 try {
+			SpringValidatorHolder.validate(entity);
+			 mailContentDao.insert(entity);
+		} catch (BindException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}
+		
 		return entity;
 	}
 
@@ -37,7 +49,6 @@ public class MailContentServiceImpl implements MailContentService {
 		return entity;
 	}
 
-	@Override
 	public boolean doDelMailContent(int id, AdminUser adminUser)
 			throws SQLException {
 		 

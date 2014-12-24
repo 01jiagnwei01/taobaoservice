@@ -20,7 +20,7 @@
 					<a href="#"  class="easyui-linkbutton" iconCls="icon-search" onclick="searchFn()">查看</a>
 				</td>
 				<td align="right" width="50%">
-					<a id="addBtn" href="#" class="easyui-linkbutton" iconCls="add_btn" plain="true" onclick="addFn()">增加</a>
+					<a href="#"  class="easyui-linkbutton" id="addBtn"  data-options="iconCls:'add_btn',plain:true" onclick="addFn()">增加</a>
 				</td>
 			</tr>
 		</table>
@@ -99,6 +99,7 @@
 					<a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" href="javascript:void(0)" onclick="javascript:submitFormFn()">保存</a>
 					<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" href="javascript:void(0)" onclick="javascript:closeWinFn()">取消</a>
 			</div>
+		</div>
 	</div>
 </body>
 <script type="text/javascript">
@@ -308,7 +309,7 @@ function submitFormFn(){
 	if(saveType == 'add'){ insertIntoDb(saveObj); }else if(saveType == 'update'){ updateIntoDb(saveObj); }
 }
 function insertIntoDb(saveObj){
-			var url =  "<%=SystemGlobals.getPreference("system.index.url") %>/admin/user/doadd";
+			var url =  "<%=request.getContextPath()%>/admin/user/doadd";
 		  	 $.ajax({
 		  	  	  type:'post',
 				  url: url,
@@ -328,7 +329,7 @@ function insertIntoDb(saveObj){
 			});
 }
 function updateIntoDb(saveObj){
-			var url =  "<%=SystemGlobals.getPreference("system.index.url") %>/admin/user/doupdate";
+			var url =  "<%=request.getContextPath() %>/admin/user/doupdate";
 		  	 $.ajax({
 		  	  	  type:'post',
 				  url: url,

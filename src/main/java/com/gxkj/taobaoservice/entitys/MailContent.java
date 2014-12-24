@@ -12,8 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.gxkj.taobaoservice.enums.MailContentStatus;
 @Entity
@@ -37,20 +39,23 @@ public class MailContent implements Serializable {
 		/**
 		 * 模板ID
 		 */
+		@NotNull(message="模板ID[templete_id]不允许为空")
 		@Column(name = "templete_id",  nullable = false,length=10) 
-		private String templeteId;
+		private Integer templeteId;
 		
 		/**
 		 * 邮件内容
 		 */
 		@Column(name = "content") 
 		@Lob
+		@NotEmpty(message="邮件内容不允许为空")
 		private String content;
 		/**
 		 * 邮件标题
 		 */
 		@Column(name = "title",length=100) 
 		@Lob
+		@NotEmpty(message="邮件标题不允许为空")
 		private String title ;
 		
 		@Column(name = "update_time",   nullable = false ) 
@@ -64,7 +69,8 @@ public class MailContent implements Serializable {
 		private MailContentStatus status;
 		
 		@Column(name = "updateUserId",   nullable = false )
-		private int updateUserId;
+		@NotNull(message="管理员[updateUserId]不允许为空")
+		private Integer updateUserId;
 		
 		@Transient
 		private String updateUserName;
@@ -77,11 +83,11 @@ public class MailContent implements Serializable {
 			this.id = id;
 		}
 
-		public String getTempleteId() {
+		public Integer getTempleteId() {
 			return templeteId;
 		}
 
-		public void setTempleteId(String templeteId) {
+		public void setTempleteId(Integer templeteId) {
 			this.templeteId = templeteId;
 		}
 
@@ -117,11 +123,11 @@ public class MailContent implements Serializable {
 			this.status = status;
 		}
 
-		public int getUpdateUserId() {
+		public Integer getUpdateUserId() {
 			return updateUserId;
 		}
 
-		public void setUpdateUserId(int updateUserId) {
+		public void setUpdateUserId(Integer updateUserId) {
 			this.updateUserId = updateUserId;
 		}
 

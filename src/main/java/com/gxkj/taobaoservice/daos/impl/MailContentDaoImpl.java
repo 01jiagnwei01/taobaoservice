@@ -19,17 +19,17 @@ public class MailContentDaoImpl extends BaseDAOImpl implements MailContentDao {
 	public ListPager doPage(int pageno, int pagesize, String title)
 			throws SQLException {
 		 
-		 StringBuffer sql = new StringBuffer("select * from mail_content where ");
+		 StringBuffer sql = new StringBuffer("select mail_content.* ,admin_user.name as updateUserName from mail_content left join admin_user on mail_content.updateUserId = admin_user.id  where ");
 		 List<Object> parameters = new ArrayList<Object>();
 		
-		 sql.append(" status = ?");
+		 sql.append(" mail_content.status = ?");
 		 parameters.add(MailContentStatus.NORMAL.name());
 		
 		 if(StringUtils.isNotBlank(title )){
-			 sql.append(" and title like ?");
+			 sql.append(" and  mail_content.title like ?");
 			 parameters.add("%"+title+"%");
 		 }
-		sql.append(" order by  id ");
+		sql.append(" order by   mail_content.id ");
 		ListPager pager = new ListPager();
 		pager.setPageNo(pageno);
 		pager.setRowsPerPage(pagesize );

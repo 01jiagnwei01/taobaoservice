@@ -2,6 +2,8 @@ package com.gxkj.taobaoservice.services;
 
 import java.sql.SQLException;
 
+import org.springframework.validation.BindException;
+
 import com.gxkj.common.util.ListPager;
 import com.gxkj.taobaoservice.entitys.AdminUser;
 import com.gxkj.taobaoservice.entitys.MailContent;
@@ -14,8 +16,9 @@ public interface MailContentService {
 	 * @param adminUser
 	 * @return
 	 * @throws SQLException
+	 * @throws BindException 
 	 */
-	public MailContent doAddMailContent(MailContent entity,AdminUser adminUser) throws SQLException;
+	public MailContent doAddMailContent(MailContent entity,AdminUser adminUser) throws SQLException, BindException;
 	
 	/**
 	 * 修改邮件内容

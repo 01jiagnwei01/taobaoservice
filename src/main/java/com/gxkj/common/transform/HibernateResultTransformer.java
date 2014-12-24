@@ -130,6 +130,10 @@ public class HibernateResultTransformer  extends AliasedTupleSubsetResultTransfo
 							tuple[i] = new BigDecimal(tuple[i].toString());
 						}
 					}
+					//基本数据类型，且其值为null，则不设置其值
+					if(tuple[i] == null && isBaseType(this.propertyClasses[i])){
+						continue;
+					}
 					setters[i].set( result, tuple[i], null );
 				}
 			}
