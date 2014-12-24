@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50620
 File Encoding         : 65001
 
-Date: 2014-12-10 13:51:52
+Date: 2014-12-24 13:33:53
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,7 +28,7 @@ CREATE TABLE `admin_menu` (
   `btnflag` varchar(32) DEFAULT NULL,
   `pid` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of admin_menu
@@ -73,6 +73,18 @@ INSERT INTO `admin_menu` VALUES ('38', '新建任务', '/admin/task/create', nul
 INSERT INTO `admin_menu` VALUES ('39', '赞助用户记录', '/admin/log/COMPANY_SUPPLY', null, '0', '', '19');
 INSERT INTO `admin_menu` VALUES ('40', '赞助用户记录分页', '/admin/log/dopage/COMPANY_SUPPLY', null, '1', 'admin_log_dopage_COMPANY_SUPPLY', '39');
 INSERT INTO `admin_menu` VALUES ('41', '公司收支情况', '/admin/company_account/get', null, '0', '', '19');
+INSERT INTO `admin_menu` VALUES ('42', '营销管理', '', null, '0', '', '0');
+INSERT INTO `admin_menu` VALUES ('43', '邮件邮箱系统', '', null, '0', '', '42');
+INSERT INTO `admin_menu` VALUES ('44', '邮箱模板管理', '/admin/mail/templete', null, '0', '', '43');
+INSERT INTO `admin_menu` VALUES ('45', '邮件管理', '/admin/mail/content', null, '0', '', '43');
+INSERT INTO `admin_menu` VALUES ('46', '创建邮件模板', '/admin/mail/templete/doadd', null, '1', 'admin_mail_templete_doadd', '44');
+INSERT INTO `admin_menu` VALUES ('47', '修改邮件模板', '/admin/mail/templete/doupdate', null, '1', 'admin_mail_templete_doupdate', '44');
+INSERT INTO `admin_menu` VALUES ('48', '删除邮件模板', '/admin/mail/templete/dodel', null, '1', 'admin_mail_templete_dodel', '44');
+INSERT INTO `admin_menu` VALUES ('49', '分页查看邮件模板', '/admin/mail/templete/dopage', null, '1', 'admin_mail_templete_dopage', '44');
+INSERT INTO `admin_menu` VALUES ('50', '分页查看邮件内容', '/admin/mail/content/dopage', null, '1', 'admin_mail_content_dopage', '45');
+INSERT INTO `admin_menu` VALUES ('51', '增加邮件', '/admin/mail/content/doadd', null, '1', 'admin_mail_content_doadd', '45');
+INSERT INTO `admin_menu` VALUES ('52', '修改邮件内容', '/admin/mail/content/doupdate', null, '1', 'admin_mail_content_doupdate', '45');
+INSERT INTO `admin_menu` VALUES ('53', '删除邮件内容', '/admin/mail/content/dodel', null, '1', 'admin_mail_content_dodel', '45');
 
 -- ----------------------------
 -- Table structure for `admin_role`
@@ -113,7 +125,7 @@ CREATE TABLE `admin_user` (
 -- ----------------------------
 -- Records of admin_user
 -- ----------------------------
-INSERT INTO `admin_user` VALUES ('1', '01jiangwei01', '63a9f0ea7bb98050796b649e85481845', '管理员', '1');
+INSERT INTO `admin_user` VALUES ('1', '01jiangwei01', '96e79218965eb72c92a549dd5a330112', '管理员', '1');
 
 -- ----------------------------
 -- Table structure for `apply_draw`
@@ -174,7 +186,7 @@ CREATE TABLE `company_account` (
 -- ----------------------------
 -- Records of company_account
 -- ----------------------------
-INSERT INTO `company_account` VALUES ('1', '0.00', '0.00', '2.00');
+INSERT INTO `company_account` VALUES ('1', '0.00', '0.00', '4.00');
 
 -- ----------------------------
 -- Table structure for `deposit_apply`
@@ -201,6 +213,43 @@ INSERT INTO `deposit_apply` VALUES ('1', '1', '10.00', '1', '2014-12-05 23:13:53
 INSERT INTO `deposit_apply` VALUES ('2', '1', '10.00', '1', '2014-12-05 23:22:14', 'REFUSE', '1', '管理员', '2014-12-05 23:38:49', 'ffffffffffff');
 INSERT INTO `deposit_apply` VALUES ('3', '1', '10.00', '1', '2014-12-06 08:19:24', 'REFUSE', '1', '管理员', '2014-12-06 08:35:13', '111');
 INSERT INTO `deposit_apply` VALUES ('4', '2', '10.00', '1', '2014-12-06 08:35:34', 'APPROVE', '1', '管理员', '2014-12-06 08:38:03', null);
+
+-- ----------------------------
+-- Table structure for `mail_content`
+-- ----------------------------
+DROP TABLE IF EXISTS `mail_content`;
+CREATE TABLE `mail_content` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `templete_id` int(10) NOT NULL,
+  `content` longtext,
+  `title` varchar(100) DEFAULT NULL,
+  `update_time` datetime NOT NULL,
+  `status` varchar(50) NOT NULL,
+  `updateUserId` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of mail_content
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `mail_templete`
+-- ----------------------------
+DROP TABLE IF EXISTS `mail_templete`;
+CREATE TABLE `mail_templete` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `templete_name` varchar(100) NOT NULL,
+  `templete_path` varchar(100) NOT NULL,
+  `update_time` datetime NOT NULL,
+  `status` varchar(50) DEFAULT NULL,
+  `updateUserId` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of mail_templete
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `operate_log`
@@ -349,12 +398,13 @@ INSERT INTO `rel_role_menu` VALUES ('206', '8', '18');
 DROP TABLE IF EXISTS `task_appreciation`;
 CREATE TABLE `task_appreciation` (
   `id` int(10) NOT NULL,
+  `task_order_id` int(10) NOT NULL,
   `task_title` varchar(100) NOT NULL,
-  `enable` int(1) NOT NULL,
   `need_dot` double(10,2) NOT NULL,
   `type` varchar(30) NOT NULL,
   `task_desc` varchar(100) NOT NULL,
   `benefit_type` varchar(30) NOT NULL,
+  `task_value` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -381,17 +431,48 @@ CREATE TABLE `task_basic` (
   `good_comment` varchar(500) NOT NULL,
   `good_comment_time_limit` varchar(255) NOT NULL,
   `good_comment_time_dot` double(10,2) NOT NULL,
-  `shops_scores_use` int(11) NOT NULL,
   `zengzhi_receiver_gain_points` double(11,2) NOT NULL,
   `zengzhi_pingtai_gain_points` double(11,2) NOT NULL,
   `basic_receiver_gain_point` double(11,2) NOT NULL,
   `basic_pingtai_gain_point` double(11,2) NOT NULL,
-  `company_supply_point` double(11,2) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of task_basic
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `task_order`
+-- ----------------------------
+DROP TABLE IF EXISTS `task_order`;
+CREATE TABLE `task_order` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) NOT NULL,
+  `create_time` datetime NOT NULL,
+  `taobao_xiaohao` varchar(50) NOT NULL,
+  `user_qq` varchar(255) NOT NULL,
+  `product_link` varchar(500) NOT NULL,
+  `product_title` varchar(100) NOT NULL,
+  `pay_method` int(10) NOT NULL,
+  `guarantee_price` double(10,2) NOT NULL,
+  `basic_publish_dot` double(10,2) NOT NULL,
+  `task_type` varchar(20) NOT NULL,
+  `good_comment` varchar(500) NOT NULL,
+  `good_comment_time_limit` varchar(255) NOT NULL,
+  `good_comment_time_dot` double(10,2) NOT NULL,
+  `zengzhi_receiver_gain_points` double(11,2) NOT NULL,
+  `zengzhi_pingtai_gain_points` double(11,2) NOT NULL,
+  `basic_receiver_gain_point` double(11,2) NOT NULL,
+  `basic_pingtai_gain_point` double(11,2) NOT NULL,
+  `status` varchar(20) NOT NULL,
+  `repeate_times` int(10) NOT NULL,
+  `remuneration` double(11,2) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of task_order
 -- ----------------------------
 
 -- ----------------------------
@@ -413,7 +494,7 @@ CREATE TABLE `user_account` (
 -- ----------------------------
 -- Records of user_account
 -- ----------------------------
-INSERT INTO `user_account` VALUES ('1', '19.00', '2.00', '0.00', '0.00', '1');
+INSERT INTO `user_account` VALUES ('1', '19.00', '4.00', '0.00', '0.00', '1');
 
 -- ----------------------------
 -- Table structure for `user_account_log`
@@ -425,7 +506,7 @@ CREATE TABLE `user_account_log` (
   `user_id` int(10) NOT NULL,
   `type` varchar(30) NOT NULL,
   `amount` double(10,2) DEFAULT '0.00',
-  `points` int(10) DEFAULT '0',
+  `points` double(10,2) DEFAULT '0.00',
   `before_rest_amount` double(10,2) NOT NULL DEFAULT '0.00',
   `before_rest_points` double(10,2) NOT NULL DEFAULT '0.00',
   `before_locked_amount` double(10,2) NOT NULL DEFAULT '0.00',
@@ -437,16 +518,18 @@ CREATE TABLE `user_account_log` (
   `admin_user_id` int(10) DEFAULT NULL,
   `task_id` int(10) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user_account_log
 -- ----------------------------
-INSERT INTO `user_account_log` VALUES ('1', '2014-12-05 23:21:38', '1', 'RECHARGE', '10.00', '0', '0.00', '0.00', '0.00', '0.00', '10.00', '0.00', '0.00', '0.00', '1', null);
-INSERT INTO `user_account_log` VALUES ('2', '2014-12-06 08:38:03', '1', 'RECHARGE', '10.00', '0', '10.00', '0.00', '0.00', '0.00', '20.00', '0.00', '0.00', '0.00', '1', null);
-INSERT INTO `user_account_log` VALUES ('3', '2014-12-06 09:42:38', '1', 'WITHDRAW', '1.00', '0', '20.00', '0.00', '0.00', '0.00', '19.00', '0.00', '0.00', '0.00', '1', null);
-INSERT INTO `user_account_log` VALUES ('4', '2014-12-07 16:21:06', '1', 'COMPANY_SUPPLY', null, '1', '19.00', '0.00', '0.00', '0.00', '19.00', '1.00', '0.00', '0.00', '1', null);
-INSERT INTO `user_account_log` VALUES ('5', '2014-12-07 16:22:44', '1', 'COMPANY_SUPPLY', null, '1', '19.00', '1.00', '0.00', '0.00', '19.00', '2.00', '0.00', '0.00', '1', null);
+INSERT INTO `user_account_log` VALUES ('1', '2014-12-05 23:21:38', '1', 'RECHARGE', '10.00', '0.00', '0.00', '0.00', '0.00', '0.00', '10.00', '0.00', '0.00', '0.00', '1', null);
+INSERT INTO `user_account_log` VALUES ('2', '2014-12-06 08:38:03', '1', 'RECHARGE', '10.00', '0.00', '10.00', '0.00', '0.00', '0.00', '20.00', '0.00', '0.00', '0.00', '1', null);
+INSERT INTO `user_account_log` VALUES ('3', '2014-12-06 09:42:38', '1', 'WITHDRAW', '1.00', '0.00', '20.00', '0.00', '0.00', '0.00', '19.00', '0.00', '0.00', '0.00', '1', null);
+INSERT INTO `user_account_log` VALUES ('4', '2014-12-07 16:21:06', '1', 'COMPANY_SUPPLY', null, '1.00', '19.00', '0.00', '0.00', '0.00', '19.00', '1.00', '0.00', '0.00', '1', null);
+INSERT INTO `user_account_log` VALUES ('5', '2014-12-07 16:22:44', '1', 'COMPANY_SUPPLY', null, '1.00', '19.00', '1.00', '0.00', '0.00', '19.00', '2.00', '0.00', '0.00', '1', null);
+INSERT INTO `user_account_log` VALUES ('6', '2014-12-14 20:44:56', '1', 'COMPANY_SUPPLY', null, '1.00', '19.00', '2.00', '0.00', '0.00', '19.00', '3.00', '0.00', '0.00', '1', null);
+INSERT INTO `user_account_log` VALUES ('7', '2014-12-14 20:48:03', '1', 'COMPANY_SUPPLY', null, '1.00', '19.00', '3.00', '0.00', '0.00', '19.00', '4.00', '0.00', '0.00', '1', null);
 
 -- ----------------------------
 -- Table structure for `user_base`
@@ -465,7 +548,7 @@ CREATE TABLE `user_base` (
 -- ----------------------------
 -- Records of user_base
 -- ----------------------------
-INSERT INTO `user_base` VALUES ('1', 'x1', 'ec6ef230f1828039ee794566b9c58adc', '2014-12-02 17:59:15', 'NORMAL', '0');
+INSERT INTO `user_base` VALUES ('1', 'x1', '6dbf9ac2da09ee1d3debf5a51873ec6d', '2014-12-02 17:59:15', 'NORMAL', '0');
 
 -- ----------------------------
 -- Table structure for `user_link`
