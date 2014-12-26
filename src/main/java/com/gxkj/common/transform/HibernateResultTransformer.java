@@ -11,7 +11,7 @@ import java.util.Map;
 import javax.persistence.Column;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.property.ChainedPropertyAccessor;
 import org.hibernate.property.PropertyAccessor;

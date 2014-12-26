@@ -119,7 +119,7 @@
 			  var result = json.result;
 			  if(result){
 				  alert("已经向您的邮箱发送了激活信息");
-			  }
+			  } 
 			 	  
 		  },
 	      error:function(xhr,textStatus,errorThrown){
@@ -156,6 +156,16 @@
 				  var result = json.result;
 				  if(result){
 					  alert("已经向您的邮箱发送了激活信息");
+				  }else {
+					  msg = json.msg;
+					  if(msg == 'Invalid Addresses'){
+						  alert("您的邮箱地址无效");
+					  }else if (msg = 'emailNoValid'){
+						  alert("邮箱地址无效");
+					  }else {
+						  alert(msg)
+					  }
+					  
 				  }
 				 	  
 			  },

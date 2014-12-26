@@ -18,6 +18,7 @@ import com.gxkj.taobaoservice.dto.EntityReturnData;
 import com.gxkj.taobaoservice.dto.RegObjDTO;
 import com.gxkj.taobaoservice.mail.MailSenderService;
 import com.gxkj.taobaoservice.services.UserBaseService;
+import com.gxkj.taobaoservice.util.RegexUtils;
 
 @Controller
 @RequestMapping("/reg")
@@ -62,12 +63,34 @@ public class RegController {
 	@RequestMapping(value="/sendmail",method=RequestMethod.POST)
 	@ResponseBody
 	public EntityReturnData doSendRegCode(HttpServletRequest request,HttpServletResponse response,ModelMap modelMap,String tomail) throws BusinessException{
-		EntityReturnData data = new EntityReturnData();
+		EntityReturnData ret = new EntityReturnData();
 		Date now = new Date();
 		String code = now.getTime()+"";
-		mailSenderService.sendMaiForReg(tomail,code );
-		data.setEntity(code);
-		return data;
+		try{
+			if(RegexUtils.isEmail( tomail)){
+				mailSenderService.sendMaiForReg(tomail,code );
+				ret.setResult(true);
+				ret.setEntity(code);
+			}else{
+				ret.setResult(false);
+				ret.setMsg("emailNoValid");//{Invalid Addresses}
+			}
+		
+		}catch(Exception e){
+			if(e instanceof javax.mail.SendFailedException){
+				ret.setResult(false);
+				ret.setMsg(e.getMessage());//{Invalid Addresses}
+			}else if(e instanceof com.sun.mail.smtp.SMTPAddressFailedException){
+				ret.setResult(false);
+				ret.setMsg(e.getMessage());//{Invalid Addresses}
+			}else{
+				ret.setResult(false);
+				ret.setMsg(e.getMessage());//{Invalid Addresses}
+			}
+			e.printStackTrace();
+		}
+		
+		return ret;
 		
 	}
 		

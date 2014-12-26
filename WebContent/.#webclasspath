@@ -33,6 +33,7 @@ C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\org.apache.maven\maven
 D:\java\maven_repository\org\springframework\spring-orm\4.1.2.RELEASE\spring-orm-4.1.2.RELEASE.jar
 C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\org.apache.maven.wagon\wagon-http\1.0-beta-6\8c665cbb0ab67c355fbd2c942ad26e39753b6f2e\wagon-http-1.0-beta-6.jar
 C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\org.codehaus.jackson\jackson-mapper-lgpl\1.9.13\562912b6ea695a2ae6411b9e4aed21153f46dde1\jackson-mapper-lgpl-1.9.13.jar
+D:\java\maven_repository\org\apache\commons\commons-lang3\3.3.2\commons-lang3-3.3.2.jar
 D:\java\maven_repository\javax\validation\validation-api\1.1.0.Final\validation-api-1.1.0.Final.jar
 C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\org.apache.maven\maven-artifact\2.2.1\23600f790d4dab2cb965419eaa982e3e84c428f8\maven-artifact-2.2.1.jar
 C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\org.codehaus.plexus\plexus-compiler-javac\2.4\b3984fb5af1d4fd8928a13522ce9458d3976ded8\plexus-compiler-javac-2.4.jar
@@ -81,7 +82,6 @@ C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\org.apache.maven.wagon
 D:\java\maven_repository\org\hibernate\javax\persistence\hibernate-jpa-2.1-api\1.0.0.Final\hibernate-jpa-2.1-api-1.0.0.Final.jar
 D:\java\maven_repository\org\slf4j\jcl-over-slf4j\1.5.6\jcl-over-slf4j-1.5.6.jar
 C:\Users\Administrator\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-core\2.4.3\4cb3dbb0c2f75b51aa7543c53252989785a0c609\jackson-core-2.4.3.jar
-D:\java\maven_repository\commons-lang\commons-lang\2.6\commons-lang-2.6.jar
 D:\java\maven_repository\org\jboss\logging\jboss-logging-annotations\1.2.0.Beta1\jboss-logging-annotations-1.2.0.Beta1.jar
 D:\java\maven_repository\antlr\antlr\2.7.7\antlr-2.7.7.jar
 D:\java\maven_repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar
