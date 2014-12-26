@@ -4,7 +4,7 @@ apply plugin: 'war'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'groovy'
 apply plugin: 'maven'
-
+version = '1.0'
 sourceCompatibility = 1.8
 webAppDirName = 'WebContent'    // 设置 WebApp 根目录
 [compileJava,compileTestJava,javadoc]*.options*.encoding = "UTF-8"
@@ -82,6 +82,20 @@ dependencies {
 
 test {
     systemProperties 'property': 'value'
+}
+
+uploadArchives {
+//	repositories {
+//		mavenDeployer {
+//			repository(url: "file://D:/test/")
+//		}
+//	}
+	repositories {
+		flatDir {
+			dirs 'repos'
+		}
+	 }
+ 
 }
  
 //eclipse.classpath.defaultOutputDir=file("${project.projectDir}/src/main/webapp/WEB-INF/classes");
@@ -289,4 +303,20 @@ uploadArchives {
  println "eclipse.wtp.component.sourceDirs="+eclipse.wtp.component.sourceDirs;
   */
  
- 
+task release(dependsOn: [build, uploadArchives]) << {
+}
+task snapshot(dependsOn: [build, uploadArchives]) << {
+//	String target = '/release'
+//	String targetDir = target + '/back'
+//	exec {
+//		commandLine 'scp','./build/libs/zoo-' + version + '.war',targetDir + 'zoo.war'
+//	}
+//	exec {
+//		commandLine 'scp', './install.py', targetDir
+//	}
+//	exec {
+//		commandLine 'ssh', target, 'wsadmin.sh -username wasadmin -password pwd
+//-language jython -f zoo/install.py'
+//	}
+}
+
