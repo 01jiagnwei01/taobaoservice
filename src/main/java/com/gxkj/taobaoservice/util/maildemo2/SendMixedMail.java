@@ -30,7 +30,7 @@ public class SendMixedMail {
     private static String subject="mail test";
     private static String server="smtp.163.com";
     private static String username="01jiangwei01";//from mail name
-    private static String password="xubaoyong200096";//from mail password
+    private static String password="xxxxxxx";//from mail password
     
     private Session session;
     

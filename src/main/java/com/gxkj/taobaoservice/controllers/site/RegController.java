@@ -1,5 +1,7 @@
 package com.gxkj.taobaoservice.controllers.site;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,6 +16,7 @@ import com.gxkj.common.enums.BusinessExceptionInfos;
 import com.gxkj.common.exceptions.BusinessException;
 import com.gxkj.taobaoservice.dto.EntityReturnData;
 import com.gxkj.taobaoservice.dto.RegObjDTO;
+import com.gxkj.taobaoservice.mail.MailSenderService;
 import com.gxkj.taobaoservice.services.UserBaseService;
 
 @Controller
@@ -23,6 +26,9 @@ public class RegController {
 	@Autowired
 	private UserBaseService userBaseService;
 
+	@Autowired
+	private MailSenderService mailSenderService;
+	
 	@RequestMapping(value="",method=RequestMethod.GET)
 	public String reg(HttpServletRequest request,HttpServletResponse response,ModelMap modelMap){
 		String mv = "site/reg";
@@ -53,4 +59,16 @@ public class RegController {
 //		return ret;	
 		throw new BusinessException(BusinessExceptionInfos.EMAIL_ADDRESS_IS_ERROR);
 	}
+	@RequestMapping(value="/sendmail",method=RequestMethod.POST)
+	@ResponseBody
+	public EntityReturnData doSendRegCode(HttpServletRequest request,HttpServletResponse response,ModelMap modelMap,String tomail) throws BusinessException{
+		EntityReturnData data = new EntityReturnData();
+		Date now = new Date();
+		String code = now.getTime()+"";
+		mailSenderService.sendMaiForReg(tomail,code );
+		data.setEntity(code);
+		return data;
+		
+	}
+		
 }

@@ -6,6 +6,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.MailParseException;
 import org.springframework.mail.MailSender;
@@ -24,6 +25,7 @@ public class MailSenderService {
 	private JavaMailSenderImpl javaMailSender;
 	
 	@Autowired
+	@Qualifier("templateMailMessage")
 	private SimpleMailMessage templateMailMessage;
 	
 	public void setJavaMailSender(JavaMailSenderImpl javaMailSender) {
@@ -48,6 +50,14 @@ public class MailSenderService {
 		simpleMailMessage.setText(msg);
 		mailSender.send(simpleMailMessage);	
 	}
+	public void sendMaiForReg(String to, String code) {			 
+		SimpleMailMessage simpleMailMessage = new SimpleMailMessage(templateMailMessage);
+		 
+		simpleMailMessage.setTo(to);
+		simpleMailMessage.setSubject("谷谷道场注册码");
+		simpleMailMessage.setText(code);
+		mailSender.send(simpleMailMessage);	
+	} 
 	
 	public void sendMailWithTemplate(String dear, String content) {			 
 		   SimpleMailMessage message = new SimpleMailMessage(templateMailMessage);

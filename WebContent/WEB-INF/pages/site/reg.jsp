@@ -136,6 +136,38 @@
 	  var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/; 
 	  return reg.test(str); 
 } 
+ 
+ function sendMail(){
+	 var url = "<%=request.getContextPath()%>/reg/sendmail";
+		var email = $("#email").val();
+	 var data = {
+			 tomail:email,
+			  d:new Date().getTime()
+		  }
+		 $.ajax({
+			  type:'POST',
+			  url: url,
+			  context: document.body,
+			  beforeSend:function(){
+				 },
+			  data:data,
+			  success:function(json){
+				  //alert(json);
+				  var result = json.result;
+				  if(result){
+					  alert("已经向您的邮箱发送了激活信息");
+				  }
+				 	  
+			  },
+		      error:function(xhr,textStatus,errorThrown){
+		  		var responseText = xhr.responseText;
+		  		json = $.parseJSON(responseText);
+		  		alert(json.msg);
+		  		// $(btn)).removeAttr("disabled");
+		  }
+ 	})
+ }
+		 
   </script>
   </head>
 
@@ -199,7 +231,7 @@
 							</div>
 							<div class="clearfix"></div>
 							<p class="center span5">
-								<button type="button" class="btn btn-primary"   onclick="loginfn(this);">登陆</button>
+								<button type="button" class="btn btn-primary"   onclick="sendMail()">发送验证码</button>
 							</p>
 						</fieldset>
 					</form>

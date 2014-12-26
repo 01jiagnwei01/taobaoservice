@@ -13,10 +13,23 @@
   <context:component-scan base-package="com.gxkj.taobaoservice.mail"></context:component-scan>
     
 <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+<!-- 
 	<property name="host" value="${taobaoservice.mail.host}" />
 	<property name="port" value="${taobaoservice.mail.port}" />
 	<property name="username" value="${taobaoservice.mail.username}" />
 	<property name="password" value="${taobaoservice.mail.password}" /> 
+	 -->
+ <!-- -->
+	<property name="host" value="smtp.aliyun.com" />
+	<property name="port" value="25" />
+	<property name="username" value="gugudaochang@aliyun.com" />
+	<property name="password" value="77585211a" /> 
+		 <!--   
+	 <property name="host" value="smtp.163.com" />
+	<property name="port" value="25" />
+	<property name="username" value="01jiangwei01@163.com" />
+	<property name="password" value="" />
+	-->
 	<property name="javaMailProperties">
             <props>
                 <prop key="mail.smtp.auth">true</prop>
@@ -30,7 +43,7 @@
   
  <bean id="templateMailMessage"
 	class="org.springframework.mail.SimpleMailMessage"> 
-	<property name="from" value="dmailtest@gmail.com" />
+	<property name="from" value="gugudaochang@aliyun.com" /><!-- gugudaochang@aliyun.com ; 01jiangwei01@163.com-->
 	<property name="to" value="srinivasdj81@gmail.com" />
 	<property name="subject" value="Hello" />
 	<property name="text">

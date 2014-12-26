@@ -4,7 +4,7 @@ apply plugin: 'war'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'groovy'
 apply plugin: 'maven'
-version = '1.0'
+
 sourceCompatibility = 1.8
 webAppDirName = 'WebContent'    // 设置 WebApp 根目录
 [compileJava,compileTestJava,javadoc]*.options*.encoding = "UTF-8"
@@ -92,6 +92,7 @@ uploadArchives {
 //	}
 	repositories {
 		flatDir {
+			version  '2.0'
 			dirs 'repos'
 		}
 	 }

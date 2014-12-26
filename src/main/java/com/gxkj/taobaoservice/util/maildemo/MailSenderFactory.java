@@ -24,7 +24,7 @@ public class MailSenderFactory {
     if (type == MailSenderType.SERVICE) {
         if (serviceSms == null) {
         	serviceSms = new SimpleMailSender("01jiangwei01@163.com",
-            "xubaoyong200096");
+            "xxxxxxxxxxx");
         }
         return serviceSms;
     }
