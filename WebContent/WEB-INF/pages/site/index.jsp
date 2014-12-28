@@ -22,5 +22,6 @@ if(userBase != null){
 <a href="<%=request.getContextPath()%>/reg">注册页面</a><br/>
 <a href="<%=request.getContextPath()%>/login">登陆页面</a><br/>
 <a href="<%=request.getContextPath()%>/findbackpassword">找回密码</a><br/>
+<a href="<%=request.getContextPath()%>/order/create">发布任务</a><br/>
 </body>
 </html>
