@@ -11,6 +11,8 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 <!-- 
 参考网址：http://docs.spring.io/spring-integration/reference/htmlsingle/
+		  http://docs.spring.io/spring-amqp/reference/htmlsingle/
+		  http://docs.spring.io/spring-amqp/reference/html/amqp.html#amqp-template
 	1)id : 适配器的ID,可选
 	2)channel：消息将要发送到的通道，必选
 	3)queue-names：消息队列的名字，从这个消息队列里获取将被消耗的消息
@@ -91,6 +93,72 @@
  
  -->
 
+ <bean id="connectionFactory"  
+        class="org.springframework.amqp.rabbit.connection.SingleConnectionFactory">  
+        <constructor-arg value="localhost" />
+        <!-- 
+        <property name="username" value="guest" />  
+        <property name="password" value="guest" />  
+         -->  
+    </bean>  
+    <bean id="amqpAdmin"  
+        class="org.springframework.amqp.rabbit.core.RabbitAdmin">  
+        <constructor-arg ref="connectionFactory" />  
+    </bean>  
+    <bean id="rabbitTemplate"  
+        class="org.springframework.amqp.rabbit.core.RabbitTemplate">  
+        <constructor-arg ref="connectionFactory"></constructor-arg>  
+    </bean>  
+    
+    
+    <!-- 声明Queue并设定Queue的名称 -->  
+    <bean id="helloWorldQueue"  
+        class="org.springframework.amqp.core.Queue">  
+        <constructor-arg value="hello.world.queue"></constructor-arg>  
+    </bean> 
+    <!-- 声明消息转换器为SimpleMessageConverter -->  
+    <bean id="messageConverter"  
+        class="org.springframework.amqp.support.converter.SimpleMessageConverter">  
+    </bean> 
+     <!-- 声明Exchange的类型为topic并设定Exchange的名称 -->  
+    <bean id="hellotopic"  
+        class="org.springframework.amqp.core.TopicExchange">  
+        <constructor-arg value="hello.topic"></constructor-arg>  
+    </bean>
+    <!-- 声明Exchange的类型为direct并设定Exchange的名称 -->  
+    <bean id="hellodirect"  
+        class="org.springframework.amqp.core.DirectExchange">  
+        <constructor-arg value="hello.direct"></constructor-arg>  
+    </bean>
+    <!-- 通过Binding来判定Queue、Exchange、routingKey -->  
+    <!-- 其中构建Binding的参数1是Queue，参数2是Exchange，参数3是routingKey -->  
+    <bean id="queuebling"  
+        class="org.springframework.amqp.core.Binding">  
+        <constructor-arg index="0" ref="helloWorldQueue"></constructor-arg>  
+        <constructor-arg index="1" ref="hellotopic"></constructor-arg>  
+        <constructor-arg index="2" value="hello.world.#"></constructor-arg>  
+    </bean> 
+    
+    <!-- 监听生产者发送的消息开始 -->  
+    <!-- 用于接收消息的处理类 -->  
+    <bean id="helloWorldHandler"  
+        class="com.gxkj.taobaoservice.amqps.MassageHandler">  
+    </bean>  
+    <!-- 用于消息的监听的代理类MessageListenerAdapter -->  
+    <bean id="helloListenerAdapter"  
+        class="org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter">  
+        <constructor-arg ref="helloWorldHandler" />  
+        <property name="defaultListenerMethod" value="handleMessage"></property>  
+        <property name="messageConverter" ref="messageConverter"></property>  
+    </bean>  
+    <!-- 用于消息的监听的容器类SimpleMessageListenerContainer，对于queueName的值一定要与定义的Queue的值相同 -->  
+    <bean id="listenerContainer"  
+        class="org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer">  
+        <property name="queueName" value="hello.world.queue"></property>  
+        <property name="connectionFactory" ref="connectionFactory"></property>  
+        <property name="messageListener" ref="helloListenerAdapter"></property>  
+    </bean>  
+    <!-- 监听生产者发送的消息结束 --> 
 
  
 </beans>
