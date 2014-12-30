@@ -1,10 +1,10 @@
 package com.gxkj.taobaoservice.controllers;
 
-import java.util.Date;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +18,13 @@ public class JmsController {
 	
 	//private MessageProducer messageProducer;
 	
-	private  TempConverter converter;; 
+	@Autowired
+	@Qualifier("simpleGateway")
+	private  TempConverter converter;
+	
+	@Autowired
+	@Qualifier("wsGateway")
+	private  TempConverter wsGateway;
 	
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String path(HttpServletRequest request,HttpServletResponse response,ModelMap modelMap){
@@ -27,15 +33,13 @@ public class JmsController {
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public EntityReturnData path_post(HttpServletRequest request,HttpServletResponse response,ModelMap modelMap){
 		EntityReturnData entity = new EntityReturnData();
-		Date a = new Date();  
-        long b = System.currentTimeMillis();  
-        for (int i = 0; i <= 10000; i++) {  
-           // messageProducer.sendMessage(i);  
-        	 System.out.println(converter.fahrenheitToCelcius(68.0f));
-        }  
-        System.out.println(a);  
-        System.out.println(new Date());  
-        System.out.println("共花了" + (System.currentTimeMillis() - b) + "ms");  
+	 
+		System.out.println(converter.fahrenheitToCelcius(68.0f));
+		
+		 System.out.println(wsGateway.fahrenheitToCelcius(68.0f));
+		
+		 entity.setResult(true);
+		 entity.setMsg("ok");
 		 return entity;
 	}
 
