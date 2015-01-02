@@ -1,0 +1,55 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/rabbit
+           http://www.springframework.org/schema/rabbit/spring-rabbit.xsd
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+     <topic-exchange name="app.stock.marketdata" xmlns="http://www.springframework.org/schema/rabbit">
+		<bindings>
+			<!-- Bind to anonymous queue for market data so all nodes configured this way get all quotes -->
+			<binding queue="marketDataQueue" pattern="app.stock.quotes.nasdaq.*" />
+		</bindings>
+	</topic-exchange>
+	
+	<bean id="stockServiceGateway" class="com.gxkj.taobaoservice.controllers.demo.stocks.gateway.RabbitStockServiceGateway">
+		<property name="rabbitTemplate">
+			<rabbit:template connection-factory="rabbitConnectionFactory" routing-key="app.stock.request"
+				message-converter="jsonMessageConverter" />
+		</property>
+		<property name="defaultReplyTo" value="fanout://broadcast.responses/" />
+	</bean>
+	
+	
+	<rabbit:queue id="tradeQueue" name="tradeQueue" />
+
+	<rabbit:queue id="marketDataQueue2" name="marketDataQueue2" />
+
+	<!--  	
+	<listener-container connection-factory="rabbitConnectionFactory" message-converter="jsonMessageConverter"
+		xmlns="http://www.springframework.org/schema/rabbit">
+		<listener ref="quoteController" method="handleQuote" queues="marketDataQueue2" />
+		<listener ref="quoteController" method="handleTrade" queues="tradeQueue" />
+	</listener-container>
+	-->
+	 <listener-container connection-factory="rabbitConnectionFactory" message-converter="jsonMessageConverter"
+		xmlns="http://www.springframework.org/schema/rabbit">
+		<listener ref="quoteController" method="handleTrade" queue-names="marketDataQueue2"  />
+	</listener-container>
+	
+	<fanout-exchange name="broadcast.responses" xmlns="http://www.springframework.org/schema/rabbit">
+		<bindings>
+			<!-- Bind a fanout to an anonymous queue unique for this node, then all nodes in a cluster get the same response -->
+			<binding queue="tradeQueue" />
+		</bindings>
+	</fanout-exchange>
+
+	 
+
+	<bean id="quoteController" class="com.gxkj.taobaoservice.controllers.demo.stocks.web.QuoteController">
+		<property name="stockServiceGateway" ref="stockServiceGateway" />
+	</bean>
+       
+	
+	
+</beans>
