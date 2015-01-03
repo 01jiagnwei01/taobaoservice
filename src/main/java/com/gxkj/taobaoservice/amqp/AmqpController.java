@@ -1,22 +1,12 @@
 package com.gxkj.taobaoservice.amqp;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.Queue;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.PriorityBlockingQueue;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Message;
@@ -30,9 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gxkj.taobaoservice.controllers.demo.dto.AmqOrder;
-import com.gxkj.taobaoservice.controllers.demo.stocks.domain.Quote;
-import com.gxkj.taobaoservice.controllers.demo.stocks.domain.TradeResponse;
-import com.gxkj.taobaoservice.controllers.demo.stocks.web.QuoteController;
 @Controller
 @RequestMapping("/demo/amq")
 public class AmqpController {
@@ -126,12 +113,26 @@ public class AmqpController {
 			 
 			 
 			 
-			 amqpWeiBoTemplate.convertAndSend(StringUtils.isEmpty(msg)?"":msg);
+			
 			 AmqOrder order = new AmqOrder();
 			 order.setMsg(StringUtils.isEmpty(msg)?"":msg);
 			 String defaultReplyTo = "weiboQueue";
 			 
-			 amqpWeiBoTemplate.convertAndSend(order.getMsg());
+//			 amqpWeiBoTemplate.convertAndSend(order);
+			 
+			 amqpWeiBoTemplate.convertSendAndReceive(order, new MessagePostProcessor() {
+					public Message postProcessMessage(Message message) throws AmqpException {
+						message.getMessageProperties().setReplyTo(defaultReplyTo);
+						try {
+							message.getMessageProperties().setCorrelationId(UUID.randomUUID().toString().getBytes("UTF-8"));
+						}
+						catch (UnsupportedEncodingException e) {
+							throw new AmqpException(e);
+						}
+						return message;
+					}
+				});
+			 
 //			 amqpWeiBoTemplate.convertAndSend(order, new MessagePostProcessor() {
 //					public Message postProcessMessage(Message message) throws AmqpException {
 //						message.getMessageProperties().setReplyTo(defaultReplyTo);
@@ -200,47 +201,5 @@ public class AmqpController {
 		AmqOrder order = (AmqOrder) template.receiveAndConvert("queue_one_key");
 		return order.getMsg();
 	}
-	
-	private static Log logger = LogFactory.getLog(QuoteController.class);
-
-
-	private ConcurrentMap<String, TradeResponse> responses = new ConcurrentHashMap<String, TradeResponse>();
-
-	private Queue<Quote> quotes = new PriorityBlockingQueue<Quote>(100, new QuoteComparator());
-
-	private long timeout = 30000; // 30 seconds of data
-
-
-	public void handleTrade(TradeResponse response) {
-		logger.info("Client received: " + response);
-		String key = response.getRequestId();
-		responses.putIfAbsent(key, response);
-		Collection<TradeResponse> queue = new ArrayList<TradeResponse>(responses.values());
-		long timestamp = System.currentTimeMillis() - timeout;
-		for (Iterator<TradeResponse> iterator = queue.iterator(); iterator.hasNext();) {
-			TradeResponse tradeResponse = iterator.next();
-			if (tradeResponse.getTimestamp() < timestamp) {
-				responses.remove(tradeResponse.getRequestId());
-			}
-		}
-	}
-
-	public void handleQuote(Quote message) {
-		logger.info("Client received: " + message);
-		long timestamp = System.currentTimeMillis() - timeout;
-		for (Iterator<Quote> iterator = quotes.iterator(); iterator.hasNext();) {
-			Quote quote = iterator.next();
-			if (quote.getTimestamp() < timestamp) {
-				iterator.remove();
-			}
-		}
-		quotes.add(message);
-	}
-	private static class QuoteComparator implements Comparator<Quote> {
-
-		public int compare(Quote o1, Quote o2) {
-			return new Long(o1.getTimestamp() - o2.getTimestamp()).intValue();
-		}
-
-	}
+	 
 }
