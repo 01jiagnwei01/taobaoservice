@@ -35,6 +35,7 @@ dependencies {
 	compile 'org.springframework.amqp:spring-amqp:1.4.1.RELEASE'
 	//compile 'org.springframework.integration:spring-integration-core:4.1.1.RELEASE'
 	//
+	compile 'com.googlecode.ehcache-spring-annotations:ehcache-spring-annotations:1.2.0'
 	testCompile 'org.springframework:spring-test:4.1.2.RELEASE'
 	
 	compile 'org.springframework:spring-support:2.0.8'
@@ -81,7 +82,7 @@ dependencies {
 
 	
 	//compile 'org.slf4j:slf4j-api:1.6.4'
-	//compile 'org.slf4j:slf4j-log4j12:1.7.9'
+	 compile 'org.slf4j:slf4j-log4j12:1.7.9'
 	//自己系统jar
 	compile fileTree(dir: 'libs', include: '*.jar')
 	//compile files('jars/netpayclient.jar' )

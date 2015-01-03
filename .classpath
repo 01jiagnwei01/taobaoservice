@@ -56,6 +56,11 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
+	<classpathentry sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/com.googlecode.ehcache-spring-annotations/ehcache-spring-annotations/1.2.0/75882f40c8e5da57678e6cfbb849ee29c0aea1b/ehcache-spring-annotations-1.2.0-sources.jar" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/com.googlecode.ehcache-spring-annotations/ehcache-spring-annotations/1.2.0/b6bf5706d99a9fd7cae9f887e28a98be19f3064b/ehcache-spring-annotations-1.2.0.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/org.springframework/spring-support/2.0.8/1516ff4609cc576376840817622b61c52945f551/spring-support-2.0.8.jar" exported="true">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
@@ -141,6 +146,11 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
+	<classpathentry sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/org.slf4j/slf4j-log4j12/1.7.9/3fc5d2c49a1d149b05b9318f83c33b59cf70e311/slf4j-log4j12-1.7.9-sources.jar" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/org.slf4j/slf4j-log4j12/1.7.9/5586044ba34544a9318bd7508f738dc967cd5e99/slf4j-log4j12-1.7.9.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
 	<classpathentry sourcepath="D:/java/maven_repository/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0-sources.jar" kind="lib" path="D:/java/maven_repository/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar" exported="true">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
@@ -197,6 +207,16 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry sourcepath="D:/java/maven_repository/org/springframework/retry/spring-retry/1.1.2.RELEASE/spring-retry-1.1.2.RELEASE-sources.jar" kind="lib" path="D:/java/maven_repository/org/springframework/retry/spring-retry/1.1.2.RELEASE/spring-retry-1.1.2.RELEASE.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/java/maven_repository/com/google/guava/guava/r09/guava-r09.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/net.sf.ehcache/ehcache-core/2.4.5/4e04608ae4ed94b1a73ecc1d406ede9088b171bb/ehcache-core-2.4.5-sources.jar" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/net.sf.ehcache/ehcache-core/2.4.5/92e665ecc4c027df5cfce9c627ab353bd286265d/ehcache-core-2.4.5.jar" exported="true">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
@@ -426,6 +446,11 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
+	<classpathentry sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.9/c2b49a585e2f433c95cec359a75e0ee4366a1e35/slf4j-api-1.7.9-sources.jar" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.9/872ec63b41181e29ad5a3723f1417356e2d2c0f2/slf4j-api-1.7.9.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
 	<classpathentry sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/org.apache.maven/maven-core/2.2.1/f66afe3909e0bcbb8611757056943d118599a7c3/maven-core-2.2.1-sources.jar" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/org.apache.maven/maven-core/2.2.1/6f488e461188496c62e161f32160b3465ce5901e/maven-core-2.2.1.jar" exported="true">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
@@ -527,11 +552,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/org.slf4j/slf4j-nop/1.5.3/f447fc9fd01eaec194f027184d22af4646ecd8b2/slf4j-nop-1.5.3-sources.jar" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/org.slf4j/slf4j-nop/1.5.3/36a3c886235cddd05e55a979cef549196740231a/slf4j-nop-1.5.3.jar" exported="true">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="D:/java/maven_repository/org/slf4j/slf4j-api/1.5.6/slf4j-api-1.5.6.jar" exported="true">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
