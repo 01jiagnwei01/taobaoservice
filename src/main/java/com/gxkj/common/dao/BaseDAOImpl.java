@@ -373,6 +373,19 @@ public  class BaseDAOImpl    implements BaseDAO {
 		 query.setMaxResults(to);  
 		 return query.list();
 	}
+ 
+	public int executeUpdateByHql(String hql, Map<String, Object> parameter) {
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery(hql);
+		if(parameter != null){
+			for (String key : parameter.keySet()) {
+				query.setParameter(key, parameter.get(key));
+			}
+		}
+		 
+		return query.executeUpdate();
+		
+	}
 	
 	private void _transFormResult(SQLQuery query,Class<?> clazz){
 		 if(clazz.getName().equals("java.util.HashMap")){
@@ -381,10 +394,13 @@ public  class BaseDAOImpl    implements BaseDAO {
 			 query.setResultTransformer(new HibernateResultTransformer(clazz));  
 		 }
 	}
+	
 	public static void main(String[] args) {
 //		Map n = new HashMap();
 //		System.out.println(n.getClass().getName());
 	}
+
+	
 	 
 
 	 

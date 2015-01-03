@@ -88,5 +88,7 @@ public interface BaseDAO {
 
 	public List<?> executeQuery(String sql, Object[] parameters, Class<?> clazzs)
 			throws SQLException;
+	
+	public int executeUpdateByHql(String hql, Map<String, Object> parameter) ;
 
 }
