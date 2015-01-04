@@ -11,7 +11,7 @@ webAppDirName = 'WebContent'    // 设置 WebApp 根目录
 
 repositories {
 	mavenLocal()
-	mavenCentral() // 中央库
+	 mavenCentral() // 中央库
 }
 
 dependencies {
