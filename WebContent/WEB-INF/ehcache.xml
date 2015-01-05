@@ -13,7 +13,7 @@
         timeToIdleSeconds="0" timeToLiveSeconds="300"  
         memoryStoreEvictionPolicy="LRU" />  
 	
-    <defaultCache eternal="true" maxElementsInMemory="100" overflowToDisk="false" />
+    
     <cache name="messageCache" maxElementsInMemory="10" eternal="true" overflowToDisk="false" />
     <cache name="messagesCache" maxElementsInMemory="10" eternal="true" overflowToDisk="false" />
 </ehcache>
