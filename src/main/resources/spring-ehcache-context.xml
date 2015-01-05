@@ -9,6 +9,7 @@
    <!-- 
    	参考文献 ：
    	http://blog.csdn.net/mingshuo0615/article/details/6085248
+   	http://ehcache.sourceforge.net/documentation/configuration.html 
    	Ehcache Spring Annotations项目主页– http://code.google.com/p/ehcache-spring-annotations/
    	Ehcache项目首页– http://ehcache.org/
    	Spring 3.0参考– http://static.springsource.org/spring/docs/3.0.x/spring-framework-reference/html/
