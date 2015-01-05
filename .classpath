@@ -146,11 +146,6 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/org.slf4j/slf4j-log4j12/1.7.9/3fc5d2c49a1d149b05b9318f83c33b59cf70e311/slf4j-log4j12-1.7.9-sources.jar" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/org.slf4j/slf4j-log4j12/1.7.9/5586044ba34544a9318bd7508f738dc967cd5e99/slf4j-log4j12-1.7.9.jar" exported="true">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
-		</attributes>
-	</classpathentry>
 	<classpathentry sourcepath="D:/java/maven_repository/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0-sources.jar" kind="lib" path="D:/java/maven_repository/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar" exported="true">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
@@ -212,6 +207,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="D:/java/maven_repository/com/google/guava/guava/r09/guava-r09.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="D:/java/maven_repository/org/slf4j/slf4j-api/1.6.2/slf4j-api-1.6.2.jar" exported="true">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
@@ -442,11 +442,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry sourcepath="D:/java/maven_repository/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1-sources.jar" kind="lib" path="D:/java/maven_repository/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar" exported="true">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.9/c2b49a585e2f433c95cec359a75e0ee4366a1e35/slf4j-api-1.7.9-sources.jar" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.9/872ec63b41181e29ad5a3723f1417356e2d2c0f2/slf4j-api-1.7.9.jar" exported="true">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
