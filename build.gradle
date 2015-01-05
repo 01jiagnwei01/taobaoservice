@@ -80,9 +80,11 @@ dependencies {
 	//避免警告：sun.misc.BASE64Decoder 是 Sun 的专用
 	compile 'org.apache.maven.plugins:maven-compiler-plugin:3.2'
 
-	
-	//compile 'org.slf4j:slf4j-api:1.6.4'
-	// compile 'org.slf4j:slf4j-log4j12:1.7.9'
+	compile 'org.slf4j:slf4j-jdk14:1.7.9'
+	compile 'org.slf4j:slf4j-api:1.7.9'
+	 compile 'org.slf4j:slf4j-log4j12:1.7.9'
+	 compile 'org.slf4j:slf4j-ext:1.7.9'
+	 compile 'org.slf4j:jcl-over-slf4j:1.7.9'
 	//自己系统jar
 	compile fileTree(dir: 'libs', include: '*.jar')
 	//compile files('jars/netpayclient.jar' )
@@ -314,7 +316,10 @@ uploadArchives {
  println "eclipse.wtp.component.rootConfigurations="+eclipse.wtp.component.rootConfigurations;
  println "eclipse.wtp.component.sourceDirs="+eclipse.wtp.component.sourceDirs;
   */
- 
+task copyOne(type: Copy) {
+	from 'src/main/test'
+	into 'build/anotherDirectory'
+}
 task release(dependsOn: [build, uploadArchives]) << {
 }
 task snapshot(dependsOn: [build, uploadArchives]) << {

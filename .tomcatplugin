@@ -16,6 +16,7 @@
         <webClassPathEntry>D:/java/eclipse-jee-luna-R-win32-x86_64/eclipse/plugins/org.codehaus.groovy_2.3.4.xx-201407142235-e44-RELEASE/lib/ivy-2.3.0-sources.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/eclipse-jee-luna-R-win32-x86_64/eclipse/plugins/org.codehaus.groovy_2.3.4.xx-201407142235-e44-RELEASE/lib/ivy-2.3.0.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/eclipse-jee-luna-R-win32-x86_64/eclipse/plugins/org.codehaus.groovy_2.3.4.xx-201407142235-e44-RELEASE/plugin_dsld_support</webClassPathEntry>
+        <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/ch.qos.cal10n/cal10n-api/0.8.1/496e5f330af47a811c497d637e03f1b8d8cdc2b0/cal10n-api-0.8.1.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/classworlds/classworlds/1.1/60c708f55deeb7c5dfce8a7886ef09cbc1388eca/classworlds-1.1.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.4.3/4cb3dbb0c2f75b51aa7543c53252989785a0c609/jackson-core-2.4.3.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-databind/2.4.3/feff63199be7b8f495c2f3e2096dcb6bd5e5b0b3/jackson-databind-2.4.3.jar</webClassPathEntry>
@@ -64,6 +65,11 @@
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.codehaus.plexus/plexus-component-api/1.0-alpha-16/5a2100a1c6a37804b1abfc70000b0ea33b83b7f9/plexus-component-api-1.0-alpha-16.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.codehaus.plexus/plexus-interactivity-api/1.0-alpha-6/c06f0eb818633033f09a87d14c4cfb6f39af9a37/plexus-interactivity-api-1.0-alpha-6.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.hibernate/hibernate-validator/5.1.3.Final/334d46a93cf095160ce06d8382594b904933c808/hibernate-validator-5.1.3.Final.jar</webClassPathEntry>
+        <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.slf4j/jcl-over-slf4j/1.7.9/f7c71870af3c344108412b745c8d13f5defffab5/jcl-over-slf4j-1.7.9.jar</webClassPathEntry>
+        <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.9/872ec63b41181e29ad5a3723f1417356e2d2c0f2/slf4j-api-1.7.9.jar</webClassPathEntry>
+        <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.slf4j/slf4j-ext/1.7.9/cd74dd89b2a998b63dcdeb69a405eb586337869d/slf4j-ext-1.7.9.jar</webClassPathEntry>
+        <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.slf4j/slf4j-jdk14/1.7.9/db0f03d53c924bd8d384a6784217b341cd4ee642/slf4j-jdk14-1.7.9.jar</webClassPathEntry>
+        <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.slf4j/slf4j-log4j12/1.7.9/5586044ba34544a9318bd7508f738dc967cd5e99/slf4j-log4j12-1.7.9.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.slf4j/slf4j-nop/1.5.3/36a3c886235cddd05e55a979cef549196740231a/slf4j-nop-1.5.3.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.springframework/spring-support/2.0.8/1516ff4609cc576376840817622b61c52945f551/spring-support-2.0.8.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/maven_repository/antlr/antlr/2.7.7/antlr-2.7.7.jar</webClassPathEntry>
@@ -119,9 +125,6 @@
         <webClassPathEntry>D:/java/maven_repository/org/jboss/logging/jboss-logging-annotations/1.2.0.Beta1/jboss-logging-annotations-1.2.0.Beta1.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/maven_repository/org/jboss/logging/jboss-logging/3.1.3.GA/jboss-logging-3.1.3.GA.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/maven_repository/org/jboss/spec/javax/transaction/jboss-transaction-api_1.2_spec/1.0.0.Final/jboss-transaction-api_1.2_spec-1.0.0.Final.jar</webClassPathEntry>
-        <webClassPathEntry>D:/java/maven_repository/org/slf4j/jcl-over-slf4j/1.5.6/jcl-over-slf4j-1.5.6.jar</webClassPathEntry>
-        <webClassPathEntry>D:/java/maven_repository/org/slf4j/slf4j-api/1.6.2/slf4j-api-1.6.2.jar</webClassPathEntry>
-        <webClassPathEntry>D:/java/maven_repository/org/slf4j/slf4j-jdk14/1.5.6/slf4j-jdk14-1.5.6.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/maven_repository/org/sonatype/plexus/plexus-cipher/1.4/plexus-cipher-1.4.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/maven_repository/org/sonatype/plexus/plexus-sec-dispatcher/1.3/plexus-sec-dispatcher-1.3.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/maven_repository/org/springframework/amqp/spring-amqp/1.4.1.RELEASE/spring-amqp-1.4.1.RELEASE.jar</webClassPathEntry>

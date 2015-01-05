@@ -20,6 +20,6 @@
     <ehcache:config cache-manager="cacheManager">
         <ehcache:evict-expired-elements interval="60" />
     </ehcache:config>
-    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"/>
+   
     <!-- rest of the file omitted -->
 </beans>
