@@ -7,13 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>邮箱内容管理 </title>
 
-<%@include file="../../common/easyui-html5.jsp" %>
-<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<%@include file="../../common/easyui-html5.jsp" %> 
 <script  src="<%=request.getContextPath() %>/resources/ckeditor/ckeditor.js"></script> 
 <script src="<%=request.getContextPath() %>/resources/ckeditor/adapters/jquery.js"></script>
-
+  
 <script type="text/javascript">
-
+CKEDITOR.disableAutoInline = true;
 var fenye = "${_adminUser_.btnMap.admin_mail_content_dopage}"== "true"?true:false;
 var add = "${_adminUser_.btnMap.admin_mail_content_doadd}"== "true"?true:false;
 var update = "${_adminUser_.btnMap.admin_mail_content_doupdate}"== "true"?true:false;
@@ -57,8 +56,9 @@ var detail = "${_adminUser_.btnMap.admin_mail_content_get}"== "true"?true:false;
 								<th data-options="field:'id',width:30" >id</th>
 								<th data-options="field:'templeteId',hidden:true"  >模板ID</th>
 								<th data-options="field:'title',width:150"  >标题</th>
-								<th data-options="field:'updateUserId',formatter:adminUserIdFormat,width:150"  >管理员</th>
-								<th data-options="field:'updateTime',formatter:dateFormat,width:150"  >修改时间</th> 
+								<th data-options="field:'templeteName',formatter:temFormat,width:150"  >模板名称</th>
+								<th data-options="field:'updateUserId',formatter:adminUserIdFormat,width:100"  >管理员</th>
+								<th data-options="field:'updateTime',formatter:dateFormat,width:100"  >修改时间</th> 
 								<th data-options="field:'opt',formatter:optFormat,width:150"  >操作</th> 
 					</tr>
 					
@@ -99,7 +99,7 @@ var detail = "${_adminUser_.btnMap.admin_mail_content_get}"== "true"?true:false;
 				    		<tr >
 				    			<td>模板:</td>
 				    			<td>
-				    				 <input id="templeteid" name="templeteId" class="easyui-combogrid" style="width:200px;" data-options="
+				    				 <input id="templeteid" name="templeteId" class="easyui-combogrid" style="width:200px;heigh:50px" data-options="
 										panelWidth: 380,
 										textField: 'templeteName',
 										idField:'id',
@@ -140,7 +140,7 @@ var detail = "${_adminUser_.btnMap.admin_mail_content_get}"== "true"?true:false;
 				    		<tr>
 				    			<td>邮件内容:</td>
 				    			<td>
-				    				<textarea id="content" name="content"  cols="5" rows="5"  ></textarea>
+				    				<textarea id="content" name="content"  ></textarea>
 				    			</td>
 				    		</tr>
 				    	</table>
@@ -176,6 +176,10 @@ function dateFormat(value,row,index){
 		return new Date(value).format("yyyy-MM-dd hh:mm:ss");
 	}
 }
+function temFormat(value,row,index){
+	return row["templeteName"]+"["+row['templeteId']+"]"
+	
+}
 function userIdFormat(value,row,index){
 	if(typeof value == 'undefined'){
 		return value;
@@ -208,20 +212,137 @@ var saveType = "add";
 function closeWinFn(){
 			$('#mail_w').window('close');
 }
+//获取页面的高度、宽度
+
+function getPageSize() {
+
+    var xScroll, yScroll;
+
+    if (window.innerHeight && window.scrollMaxY) {
+
+        xScroll = window.innerWidth + window.scrollMaxX;
+
+        yScroll = window.innerHeight + window.scrollMaxY;
+
+    } else {
+
+        if (document.body.scrollHeight > document.body.offsetHeight) { // all but Explorer Mac    
+
+            xScroll = document.body.scrollWidth;
+
+            yScroll = document.body.scrollHeight;
+
+        } else { // Explorer Mac...would also work in Explorer 6 Strict, Mozilla and Safari    
+
+            xScroll = document.body.offsetWidth;
+
+            yScroll = document.body.offsetHeight;
+
+        }
+
+    }
+
+    var windowWidth, windowHeight;
+
+    if (self.innerHeight) { // all except Explorer    
+
+        if (document.documentElement.clientWidth) {
+
+            windowWidth = document.documentElement.clientWidth;
+
+        } else {
+
+            windowWidth = self.innerWidth;
+
+        }
+
+        windowHeight = self.innerHeight;
+
+    } else {
+
+        if (document.documentElement && document.documentElement.clientHeight) { // Explorer 6 Strict Mode    
+
+            windowWidth = document.documentElement.clientWidth;
+
+            windowHeight = document.documentElement.clientHeight;
+
+        } else {
+
+            if (document.body) { // other Explorers    
+
+                windowWidth = document.body.clientWidth;
+
+                windowHeight = document.body.clientHeight;
+
+            }
+
+        }
+
+    }       
+
+    // for small pages with total height less then height of the viewport    
+
+    if (yScroll < windowHeight) {
+
+        pageHeight = windowHeight;
+
+    } else {
+
+        pageHeight = yScroll;
+
+    }    
+
+    // for small pages with total width less then width of the viewport    
+
+    if (xScroll < windowWidth) {
+
+        pageWidth = xScroll;
+
+    } else {
+
+        pageWidth = windowWidth;
+
+    }
+
+    //arrayPageSize = new Array(pageWidth, pageHeight, windowWidth, windowHeight);
+
+    return {
+    	"pageWidth":pageWidth,
+    	"pageHeight":pageHeight,
+    	"windowWidth":windowWidth,
+    	"windowHeight":windowHeight
+    	};
+
+}
+function initEditor(pageSize){
+	 var w = pageSize.pageWidth;
+	 var h = pageSize.pageHeight;
+	 $( '#content' ).ckeditor(function( textarea ) {
+	  },{
+		  	width:w,
+	        heigh:(h-100)
+		 
+	});
+	
+	  
+	
+}
 function addFn(){
 	saveType = "add";
 	 $("#ff").form("reset");
-	 $('#mail_w').window('open').panel('setTitle',"创建邮件");
-	  $( '#content' ).ckeditor(function( textarea ) {
-		    // Callback function code.
-		   // alert("11");
-	  },{
-		  width:200,
-	        heigh:50, 
-	        toolbar:[{ name: 'document', items: [ 'Source', '-', 'NewPage', 'Preview', '-', 'Templates' ] }]
-		 
-	});
 	 
+	 /** */
+	 var pageSize = getPageSize();
+	 var w = pageSize.pageWidth;
+	 var h = pageSize.pageHeight;
+	
+	 initEditor(pageSize);
+	 $('#mail_w').window('resize', {
+		  width:w,
+		  height: (h-10)
+	  });
+	  $('#mail_w').window('center');
+	  $('#mail_w').window('open').panel('setTitle',"创建邮件");
 	 $('#savebtn').show();
 }
 function updateFn(id){
@@ -238,20 +359,30 @@ function updateFn(id){
 	}
 	var rowIndex = 	$('#dg').datagrid("getRowIndex",row);
 	updateRowIndex = rowIndex;
-	$( '#content' ).ckeditor();
+
 	 
 	$("#id").val(row['id']);
 	$("#form_title").val(row['title']);
-	$("#content").val(row['content']);
+	//$("#content").val(row['content']);
 	 if(row['templeteId']){
 	 	var templeteId = row['templeteId'];
 	 	var templeteName = row['templeteName'] == null ?"": row['templeteName'] ;
-	 	 
 	 	//var roleName = role.name;
 	 	 $('#templeteid').combogrid('setValue', templeteId);
 		 $('#templeteid').combogrid('setText', templeteName);
 		  
 	 }
+	 var pageSize = getPageSize();
+	 var w = pageSize.pageWidth;
+	 var h = pageSize.pageHeight;
+		initEditor(pageSize);
+	var editor = CKEDITOR.instances.content;
+	editor.setData( row['content'] );
+	
+	 $('#mail_w').window('resize', {
+		  width:w,
+		  height: (h-10)
+	  });
 	$('#mail_w').window('open').panel('setTitle',"修改邮件") ;
 	$('#mail_w').window('center');
 	$('#savebtn').show();
@@ -274,6 +405,10 @@ function submitFormFn(){
 		 $.messager.alert('系统提示','内容不能为空!','info');
 		 return;
 	}
+	var editor = CKEDITOR.instances.content;
+	content = editor.getData() ;
+ 
+	
 	var saveObj = {};
 	saveObj.id=$.trim(u_id).length==0?0:u_id;
 	saveObj.templeteId= templeteid;
@@ -405,6 +540,18 @@ function getFn(id){
 		 $('#templeteid').combogrid('setText', templeteName);
 		  
 	 }
+	 
+	 var pageSize = getPageSize();
+	 var w = pageSize.pageWidth;
+	 var h = pageSize.pageHeight;
+	
+	 initEditor(pageSize);
+	 $('#mail_w').window('resize', {
+		  width:w,
+		  height: (h-10)
+	  });
+	
+	 
 	$('#mail_w').window('open').panel('setTitle',"查看邮件") ;
 	$('#mail_w').window('center');
 	$('#savebtn').hide();

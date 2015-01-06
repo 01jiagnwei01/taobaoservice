@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50620
 File Encoding         : 65001
 
-Date: 2014-12-24 19:53:29
+Date: 2015-01-06 19:13:23
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,7 +28,7 @@ CREATE TABLE `admin_menu` (
   `btnflag` varchar(32) DEFAULT NULL,
   `pid` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of admin_menu
@@ -87,6 +87,8 @@ INSERT INTO `admin_menu` VALUES ('52', '修改邮件内容', '/admin/mail/conten
 INSERT INTO `admin_menu` VALUES ('53', '删除邮件内容', '/admin/mail/content/dodel', null, '1', 'admin_mail_content_dodel', '45');
 INSERT INTO `admin_menu` VALUES ('54', '查看邮件详情', '/admin/mail/content/get', null, '1', 'admin_mail_content_get', '45');
 INSERT INTO `admin_menu` VALUES ('55', '查看邮件模板详情', '/admin/mail/templete/get', null, '1', 'admin_mail_templete_get', '44');
+INSERT INTO `admin_menu` VALUES ('56', '工具箱', '', null, '0', '', '0');
+INSERT INTO `admin_menu` VALUES ('57', '图片库', '/admin/tool/pics', null, '0', '', '56');
 
 -- ----------------------------
 -- Table structure for `admin_role`
@@ -127,7 +129,7 @@ CREATE TABLE `admin_user` (
 -- ----------------------------
 -- Records of admin_user
 -- ----------------------------
-INSERT INTO `admin_user` VALUES ('1', '01jiangwei01', '63a9f0ea7bb98050796b649e85481845', '管理员', '1');
+INSERT INTO `admin_user` VALUES ('1', '01jiangwei01', '96e79218965eb72c92a549dd5a330112', '管理员', '1');
 
 -- ----------------------------
 -- Table structure for `apply_draw`
@@ -217,6 +219,22 @@ INSERT INTO `deposit_apply` VALUES ('3', '1', '10.00', '1', '2014-12-06 08:19:24
 INSERT INTO `deposit_apply` VALUES ('4', '2', '10.00', '1', '2014-12-06 08:35:34', 'APPROVE', '1', '管理员', '2014-12-06 08:38:03', null);
 
 -- ----------------------------
+-- Table structure for `log_info`
+-- ----------------------------
+DROP TABLE IF EXISTS `log_info`;
+CREATE TABLE `log_info` (
+  `id` int(11) NOT NULL DEFAULT '0',
+  `user_id` int(11) NOT NULL,
+  `create_time` datetime NOT NULL,
+  `log_type` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of log_info
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `mail_content`
 -- ----------------------------
 DROP TABLE IF EXISTS `mail_content`;
@@ -229,7 +247,7 @@ CREATE TABLE `mail_content` (
   `status` varchar(50) NOT NULL,
   `updateUserId` int(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mail_content
@@ -237,7 +255,8 @@ CREATE TABLE `mail_content` (
 INSERT INTO `mail_content` VALUES ('1', '1', '内容1', '标题1-1', '2014-12-24 19:23:02', 'DELETE', '1');
 INSERT INTO `mail_content` VALUES ('2', '1', '内容2', '标题2-1', '2014-12-24 19:43:50', 'DELETE', '1');
 INSERT INTO `mail_content` VALUES ('3', '1', '内容3', '标题3', '2014-12-24 18:18:08', 'NORMAL', '1');
-INSERT INTO `mail_content` VALUES ('4', '1', '内容4', '标题4', '2014-12-24 18:25:56', 'NORMAL', '1');
+INSERT INTO `mail_content` VALUES ('4', '1', '<p>内容5555</p>\n', '标题4', '2015-01-06 18:52:58', 'NORMAL', '1');
+INSERT INTO `mail_content` VALUES ('5', '1', '<p>欢迎注册聚来宝</p>\n', '聚来宝注册', '2015-01-06 18:53:13', 'NORMAL', '1');
 
 -- ----------------------------
 -- Table structure for `mail_templete`
@@ -250,14 +269,16 @@ CREATE TABLE `mail_templete` (
   `update_time` datetime NOT NULL,
   `status` varchar(50) DEFAULT NULL,
   `updateUserId` int(10) DEFAULT NULL,
+  `templete_type` varchar(100) DEFAULT NULL,
+  `templete_desc` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mail_templete
 -- ----------------------------
-INSERT INTO `mail_templete` VALUES ('1', '测试模板', '/templete/mail/v1', '2014-12-24 14:16:56', 'NORMAL', null);
-INSERT INTO `mail_templete` VALUES ('2', '模板2', '/admin/123233', '2014-12-24 19:44:25', 'DELETE', '1');
+INSERT INTO `mail_templete` VALUES ('1', '测试模板', '/templete/mail/v1', '2015-01-06 13:44:31', 'NORMAL', '1', 'JU_LAI_BAO_TUI_GUANG_V1', '1');
+INSERT INTO `mail_templete` VALUES ('2', '模板2', '/admin/123233', '2014-12-24 19:44:25', 'DELETE', '1', null, null);
 
 -- ----------------------------
 -- Table structure for `operate_log`
@@ -313,7 +334,7 @@ CREATE TABLE `rel_role_menu` (
   `roleid` int(10) DEFAULT NULL,
   `menuid` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=271 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=222 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rel_role_menu
@@ -394,24 +415,26 @@ INSERT INTO `rel_role_menu` VALUES ('198', '8', '51');
 INSERT INTO `rel_role_menu` VALUES ('199', '8', '52');
 INSERT INTO `rel_role_menu` VALUES ('200', '8', '53');
 INSERT INTO `rel_role_menu` VALUES ('201', '8', '54');
-INSERT INTO `rel_role_menu` VALUES ('202', '8', '1');
-INSERT INTO `rel_role_menu` VALUES ('203', '8', '2');
-INSERT INTO `rel_role_menu` VALUES ('204', '8', '9');
-INSERT INTO `rel_role_menu` VALUES ('205', '8', '10');
-INSERT INTO `rel_role_menu` VALUES ('206', '8', '11');
-INSERT INTO `rel_role_menu` VALUES ('207', '8', '12');
-INSERT INTO `rel_role_menu` VALUES ('208', '8', '3');
-INSERT INTO `rel_role_menu` VALUES ('209', '8', '13');
-INSERT INTO `rel_role_menu` VALUES ('210', '8', '14');
-INSERT INTO `rel_role_menu` VALUES ('211', '8', '15');
-INSERT INTO `rel_role_menu` VALUES ('212', '8', '16');
-INSERT INTO `rel_role_menu` VALUES ('213', '8', '17');
-INSERT INTO `rel_role_menu` VALUES ('214', '8', '4');
-INSERT INTO `rel_role_menu` VALUES ('215', '8', '5');
-INSERT INTO `rel_role_menu` VALUES ('216', '8', '6');
-INSERT INTO `rel_role_menu` VALUES ('217', '8', '7');
-INSERT INTO `rel_role_menu` VALUES ('218', '8', '8');
-INSERT INTO `rel_role_menu` VALUES ('219', '8', '18');
+INSERT INTO `rel_role_menu` VALUES ('202', '8', '56');
+INSERT INTO `rel_role_menu` VALUES ('203', '8', '57');
+INSERT INTO `rel_role_menu` VALUES ('204', '8', '1');
+INSERT INTO `rel_role_menu` VALUES ('205', '8', '2');
+INSERT INTO `rel_role_menu` VALUES ('206', '8', '9');
+INSERT INTO `rel_role_menu` VALUES ('207', '8', '10');
+INSERT INTO `rel_role_menu` VALUES ('208', '8', '11');
+INSERT INTO `rel_role_menu` VALUES ('209', '8', '12');
+INSERT INTO `rel_role_menu` VALUES ('210', '8', '3');
+INSERT INTO `rel_role_menu` VALUES ('211', '8', '13');
+INSERT INTO `rel_role_menu` VALUES ('212', '8', '14');
+INSERT INTO `rel_role_menu` VALUES ('213', '8', '15');
+INSERT INTO `rel_role_menu` VALUES ('214', '8', '16');
+INSERT INTO `rel_role_menu` VALUES ('215', '8', '17');
+INSERT INTO `rel_role_menu` VALUES ('216', '8', '4');
+INSERT INTO `rel_role_menu` VALUES ('217', '8', '5');
+INSERT INTO `rel_role_menu` VALUES ('218', '8', '6');
+INSERT INTO `rel_role_menu` VALUES ('219', '8', '7');
+INSERT INTO `rel_role_menu` VALUES ('220', '8', '8');
+INSERT INTO `rel_role_menu` VALUES ('221', '8', '18');
 
 -- ----------------------------
 -- Table structure for `task_appreciation`
@@ -586,4 +609,24 @@ CREATE TABLE `user_link` (
 
 -- ----------------------------
 -- Records of user_link
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `valid_info`
+-- ----------------------------
+DROP TABLE IF EXISTS `valid_info`;
+CREATE TABLE `valid_info` (
+  `id` int(10) NOT NULL DEFAULT '0',
+  `type` varchar(255) NOT NULL,
+  `type_value` varchar(100) NOT NULL,
+  `code` varchar(8) NOT NULL,
+  `create_time` datetime NOT NULL,
+  `invalid_time` datetime NOT NULL,
+  `active_time` datetime DEFAULT NULL,
+  `enabled` int(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of valid_info
 -- ----------------------------

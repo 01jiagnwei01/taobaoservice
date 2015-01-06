@@ -11,7 +11,7 @@
 	<link id="bs-css" href="<%=request.getContextPath() %>/resources/charisma/css/bootstrap-cerulean.css" rel="stylesheet">
 	<link id="bs-css" href="<%=request.getContextPath() %>/resources/charisma/css/bootstrap-responsive.css" rel="stylesheet">
 	<link id="bs-css" href="<%=request.getContextPath() %>/resources/charisma/css/charisma-app.css" rel="stylesheet">
-	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/easyui/jquery-1.10.2.min.js"> </script>
+	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/jquery-1.11.2.min.js"> </script>
 	<script type="text/javascript">if(window.top != window){
 			window.top.location = window.location;
 		
