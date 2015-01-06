@@ -16,9 +16,11 @@
 		<property name="order" value="0" />
 		<property name="interceptors">  
            <list>
-           		<bean class="com.gxkj.common.interceptors.SharedRenderVariableInterceptor"/>
                <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+             
                 <bean class="com.gxkj.taobaoservice.filters.AuthorizationInterceptor" /> 
+                 <bean class="com.gxkj.common.interceptors.SharedRenderVariableInterceptor"/>
+                <!--   -->
            </list>  
        </property>  
 		
