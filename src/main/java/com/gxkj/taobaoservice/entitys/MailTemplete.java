@@ -15,6 +15,7 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.gxkj.taobaoservice.enums.MailTempleteStatus;
+import com.gxkj.taobaoservice.enums.MailTempleteTypes;
 
 /**
  * 邮件模板
@@ -58,6 +59,22 @@ public class MailTemplete implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private MailTempleteStatus status;
 	
+	/**
+	 * 模板类型
+	 */
+	@Column(name = "templete_type",   nullable = false ) 
+	@Enumerated(EnumType.STRING)
+	private MailTempleteTypes type;
+	
+	/**
+	 * 模板描述
+	 */
+	@Column(name = "templete_desc",   nullable = false ) 
+	private String templeteDesc;
+	
+	/**
+	 * 修改人
+	 */
 	@Column(name = "updateUserId",   nullable = false )
 	private Integer updateUserId;
 	
@@ -132,6 +149,26 @@ public class MailTemplete implements Serializable {
 
 	public void setUpdateUserName(String updateUserName) {
 		this.updateUserName = updateUserName;
+	}
+
+
+	public MailTempleteTypes getType() {
+		return type;
+	}
+
+
+	public void setType(MailTempleteTypes type) {
+		this.type = type;
+	}
+
+
+	public String getTempleteDesc() {
+		return templeteDesc;
+	}
+
+
+	public void setTempleteDesc(String templeteDesc) {
+		this.templeteDesc = templeteDesc;
 	}
 	
 	

@@ -6,8 +6,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" content="ie=edge"/>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>邮箱内容管理 </title>
+
 <%@include file="../../common/easyui-html5.jsp" %>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script  src="<%=request.getContextPath() %>/resources/ckeditor/ckeditor.js"></script> 
+<script src="<%=request.getContextPath() %>/resources/ckeditor/adapters/jquery.js"></script>
+
 <script type="text/javascript">
+
 var fenye = "${_adminUser_.btnMap.admin_mail_content_dopage}"== "true"?true:false;
 var add = "${_adminUser_.btnMap.admin_mail_content_doadd}"== "true"?true:false;
 var update = "${_adminUser_.btnMap.admin_mail_content_doupdate}"== "true"?true:false;
@@ -73,8 +79,8 @@ var detail = "${_adminUser_.btnMap.admin_mail_content_get}"== "true"?true:false;
 			</tr>
 		</table>
 	</div>
-	 <div id="mail_w" class="easyui-window" title="系统管理员" data-options="modal:true,closed:true,iconCls:'icon-save',
-		collapsible:false,minimizable:false,maximizable:false,resizable:false" 
+	 <div id="mail_w" class="easyui-window" title="窗口" data-options="modal:true,closed:true,iconCls:'icon-save',
+		collapsible:false,minimizable:false,maximizable:false,resizable:false,onOpen:winOpen" 
 			style="width:600px;height:420px;padding:10px;">
 		<div class="easyui-layout" data-options="fit:true">
 			<div data-options="region:'center',border:false" id="content_layout" >
@@ -134,7 +140,7 @@ var detail = "${_adminUser_.btnMap.admin_mail_content_get}"== "true"?true:false;
 				    		<tr>
 				    			<td>邮件内容:</td>
 				    			<td>
-				    				<textarea rows="16" cols="56" id="content" name="content" ></textarea>
+				    				<textarea id="content" name="content"  cols="5" rows="5"  ></textarea>
 				    			</td>
 				    		</tr>
 				    	</table>
@@ -150,8 +156,12 @@ var detail = "${_adminUser_.btnMap.admin_mail_content_get}"== "true"?true:false;
 <script type="text/javascript">
 
 $(function(){
- 
+	 
 });
+function winOpen(){
+ 
+	
+}
 function searchFn(){
 	var title = $("#title").val(); 
 	$('#dg').datagrid('load',{
@@ -180,8 +190,6 @@ function adminUserIdFormat(value,row,index){
 	return row['updateUserName']+"["+row['updateUserId']+"]"
 }
 function optFormat(value,row,index){
-	
-	 
 		var btns = [];
 		if(detail){
 			btns.push('<a class="easyui-linkbutton l-btn l-btn-plain" onclick="getFn(\''+row['id']+'\')" href="#" plain="true" iconCls="green_btn"><span class="l-btn-left"><span class="l-btn-text green_btn l-btn-icon-left">查看</span></span></a>');
@@ -204,6 +212,16 @@ function addFn(){
 	saveType = "add";
 	 $("#ff").form("reset");
 	 $('#mail_w').window('open').panel('setTitle',"创建邮件");
+	  $( '#content' ).ckeditor(function( textarea ) {
+		    // Callback function code.
+		   // alert("11");
+	  },{
+		  width:200,
+	        heigh:50, 
+	        toolbar:[{ name: 'document', items: [ 'Source', '-', 'NewPage', 'Preview', '-', 'Templates' ] }]
+		 
+	});
+	 
 	 $('#savebtn').show();
 }
 function updateFn(id){
@@ -220,6 +238,7 @@ function updateFn(id){
 	}
 	var rowIndex = 	$('#dg').datagrid("getRowIndex",row);
 	updateRowIndex = rowIndex;
+	$( '#content' ).ckeditor();
 	 
 	$("#id").val(row['id']);
 	$("#form_title").val(row['title']);

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
  <%@ page import="com.gxkj.common.util.SystemGlobals"%>
+  <%@ page import="com.gxkj.taobaoservice.enums.MailTempleteTypes"%>
  <!DOCTYPE html>
 <html lang="zh">
 <head><%--  --%>
@@ -13,6 +14,16 @@ var add = "${_adminUser_.btnMap.admin_mail_templete_doadd}"== "true"?true:false;
 var update = "${_adminUser_.btnMap.admin_mail_templete_doupdate}"== "true"?true:false;
 var del = "${_adminUser_.btnMap.admin_mail_templete_dodel}"== "true"?true:false;
 var detail = "${_adminUser_.btnMap.admin_mail_templete_get}"== "true"?true:false;
+var typeMap = {};
+<%
+MailTempleteTypes[] types = MailTempleteTypes.values();
+for(MailTempleteTypes type: types){
+%>
+
+typeMap['<%=type.name()%>'] ='<%=type.getString()%>'
+<%
+}
+%>
 </script>
 </head>
 <body class="easyui-layout">
@@ -51,6 +62,9 @@ var detail = "${_adminUser_.btnMap.admin_mail_templete_get}"== "true"?true:false
 								<th data-options="field:'id',width:30" >id</th>
 								<th data-options="field:'templeteName',width:150"  >名称</th>
 								<th data-options="field:'templetePath',width:150"  >保存路径</th>
+								<th data-options="field:'type',width:150,formatter: function(value,row,index){if(value)return typeMap[value]}
+								"  >模板类型</th>
+								<th data-options="field:'templeteDesc',width:150"  >模板描述</th>
 								<th data-options="field:'opt',formatter:optFormat,width:150"  >操作</th> 
 					</tr>
 					
@@ -89,9 +103,31 @@ var detail = "${_adminUser_.btnMap.admin_mail_templete_get}"== "true"?true:false
 				    			</td>
 				    		</tr>
 				    		<tr>
+				    			<td>类型:</td>
+				    			<td>
+				    				<select  style="width:300px;" id="type" class="easyui-combobox" name="type" style="width:200px;" data-options="panelHeight:40">
+				    				<%
+				    			 
+				    				for(MailTempleteTypes type: types){
+				    				%>
+				    				<option value="<%=type.name()%>"><%=type.getString()%></option>
+				    				<%
+				    				}
+				    				%>
+				    				</select>
+				    			
+				    			</td>
+				    		</tr>
+				    		<tr>
 				    			<td>保存路径:</td>
 				    			<td>
 				    				<input style="width:300px;" class="easyui-validatebox" type="text" id="templetePath" name="templetePath" data-options="required:true"></input>
+				    			</td>
+				    		</tr>
+				    		<tr>
+				    			<td>描述:</td>
+				    			<td>
+				    				<input class="easyui-textbox" data-options="multiline:true" style="width:300px" id='templeteDesc'/>
 				    			</td>
 				    		</tr>
 				    		 
@@ -183,6 +219,8 @@ function updateFn(id){
 	$("#id").val(row['id']);
 	$("#form_templeteName").val(row['templeteName']);
 	$("#templetePath").val(row['templetePath']);
+	$("#type").val(row['type']);
+	$("#templeteDesc").val(row['templeteDesc']);
 	  
 	$('#templete_w').window('open').panel('setTitle',"修改模板") ;
 	$('#templete_w').window('center');
@@ -192,6 +230,8 @@ function submitFormFn(){
 	var u_id = $("#id").val();
 	var form_templeteName = $("#form_templeteName").val();
 	var templetePath = $("#templetePath").val();
+	var templeteDesc = $("#templeteDesc").val();
+	var type = $("#type").val();
 	 
 	if(form_templeteName.length == 0){
 		 $.messager.alert('系统提示','名称不能为空!','info');
@@ -206,6 +246,8 @@ function submitFormFn(){
 	saveObj.id=$.trim(u_id).length==0?0:u_id;
 	saveObj.templeteName= form_templeteName;
 	saveObj.templetePath=templetePath; 
+	saveObj.type = type;
+	saveObj.templeteDesc = templeteDesc;
 	 
 	if(saveType == 'add'){ insertIntoDb(saveObj); }else if(saveType == 'update'){ updateIntoDb(saveObj); }
 }
@@ -322,6 +364,8 @@ function getFn(id){
 	$("#id").val(row['id']);
 	$("#form_templeteName").val(row['templeteName']);
 	$("#templetePath").val(row['templetePath']);
+	$("#type").val(row['type']);
+	$("#templeteDesc").val(row['templeteDesc']);
 	$('#templete_w').window('open').panel('setTitle',"查看模板") ;
 	$('#templete_w').window('center');
 	$('#savebtn').hide();
