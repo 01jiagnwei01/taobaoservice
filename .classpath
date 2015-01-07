@@ -106,16 +106,6 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/org.activiti/activiti-spring/5.17.0/e7909b8610fb4ac3a9582fa7d5b93153262dd447/activiti-spring-5.17.0-sources.jar" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/org.activiti/activiti-spring/5.17.0/33234eed902b14c84f716b5e10f5c016744e707c/activiti-spring-5.17.0.jar" exported="true">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/org.activiti/activiti-engine/5.17.0/745b1fb9b466af844d8d644bbd8211626278b2f3/activiti-engine-5.17.0-sources.jar" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/org.activiti/activiti-engine/5.17.0/c23e0121c07da62dee8970beee32b7907c7db010/activiti-engine-5.17.0.jar" exported="true">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
-		</attributes>
-	</classpathentry>
 	<classpathentry sourcepath="D:/java/maven_repository/org/hibernate/hibernate-core/4.3.7.Final/hibernate-core-4.3.7.Final-sources.jar" kind="lib" path="D:/java/maven_repository/org/hibernate/hibernate-core/4.3.7.Final/hibernate-core-4.3.7.Final.jar" exported="true">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
@@ -276,36 +266,6 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
-	<classpathentry sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/org.activiti/activiti-bpmn-converter/5.17.0/139b167003d33ca2a844673e11264dc10e4eca5/activiti-bpmn-converter-5.17.0-sources.jar" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/org.activiti/activiti-bpmn-converter/5.17.0/5a964674427bdcfa80d0530758a68f25a8c1dfa5/activiti-bpmn-converter-5.17.0.jar" exported="true">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/org.activiti/activiti-process-validation/5.17.0/7e29dcd756a6935878f361543a96215b037b5bc1/activiti-process-validation-5.17.0-sources.jar" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/org.activiti/activiti-process-validation/5.17.0/78e4714884a348b30b0e94ae8a2e9d5d41717533/activiti-process-validation-5.17.0.jar" exported="true">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/org.activiti/activiti-image-generator/5.17.0/4def1869b54575a13ccb78bf822908154de53df6/activiti-image-generator-5.17.0-sources.jar" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/org.activiti/activiti-image-generator/5.17.0/227c0900dadfe1fede5413d8fdacf6c261f373cd/activiti-image-generator-5.17.0.jar" exported="true">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/org.apache.commons/commons-email/1.2/d6d9c571c856c775e6b5248fef4122ccd31a84e4/commons-email-1.2-sources.jar" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/org.apache.commons/commons-email/1.2/6cd5d2b5c11d2898b901e3162d825b804699187d/commons-email-1.2.jar" exported="true">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/org.mybatis/mybatis/3.2.5/f94a850e2f16dfca166a5fce5bb67ae0fda1a9a6/mybatis-3.2.5-sources.jar" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/org.mybatis/mybatis/3.2.5/70e8be7718eb1a2b46d321533f0200b0e552aa27/mybatis-3.2.5.jar" exported="true">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/joda-time/joda-time/2.6/828b58d9c5a47da48bc1bcc2515e0ffd3b2dbb07/joda-time-2.6-sources.jar" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/joda-time/joda-time/2.6/5015880733b0bc0ce813a3ed5601064c1d413671/joda-time-2.6.jar" exported="true">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="D:/java/maven_repository/org/jboss/logging/jboss-logging/3.1.3.GA/jboss-logging-3.1.3.GA.jar" exported="true">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
@@ -432,11 +392,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="D:/java/maven_repository/xpp3/xpp3_min/1.1.4c/xpp3_min-1.1.4c.jar" exported="true">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/org.activiti/activiti-bpmn-model/5.17.0/84e2c16f637209bdc352aba03fef8d673c998675/activiti-bpmn-model-5.17.0-sources.jar" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/org.activiti/activiti-bpmn-model/5.17.0/96359915618691e360b4915e3c5d14c9c224b7b9/activiti-bpmn-model-5.17.0.jar" exported="true">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
