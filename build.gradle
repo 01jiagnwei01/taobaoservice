@@ -56,6 +56,9 @@ dependencies {
 	//json-lib
 	//compile 'net.sf.json-lib:json-lib:2.4'
 	//compile 'net.sf.ezmorph:ezmorph:1.0.6'
+	//activiti
+	compile 'org.activiti:activiti-spring:5.17.0'
+	compile 'org.activiti:activiti-engine:5.17.0'
 
 	
 	//hibernate

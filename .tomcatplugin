@@ -23,10 +23,18 @@
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/com.googlecode.ehcache-spring-annotations/ehcache-spring-annotations/1.2.0/b6bf5706d99a9fd7cae9f887e28a98be19f3064b/ehcache-spring-annotations-1.2.0.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/com.jcraft/jsch/0.1.38/677f7038dd5c8d5d687c558d09c124f820a8fd5/jsch-0.1.38.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/javax.mail/mail/1.4.7/9add058589d5d85adeb625859bf2c5eeaaedf12d/mail-1.4.7.jar</webClassPathEntry>
+        <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/joda-time/joda-time/2.6/5015880733b0bc0ce813a3ed5601064c1d413671/joda-time-2.6.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/junit/junit/4.12/2973d150c0dc1fefe998f834810d68f278ea58ec/junit-4.12.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/nekohtml/nekohtml/1.9.6.2/2d960be7b62ae6622dbbbe49ab4ffdc609f85c80/nekohtml-1.9.6.2.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/nekohtml/xercesMinimal/1.9.6.2/d1c5e063683a0e6f77cd5f051a9d4af48346fa6/xercesMinimal-1.9.6.2.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/net.sf.ehcache/ehcache-core/2.4.5/92e665ecc4c027df5cfce9c627ab353bd286265d/ehcache-core-2.4.5.jar</webClassPathEntry>
+        <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.activiti/activiti-bpmn-converter/5.17.0/5a964674427bdcfa80d0530758a68f25a8c1dfa5/activiti-bpmn-converter-5.17.0.jar</webClassPathEntry>
+        <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.activiti/activiti-bpmn-model/5.17.0/96359915618691e360b4915e3c5d14c9c224b7b9/activiti-bpmn-model-5.17.0.jar</webClassPathEntry>
+        <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.activiti/activiti-engine/5.17.0/c23e0121c07da62dee8970beee32b7907c7db010/activiti-engine-5.17.0.jar</webClassPathEntry>
+        <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.activiti/activiti-image-generator/5.17.0/227c0900dadfe1fede5413d8fdacf6c261f373cd/activiti-image-generator-5.17.0.jar</webClassPathEntry>
+        <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.activiti/activiti-process-validation/5.17.0/78e4714884a348b30b0e94ae8a2e9d5d41717533/activiti-process-validation-5.17.0.jar</webClassPathEntry>
+        <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.activiti/activiti-spring/5.17.0/33234eed902b14c84f716b5e10f5c016744e707c/activiti-spring-5.17.0.jar</webClassPathEntry>
+        <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.apache.commons/commons-email/1.2/6cd5d2b5c11d2898b901e3162d825b804699187d/commons-email-1.2.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.2.2/ee8dfd1a0efa78a07222eda60b8892972fbb6165/httpclient-4.2.2.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.2.2/b76bee23cd3f3ee9b98bc7c2c14670e821ddbbfd/httpcore-4.2.2.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.apache.jackrabbit/jackrabbit-jcr-commons/1.5.0/816ca280dc631b277e7b963723f2e99b038383f2/jackrabbit-jcr-commons-1.5.0.jar</webClassPathEntry>
@@ -65,6 +73,7 @@
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.codehaus.plexus/plexus-component-api/1.0-alpha-16/5a2100a1c6a37804b1abfc70000b0ea33b83b7f9/plexus-component-api-1.0-alpha-16.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.codehaus.plexus/plexus-interactivity-api/1.0-alpha-6/c06f0eb818633033f09a87d14c4cfb6f39af9a37/plexus-interactivity-api-1.0-alpha-6.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.hibernate/hibernate-validator/5.1.3.Final/334d46a93cf095160ce06d8382594b904933c808/hibernate-validator-5.1.3.Final.jar</webClassPathEntry>
+        <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.mybatis/mybatis/3.2.5/70e8be7718eb1a2b46d321533f0200b0e552aa27/mybatis-3.2.5.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.slf4j/jcl-over-slf4j/1.7.9/f7c71870af3c344108412b745c8d13f5defffab5/jcl-over-slf4j-1.7.9.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.9/872ec63b41181e29ad5a3723f1417356e2d2c0f2/slf4j-api-1.7.9.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.slf4j/slf4j-ext/1.7.9/cd74dd89b2a998b63dcdeb69a405eb586337869d/slf4j-ext-1.7.9.jar</webClassPathEntry>
