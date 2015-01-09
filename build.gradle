@@ -59,6 +59,10 @@ dependencies {
 	//activiti
 	//compile 'org.activiti:activiti-spring:5.17.0'
 	//compile 'org.activiti:activiti-engine:5.17.0'
+	
+	//jms
+	compile 'org.apache.activemq:activemq-core:5.7.0';
+	compile 'org.springframework:spring-jms:4.1.4.RELEASE';
 
 	
 	//hibernate
