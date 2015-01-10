@@ -61,8 +61,13 @@ dependencies {
 	//compile 'org.activiti:activiti-engine:5.17.0'
 	
 	//jms
-	compile 'org.apache.activemq:activemq-core:5.7.0';
-	compile 'org.apache.activemq:activemq-pool:5.10.0';
+//	compile 'org.apache.activemq:activemq-core:5.7.0';
+//	compile 'org.apache.activemq:activemq-pool:5.10.0';
+//	compile 'org.apache.activemq:activemq-broker:5.10.0';
+	compile 'org.apache.activemq:activemq-all:5.10.0';
+	compile 'org.apache.activemq:activemq-ra:5.10.0';
+	compile 'org.apache.activemq:activemq-rar:5.10.0';
+	compile 'org.apache.activemq:activemq-broker:5.10.0';
 	compile 'org.springframework:spring-jms:4.1.4.RELEASE';
 	
 

@@ -2,6 +2,8 @@ package com.gxkj.taobaoservice.jms;
 
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -9,8 +11,18 @@ import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
 import javax.jms.TextMessage;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.ConnectionHolder;
+import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.orm.hibernate4.SessionHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.support.AbstractPlatformTransactionManager;
+import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
+import org.springframework.transaction.support.TransactionSynchronizationUtils;
 
 import com.gxkj.taobaoservice.daos.impl.LogInfosDaoImpl;
 import com.gxkj.taobaoservice.entitys.LogInfos;
@@ -22,12 +34,22 @@ public class ConsumerMessageListener implements MessageListener  {
 	@Autowired
 	private LogInfosDaoImpl logInfosDao;
 	
+	@Autowired
+	private SessionFactory sessionFactory;
+	
 	private int count = 0;  
 	
 	public void onMessage(Message message) {
-	 
+		
+//		Session session = sessionFactory.getCurrentSession();
+//		 Transaction tx= session.beginTransaction();
+		//AbstractPlatformTransactionManager.getTransaction();
+		//HibernateTransactionManager.doGetTransaction();
 		//这里我们知道生产者发送的就是一个纯文本消息，所以这里可以直接进行强制转换  
-		        
+		SessionHolder  sessionHolder = (SessionHolder )TransactionSynchronizationManager.getResource(sessionFactory);
+		 Transaction transAction = sessionHolder.getTransaction();
+		 transAction.begin();
+		 
 		       if (message instanceof TextMessage) { 
 		    	   TextMessage textMsg = (TextMessage) message;  
 			       System.out.println("接收到一个纯文本消息。");  
@@ -52,19 +74,34 @@ public class ConsumerMessageListener implements MessageListener  {
 		       log.setCreateTime(new Date());
 		       log.setLogType(LogType.FIND_PASSWORD);
 		       log.setUserId(1);
-		       System.out.println("count="+count);
+		       System.out.println("=====================count="+count);
 		       try {
 				logInfosDao.insert(log);
 				System.out.println("logid ="+log.getId());
-			} catch (SQLException e) {
-				 
-				e.printStackTrace();
-			}
-		       if(count == 0){
-		    	   count ++;  
-		    	   throw new RuntimeException("Error! 出错啦！");  
+				count ++;  
+				System.out.println("count="+count);
+				  if(count <= 10){	  }
+			    	   
+//			    	   throw new RuntimeException("Error! 出错啦！");  
+				  transAction.commit();
 
-		       }
+				} catch ( Exception e) {
+					/**
+					 * 需要同步配置文件里 sessionTransacted为false;否则
+					 * 回滚会重复执行7次
+					 * 
+					 */
+					transAction.rollback();
+						
+						//SessionHolder  sessionHolder = (SessionHolder )TransactionSynchronizationManager.getResource(sessionFactory);
+						//sessionHolder.getTransaction().rollback();
+						//logInfosDao.delete(log);
+						
+					System.out.println(1);
+					 
+					//e.printStackTrace();
+				}
+		      
 
 	}
 

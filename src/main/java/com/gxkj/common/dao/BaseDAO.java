@@ -6,9 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.SessionFactory;
+
 import com.gxkj.common.util.ListPager;
 
 public interface BaseDAO {
+	
+	public SessionFactory getSessionFactory();
 
 	public void deleteById(Serializable  id,Class<?> clazz) throws SQLException;
 	

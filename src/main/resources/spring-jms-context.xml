@@ -6,9 +6,11 @@
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd"
-	
 	default-autowire="byName" default-lazy-init="false">
-  
+  <!-- 
+  	参考文献
+  	http://docs.spring.io/spring/docs/3.0.x/spring-framework-reference/html/jms.html
+   -->
 	
     <!-- 真正可以产生Connection的ConnectionFactory，由对应的 JMS服务厂商提供-->
     <bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
@@ -31,6 +33,8 @@
     <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
         <!-- 这个connectionFactory对应的是我们定义的Spring提供的那个ConnectionFactory对象 -->
         <property name="connectionFactory" ref="jmsconnectionFactory"/>
+        <property name="sessionTransacted" value="true"/>
+        <property name="receiveTimeout" value="5000"/>
     </bean>
       <!--这个是队列目的地，点对点的-->
     <bean id="queueDestination" class="org.apache.activemq.command.ActiveMQQueue">
@@ -52,7 +56,10 @@
         <property name="connectionFactory" ref="pooledConnectionFactory" />
         <property name="destination" ref="queueDestination" /><!-- 定义要消费的通道 -->
         <property name="messageListener" ref="consumerMessageListener" /><!-- 定义使用的监听器 -->
-        <property name="transactionManager" ref="transactionManager"/>  <!-- 事务管理器 -->
+        <property name="sessionTransacted" value="false"/>  <!-- 代码里加事务，自己实现事务逻辑。 -->
+        <!-- 
+        <property name="transactionManager" ref="transactionManager"/> --> <!-- 事务管理器 -->
+        <property  name = "maxConcurrentConsumers"  value = "10"/>
     </bean>
 <!-- 定义消费者结束 -->
     

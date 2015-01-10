@@ -18,12 +18,18 @@ import com.gxkj.common.util.ListPager;
  
 public  class BaseDAOImpl    implements BaseDAO {
 	
-    protected SessionFactory sessionFactory;
+    public SessionFactory sessionFactory;
     
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
+	
+
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
 
 	public Object selectById(Serializable id, Class<?> clazz) throws SQLException { 
 		return sessionFactory.getCurrentSession().get(clazz, id);
