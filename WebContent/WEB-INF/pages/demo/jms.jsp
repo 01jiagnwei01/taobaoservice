@@ -12,6 +12,8 @@
 要发送的数据：<input type="text" value="1999" id="name">
 <input type='button' value="发送数据" onclick="sendReq()"><br/>
 <input type='button' value="获取请求" onclick="receiveMsg()"><br/>
+
+<input type='button' value="发送数据" onclick="sendReqOk()"><br/>
 </body>
 <script type="text/javascript">
 function sendReq(){
@@ -54,6 +56,27 @@ function receiveMsg(){
 		  
 		  } 
 	});
+}
+function sendReqOk(){
+	var url = "<%=request.getContextPath() %>/demo/jms/sendok";
+	var msg = $("#name").val();
+		 $.ajax({
+	  	  type:'post',
+			  url: url,
+			  data:{
+				  msg:msg
+			  },
+			  context: document.body,
+			  success:function(json){
+			 	 alert(json);
+				
+			  },
+			  error:function(xhr,textStatus,errorThrown){
+			  		var responseText = xhr.responseText;
+			    	$.messager.alert('系统提示',' 失败，请刷新后重试!','error');
+			  
+			  } 
+		});
 }
 
 

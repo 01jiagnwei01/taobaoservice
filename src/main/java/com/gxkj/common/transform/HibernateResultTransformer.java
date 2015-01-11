@@ -30,7 +30,7 @@ public class HibernateResultTransformer  extends AliasedTupleSubsetResultTransfo
 	    "java.lang.Long", "short", "java.lang.Short", "byte",
 	    "java.lang.Byte", "boolean", "java.lang.Boolean", "java.util.Date",
 	    "java.util.Timestamp", "java.sql.Timestamp", "java.sql.Date",
-	    "java.lang.BigDecimal", "[B" // byte[]
+	    "java.lang.BigDecimal","java.math.BigInteger","java.math.BigDecimal", "[B" // byte[]
     };
 	public static <T> boolean isBaseType(Class<T> clazz) {
 		String className = clazz.getName();
@@ -68,7 +68,13 @@ public class HibernateResultTransformer  extends AliasedTupleSubsetResultTransfo
 	public Object transformTuple(Object[] tuple, String[] aliases) {
 		Object result;
 		try {
-			if ( ! isInitialized ) {
+			if(HibernateResultTransformer.isBaseType(this.resultClass) ){
+				if(tuple!=null && tuple[0]!=null){
+					return tuple[0];
+				}else {
+					return null;
+				}
+			}else if ( ! isInitialized ) {
 				initialize( aliases );
 			}
 			else {

@@ -1,6 +1,7 @@
 F:\taobaoservice\WebContent\WEB-INF\classes
 D:\java\maven_repository\mysql\mysql-connector-java\5.1.34\mysql-connector-java-5.1.34.jar
 D:\java\maven_repository\xml-apis\xml-apis\1.0.b2\xml-apis-1.0.b2.jar
+D:\java\maven_repository\commons-pool\commons-pool\1.6\commons-pool-1.6.jar
 D:\java\gradlelib\caches\modules-2\files-2.1\org.apache.maven\maven-monitor\2.2.1\afc57c3a1368cd34caccb638e00523701f398c20\maven-monitor-2.2.1.jar
 D:\java\maven_repository\com\google\guava\guava\r09\guava-r09.jar
 D:\java\gradlelib\caches\modules-2\files-2.1\org.apache.maven.wagon\wagon-ssh-common\1.0-beta-6\c654cc7e10e18bedca04a6e42f980d6c68435fc\wagon-ssh-common-1.0-beta-6.jar
@@ -28,6 +29,7 @@ D:\java\maven_repository\org\hibernate\hibernate-core\4.3.7.Final\hibernate-core
 D:\java\maven_repository\xmlpull\xmlpull\1.1.3.1\xmlpull-1.1.3.1.jar
 D:\java\gradlelib\caches\modules-2\files-2.1\org.apache.maven\maven-repository-metadata\2.2.1\98f0c07fcf1eeb213bef8d9316a9935184084b06\maven-repository-metadata-2.2.1.jar
 D:\java\maven_repository\org\apache\activemq\activemq-broker\5.10.0\activemq-broker-5.10.0.jar
+D:\java\maven_repository\org\apache\activemq\activemq-spring\5.10.0\activemq-spring-5.10.0.jar
 D:\java\maven_repository\org\codehaus\plexus\plexus-component-annotations\1.5.5\plexus-component-annotations-1.5.5.jar
 D:\java\gradlelib\caches\modules-2\files-2.1\org.apache.maven.plugins\maven-compiler-plugin\3.2\aec10f274ac07fafab8906cb1aa69669d753b2c2\maven-compiler-plugin-3.2.jar
 D:\java\gradlelib\caches\modules-2\files-2.1\org.apache.maven.wagon\wagon-ssh\1.0-beta-6\37ac531f8159dddffa398a7612d5cbe313228437\wagon-ssh-1.0-beta-6.jar
@@ -64,6 +66,7 @@ D:\java\gradlelib\caches\modules-2\files-2.1\org.apache.maven\maven-settings\2.2
 D:\java\maven_repository\org\codehaus\plexus\plexus-container-default\1.5.5\plexus-container-default-1.5.5.jar
 D:\java\maven_repository\org\jboss\jandex\1.1.0.Final\jandex-1.1.0.Final.jar
 D:\java\maven_repository\org\sonatype\plexus\plexus-cipher\1.4\plexus-cipher-1.4.jar
+D:\java\maven_repository\org\apache\activemq\activemq-pool\5.10.0\activemq-pool-5.10.0.jar
 D:\java\maven_repository\log4j\log4j\1.2.17\log4j-1.2.17.jar
 D:\java\gradlelib\caches\modules-2\files-2.1\org.apache.maven\maven-plugin-parameter-documenter\2.2.1\1a117baac49437fc5a6fcd9f18f779e6bad4207e\maven-plugin-parameter-documenter-2.2.1.jar
 D:\java\gradlelib\caches\modules-2\files-2.1\classworlds\classworlds\1.1\60c708f55deeb7c5dfce8a7886ef09cbc1388eca\classworlds-1.1.jar
@@ -96,7 +99,6 @@ D:\java\gradlelib\caches\modules-2\files-2.1\org.apache.maven.wagon\wagon-http\1
 D:\java\maven_repository\org\apache\maven\reporting\maven-reporting-api\2.2.1\maven-reporting-api-2.2.1.jar
 D:\java\maven_repository\org\codehaus\plexus\plexus-interpolation\1.11\plexus-interpolation-1.11.jar
 D:\java\maven_repository\org\codehaus\plexus\plexus-utils\3.0.10\plexus-utils-3.0.10.jar
-D:\java\maven_repository\commons-pool\commons-pool\1.5.4\commons-pool-1.5.4.jar
 D:\java\gradlelib\caches\modules-2\files-2.1\nekohtml\nekohtml\1.9.6.2\2d960be7b62ae6622dbbbe49ab4ffdc609f85c80\nekohtml-1.9.6.2.jar
 D:\java\gradlelib\caches\modules-2\files-2.1\org.apache.maven.wagon\wagon-file\1.0-beta-6\6c53633505460caf49d2660de1e24744d915afb9\wagon-file-1.0-beta-6.jar
 D:\java\gradlelib\caches\modules-2\files-2.1\org.codehaus.plexus\plexus-component-api\1.0-alpha-16\5a2100a1c6a37804b1abfc70000b0ea33b83b7f9\plexus-component-api-1.0-alpha-16.jar
@@ -109,6 +111,7 @@ D:\java\maven_repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar
 D:\java\maven_repository\org\springframework\spring-aop\4.1.4.RELEASE\spring-aop-4.1.4.RELEASE.jar
 D:\java\maven_repository\commons-logging\commons-logging\1.2\commons-logging-1.2.jar
 D:\java\gradlelib\caches\modules-2\files-2.1\com.googlecode.ehcache-spring-annotations\ehcache-spring-annotations\1.2.0\b6bf5706d99a9fd7cae9f887e28a98be19f3064b\ehcache-spring-annotations-1.2.0.jar
+D:\java\maven_repository\org\apache\xbean\xbean-spring\3.16\xbean-spring-3.16.jar
 D:\java\maven_repository\com\fasterxml\classmate\1.0.0\classmate-1.0.0.jar
 D:\java\maven_repository\org\codehaus\jettison\jettison\1.2\jettison-1.2.jar
 D:\java\maven_repository\org\jboss\spec\javax\transaction\jboss-transaction-api_1.2_spec\1.0.0.Final\jboss-transaction-api_1.2_spec-1.0.0.Final.jar
@@ -140,6 +143,7 @@ D:\java\maven_repository\commons-dbcp\commons-dbcp\1.4\commons-dbcp-1.4.jar
 D:\java\maven_repository\org\springframework\spring-context\4.1.4.RELEASE\spring-context-4.1.4.RELEASE.jar
 D:\java\maven_repository\org\apache\maven\doxia\doxia-logging-api\1.1\doxia-logging-api-1.1.jar
 D:\java\maven_repository\org\springframework\retry\spring-retry\1.1.2.RELEASE\spring-retry-1.1.2.RELEASE.jar
+D:\java\gradlelib\caches\modules-2\files-2.1\org.apache.activemq\activemq-rar\5.10.0\b308e6c2d5fd7d31cbc95107f6994194bdb4de90\activemq-rar-5.10.0.rar
 D:\java\gradlelib\caches\modules-2\files-2.1\javax.mail\mail\1.4.7\9add058589d5d85adeb625859bf2c5eeaaedf12d\mail-1.4.7.jar
 D:\java\maven_repository\org\apache\geronimo\specs\geronimo-jms_1.1_spec\1.1.1\geronimo-jms_1.1_spec-1.1.1.jar
 D:\java\gradlelib\caches\modules-2\files-2.1\org.apache.httpcomponents\httpcore\4.2.2\b76bee23cd3f3ee9b98bc7c2c14670e821ddbbfd\httpcore-4.2.2.jar

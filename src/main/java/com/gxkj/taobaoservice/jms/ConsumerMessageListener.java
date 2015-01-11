@@ -48,7 +48,13 @@ public class ConsumerMessageListener implements MessageListener  {
 		//这里我们知道生产者发送的就是一个纯文本消息，所以这里可以直接进行强制转换  
 		SessionHolder  sessionHolder = (SessionHolder )TransactionSynchronizationManager.getResource(sessionFactory);
 		 Transaction transAction = sessionHolder.getTransaction();
-		 transAction.begin();
+ 
+		 try {
+			 Integer deliveryCount = 	message.getIntProperty("JMSXDeliveryCount");
+			 System.out.println("加载次数deliveryCount为"+deliveryCount);
+		} catch (JMSException e1) {
+			e1.printStackTrace();
+		}
 		 
 		       if (message instanceof TextMessage) { 
 		    	   TextMessage textMsg = (TextMessage) message;  
@@ -80,10 +86,12 @@ public class ConsumerMessageListener implements MessageListener  {
 				System.out.println("logid ="+log.getId());
 				count ++;  
 				System.out.println("count="+count);
-				  if(count <= 10){	  }
+				  if(count <= 10){	
+					  throw new RuntimeException("Error! 出错啦！");  
+				  }
 			    	   
-//			    	   throw new RuntimeException("Error! 出错啦！");  
-				  transAction.commit();
+//			    	   
+//				  transAction.commit();
 
 				} catch ( Exception e) {
 					/**
@@ -92,9 +100,7 @@ public class ConsumerMessageListener implements MessageListener  {
 					 * 
 					 */
 					transAction.rollback();
-						
-						//SessionHolder  sessionHolder = (SessionHolder )TransactionSynchronizationManager.getResource(sessionFactory);
-						//sessionHolder.getTransaction().rollback();
+					 
 						//logInfosDao.delete(log);
 						
 					System.out.println(1);
