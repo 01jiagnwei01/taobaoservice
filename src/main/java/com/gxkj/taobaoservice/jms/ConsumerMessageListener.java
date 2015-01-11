@@ -1,9 +1,6 @@
 package com.gxkj.taobaoservice.jms;
 
-import java.sql.SQLException;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -11,18 +8,12 @@ import javax.jms.MessageListener;
 import javax.jms.ObjectMessage;
 import javax.jms.TextMessage;
 
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.ConnectionHolder;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.SessionHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.support.AbstractPlatformTransactionManager;
-import org.springframework.transaction.support.TransactionSynchronization;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
-import org.springframework.transaction.support.TransactionSynchronizationUtils;
 
 import com.gxkj.taobaoservice.daos.impl.LogInfosDaoImpl;
 import com.gxkj.taobaoservice.entitys.LogInfos;
