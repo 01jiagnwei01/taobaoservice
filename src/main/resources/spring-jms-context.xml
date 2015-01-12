@@ -11,6 +11,8 @@ http://www.javacodegeeks.com/2014/02/spring-jms-processing-messages-within-trans
 https://github.com/xpadro/spring-integration/tree/master/jms-tx
 http://activemq.apache.org/redelivery-policy.html
 http://docs.spring.io/spring/docs/3.0.x/spring-framework-reference/html/jms.html
+jms数据持久化
+http://obullxl.iteye.com/blog/1114827
  -->
 
 	<!-- Infrastructure -->
@@ -34,6 +36,15 @@ http://docs.spring.io/spring/docs/3.0.x/spring-framework-reference/html/jms.html
 				<property name="backOffMultiplier" value="2"/>
 			</bean>
 		</property>
+		<!--  
+		http://activemq.apache.org/jmx.html 
+		 -->
+		 <!--  
+		http://activemq.apache.org/persistence.html 
+		conf/activemq.xml
+		 -->
+		 <property name="useAsyncSend" value="true" />
+		  
 	</bean>
 	
 	<bean id="cachingConnectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
@@ -66,7 +77,7 @@ http://docs.spring.io/spring/docs/3.0.x/spring-framework-reference/html/jms.html
         <property name="connectionFactory" ref="cachingConnectionFactory" />
         <property name="destination" ref="queueDestination" /><!-- 定义要消费的通道 -->
         <property name="messageListener" ref="consumerMessageListener" /><!-- 定义使用的监听器 -->
-        <property name="sessionTransacted" value="false"/>  <!-- 代码里加事务，自己实现事务逻辑。 -->
+        <property name="sessionTransacted" value="true"/>  <!-- 代码里加事务，自己实现事务逻辑。 -->
         <!-- -->
         <property name="transactionManager" ref="transactionManager"/>  <!-- 事务管理器 -->
         <property  name = "maxConcurrentConsumers"  value = "10"/>

@@ -1,5 +1,6 @@
 package com.gxkj.taobaoservice.jms;
 
+import java.sql.SQLException;
 import java.util.Date;
 
 import javax.jms.JMSException;
@@ -32,20 +33,26 @@ public class ConsumerMessageListener implements MessageListener  {
 	
 	public void onMessage(Message message) {
 		
-//		Session session = sessionFactory.getCurrentSession();
-//		 Transaction tx= session.beginTransaction();
-		//AbstractPlatformTransactionManager.getTransaction();
-		//HibernateTransactionManager.doGetTransaction();
+		count ++;  
+		System.out.println("count="+count);
+		  if(count <= 100){	
+			  throw new RuntimeException("Error! 出错啦！");  
+		  }
 		//这里我们知道生产者发送的就是一个纯文本消息，所以这里可以直接进行强制转换  
-		SessionHolder  sessionHolder = (SessionHolder )TransactionSynchronizationManager.getResource(sessionFactory);
-		 Transaction transAction = sessionHolder.getTransaction();
+//		SessionHolder  sessionHolder = (SessionHolder )TransactionSynchronizationManager.getResource(sessionFactory);
+//		 Transaction transAction = sessionHolder.getTransaction();
  
-		 try {
-			 Integer deliveryCount = 	message.getIntProperty("JMSXDeliveryCount");
-			 System.out.println("加载次数deliveryCount为"+deliveryCount);
-		} catch (JMSException e1) {
-			e1.printStackTrace();
-		}
+//		 try {
+			
+			try {
+				 Integer deliveryCount  = message.getIntProperty("JMSXDeliveryCount");
+				 System.out.println("加载次数deliveryCount为"+deliveryCount);
+			} catch (JMSException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+		
 		 
 		       if (message instanceof TextMessage) { 
 		    	   TextMessage textMsg = (TextMessage) message;  
@@ -72,34 +79,36 @@ public class ConsumerMessageListener implements MessageListener  {
 		       log.setLogType(LogType.FIND_PASSWORD);
 		       log.setUserId(1);
 		       System.out.println("=====================count="+count);
-		       try {
-				logInfosDao.insert(log);
+		    
+				try {
+					logInfosDao.insert(log);
+				} catch (SQLException e) {
+				 
+					e.printStackTrace();
+				}
 				System.out.println("logid ="+log.getId());
-				count ++;  
-				System.out.println("count="+count);
-				  if(count <= 10){	
-					  throw new RuntimeException("Error! 出错啦！");  
-				  }
+				
 			    	   
 //			    	   
 //				  transAction.commit();
 
-				} catch ( Exception e) {
-					/**
-					 * 需要同步配置文件里 sessionTransacted为false;否则
-					 * 回滚会重复执行7次
-					 * 
-					 */
-					transAction.rollback();
-					 
-						//logInfosDao.delete(log);
-						
-					System.out.println(1);
-					 
-					//e.printStackTrace();
-				}
+			
 		      
-
-	}
+//			}catch ( Exception e) {
+//				/**
+//				 * 需要同步配置文件里 sessionTransacted为false;否则
+//				 * 回滚会重复执行7次
+//				 * 
+//				 */
+////				transAction.rollback();
+//				 
+//					 
+//					
+//				System.out.println(1);
+//				 
+//				 e.printStackTrace();
+//				// throw e;
+//			}	
+		}
 
 }
