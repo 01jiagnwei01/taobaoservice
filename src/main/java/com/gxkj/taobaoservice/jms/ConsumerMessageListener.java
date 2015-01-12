@@ -10,11 +10,8 @@ import javax.jms.ObjectMessage;
 import javax.jms.TextMessage;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate4.SessionHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import com.gxkj.taobaoservice.daos.impl.LogInfosDaoImpl;
 import com.gxkj.taobaoservice.entitys.LogInfos;

@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jms="http://www.springframework.org/schema/jms"
-	xmlns:amq="http://activemq.apache.org/schema/core"
-	xsi:schemaLocation="http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core-5.9.0.xsd">
+<beans
+  xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:amq="http://activemq.apache.org/schema/core"
+  xmlns:jms="http://www.springframework.org/schema/jms"
+  xsi:schemaLocation="http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd
+  http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+  http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
 <!-- 
 参考文档：
 http://www.javacodegeeks.com/2014/02/spring-jms-processing-messages-within-transactions.html?utm_source=tuicool
@@ -13,48 +17,47 @@ http://activemq.apache.org/redelivery-policy.html
 http://docs.spring.io/spring/docs/3.0.x/spring-framework-reference/html/jms.html
 jms数据持久化
 http://obullxl.iteye.com/blog/1114827
+失效的消息的处理方法见我的博客
+http://01jiangwei01.iteye.com/admin/blogs/2174971
  -->
-
-	<!-- Infrastructure -->
-	<bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
-	<!-- 
-	<property name="brokerURL" value="vm://embedded?broker.persistent=false"/>
-	 -->
-		<property name="brokerURL" value="tcp://localhost:61616"/>
-		<property name="redeliveryPolicy">
-			<bean class="org.apache.activemq.RedeliveryPolicy">
-			<!-- 
-			<property name="collisionAvoidanceFactor" value="0.5"/>
-			 -->
-				
-				<property name="maximumRedeliveries" value="0"/><!-- 重复次数 -->
-				<property name="maximumRedeliveryDelay" value="-1"/>
-				<property name="initialRedeliveryDelay" value="10"/>
-				<property name="redeliveryDelay" value="1000"/>
-				<property name="useCollisionAvoidance" value="false"/>
-				<property name="useExponentialBackOff" value="false"/>
-				<property name="backOffMultiplier" value="2"/>
-			</bean>
-		</property>
-		<!--  
-		http://activemq.apache.org/jmx.html 
-		 -->
-		 <!--  
-		http://activemq.apache.org/persistence.html 
-		conf/activemq.xml
-		 -->
-		 <property name="useAsyncSend" value="true" />
-		  
-	</bean>
+	<context:component-scan base-package="com.gxkj.taobaoservice.jms" />
+	 
+	<amq:connectionFactory brokerURL="tcp://localhost:61616" useAsyncSend="true"
+		id="connectionFactory" >
+		<amq:redeliveryPolicyMap>
+			<amq:redeliveryPolicyMap>
+				<amq:defaultEntry>
+					<!-- 5次，每次30秒 -->
+					<amq:redeliveryPolicy maximumRedeliveries="5"
+						initialRedeliveryDelay="30000" />
+				</amq:defaultEntry>
+				<amq:redeliveryPolicyEntries>
+					<!-- 
+					maximumRedeliveries:重复次数，默认6次
+					initialRedeliveryDelay：间隔时间
+					maximumRedeliveryDelay:
+					redeliveryDelay:重发时间间隔
+					useCollisionAvoidance:false|true
+					useExponentialBackOff:false|true
+					backOffMultiplier:number
+					3次 1分钟 2分钟 4分钟 -->
+					<amq:redeliveryPolicy queue="myqueue"
+						maximumRedeliveries="3" initialRedeliveryDelay="60000"
+						backOffMultiplier="2" useExponentialBackOff="true" />
+						
+						<!-- 此处可以设置多个 -->
+				</amq:redeliveryPolicyEntries>
+			</amq:redeliveryPolicyMap>
+		</amq:redeliveryPolicyMap>
+	</amq:connectionFactory>
+	
+	
+	 
 	
 	<bean id="cachingConnectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
 		<property name="targetConnectionFactory" ref="connectionFactory"/>
 	</bean>
-	 <!-- 
-	 <bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
-        <property name="connectionFactory" ref="connectionFactory"/>
-        <property name="maxConnections" value="10"/>
-    </bean> -->
+ 
 	
 	
 	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
@@ -64,28 +67,30 @@ http://obullxl.iteye.com/blog/1114827
         <property name="receiveTimeout" value="5000"/>
     </bean>
     
+	<amq:queue id="queueDestination" physicalName="myqueue" />
 	
-	<bean id="queueDestination" class="org.apache.activemq.command.ActiveMQQueue">
-        <constructor-arg value="queue"/>
-    </bean>
+	<jms:listener-container destination-type="queue" 
+		concurrency="8-32" acknowledge="transacted" connection-factory="cachingConnectionFactory"
+		transaction-manager="transactionManager" 
+		>
+		<jms:listener destination="myqueue"
+			ref="consumerMessageListener"   />
+			<!-- 此处可以设置多个 -->
+	</jms:listener-container>
 	
-	 <!-- 定义消费者开始 -->
-     <!-- 消息监听器 -->
-    <bean id="consumerMessageListener" class="com.gxkj.taobaoservice.jms.ConsumerMessageListener"/>    
-    <!-- 消息监听容器 -->
-    <bean id="jmsContainer"        class="org.springframework.jms.listener.DefaultMessageListenerContainer">
-        <property name="connectionFactory" ref="cachingConnectionFactory" />
-        <property name="destination" ref="queueDestination" /><!-- 定义要消费的通道 -->
-        <property name="messageListener" ref="consumerMessageListener" /><!-- 定义使用的监听器 -->
-        <property name="sessionTransacted" value="true"/>  <!-- 代码里加事务，自己实现事务逻辑。 -->
-        <!-- -->
-        <property name="transactionManager" ref="transactionManager"/>  <!-- 事务管理器 -->
-        <property  name = "maxConcurrentConsumers"  value = "10"/>
-    </bean>
+	 
+	
 <!-- 定义消费者结束 -->
 	
  
-	
+	<bean id="mysql-ds" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://localhost/activemq?relaxAutoCommit=true"/>
+		<property name="username" value="root"/>
+		<property name="password" value=""/>
+		<property name="maxActive" value="200"/>
+		<property name="poolPreparedStatements" value="true"/>
+	</bean>
  
 	
 	 

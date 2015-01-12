@@ -74,7 +74,7 @@ public class ProducerController {
  	         jmsTemplate.convertAndSend(destination, entity);
  	         
  	         //查看队列信息
- 	        Integer queryNum = this.browerInfoInQueue("queue");
+ 	        Integer queryNum = this.browerInfoInQueue("myqueue");
  	        System.out.println("队列中的数量为："+queryNum);
 	         
 			}catch (Exception ex) {
