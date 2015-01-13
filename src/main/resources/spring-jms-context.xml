@@ -15,6 +15,7 @@ http://www.javacodegeeks.com/2014/02/spring-jms-processing-messages-within-trans
 https://github.com/xpadro/spring-integration/tree/master/jms-tx
 http://activemq.apache.org/redelivery-policy.html
 http://docs.spring.io/spring/docs/3.0.x/spring-framework-reference/html/jms.html
+http://activemq.apache.org/spring-support.html
 jms数据持久化
 http://obullxl.iteye.com/blog/1114827
 失效的消息的处理方法见我的博客
@@ -33,10 +34,11 @@ http://01jiangwei01.iteye.com/admin/blogs/2174971
 				</amq:defaultEntry>
 				<amq:redeliveryPolicyEntries>
 					<!-- 
-					maximumRedeliveries:重复次数，默认6次
-					initialRedeliveryDelay：间隔时间
-					maximumRedeliveryDelay:
-					redeliveryDelay:重发时间间隔
+					参考网址：http://activemq.apache.org/redelivery-policy.html
+					maximumRedeliveries:重复次数，默认6次,-1表示无限进行下去
+					initialRedeliveryDelay：第一次重发则延迟时间，默认1000L 毫秒
+					maximumRedeliveryDelay:最大延迟时间， 当useExponentialBackOff被设置时使用。
+					redeliveryDelay:传递延时，如果initialRedeliveryDelay为0
 					useCollisionAvoidance:false|true
 					useExponentialBackOff:false|true
 					backOffMultiplier:number
