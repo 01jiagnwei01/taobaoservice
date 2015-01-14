@@ -6,7 +6,7 @@
 	<classpathentry kind="src" path="src/test/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER" exported="true"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container" exported="true"/>
-	<classpathentry sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/org.codehaus.groovy/groovy-all/2.3.6/daa3256e1f5887541d5ba47022ed4de19143ea2/groovy-all-2.3.6-sources.jar" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/org.codehaus.groovy/groovy-all/2.3.6/dfe5f424777f4579786ec2145fc43286fcda8195/groovy-all-2.3.6.jar" exported="true">
+	<classpathentry sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/org.codehaus.groovy/groovy-all/2.3.4/d54780d90adc7ba182be6e1e15fb1f17c7a0be70/groovy-all-2.3.4-sources.jar" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/org.codehaus.groovy/groovy-all/2.3.4/63573270662a8d2bdea1f75b2291e667c7d972a7/groovy-all-2.3.4.jar" exported="true">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
@@ -202,6 +202,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="D:/java/maven_repository/org/springframework/spring-test/4.1.2.RELEASE/spring-test-4.1.2.RELEASE.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/org.glassfish/javax.el/3.0.0/9a2a19399140efdd86a5b350e7bff8cd1eb05579/javax.el-3.0.0-sources.jar" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/org.glassfish/javax.el/3.0.0/dd532526e7c8de48e40419e6af1183658a973379/javax.el-3.0.0.jar" exported="true">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>

@@ -16,7 +16,7 @@
     -->
     <ehcache:annotation-driven />
     <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-	     <property name="configLocation"  value="/WEB-INF/ehcache.xml"/>
+	     <property name="configLocation"  value="classpath:ehcache.xml"/>
 	</bean>
     <ehcache:config cache-manager="cacheManager">
         <ehcache:evict-expired-elements interval="60" />

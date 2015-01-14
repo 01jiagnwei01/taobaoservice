@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.gxkj.common.util.SystemGlobals;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/spring-*.xml" })
+@ContextConfiguration(locations = { "classpath:spring-*.xml","file:WebContent/WEB-INF/mvc-dispatcher-servlet.xml" })
 public class BaseSpringTest extends AbstractTransactionalJUnit4SpringContextTests{
 	
 	@BeforeClass

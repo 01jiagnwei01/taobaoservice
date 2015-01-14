@@ -20,6 +20,12 @@ jms数据持久化
 http://obullxl.iteye.com/blog/1114827
 失效的消息的处理方法见我的博客
 http://01jiangwei01.iteye.com/admin/blogs/2174971
+jms数据内容
+http://sunny.blog.51cto.com/182601/107507/
+
+了解文档
+http://www.360doc.cn/article.aspx?id=53325069
+http://wenku.baidu.com/link?url=oZkKhVWaKOOnBu5y44TTiFGceqqDF9mUWoK4gXJ6xxZr0vHR-7IpaK8LwwzQz69jWkUKCymV8CS08X6cXyCwLMZ2oVc3UYISdf8UhMOTCnW
  -->
 	<context:component-scan base-package="com.gxkj.taobaoservice.jms" />
 	 
@@ -41,12 +47,11 @@ http://01jiangwei01.iteye.com/admin/blogs/2174971
 					redeliveryDelay:传递延时，如果initialRedeliveryDelay为0
 					useCollisionAvoidance:false|true
 					useExponentialBackOff:false|true
-					backOffMultiplier:number
+					backOffMultiplier:number  //默认是5 ，发生冲突时的强制性重传延迟因子。 大致意思就是网络上的节点在发送数据冲突后，等待一定时间后再发，等待时间是随指数增长
 					3次 1分钟 2分钟 4分钟 -->
 					<amq:redeliveryPolicy queue="myqueue"
 						maximumRedeliveries="3" initialRedeliveryDelay="60000"
 						backOffMultiplier="2" useExponentialBackOff="true" />
-						
 						<!-- 此处可以设置多个 -->
 				</amq:redeliveryPolicyEntries>
 			</amq:redeliveryPolicyMap>
@@ -55,9 +60,11 @@ http://01jiangwei01.iteye.com/admin/blogs/2174971
 	
 	
 	 
-	
+	<bean id="exceptionListener" class="com.gxkj.taobaoservice.jms.JmsExceptionListener"></bean>
 	<bean id="cachingConnectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
 		<property name="targetConnectionFactory" ref="connectionFactory"/>
+		<property name="exceptionListener" ref="exceptionListener"/><!-- 错误监听,没啥大用.用来打印信息而已 -->
+		<property name="sessionCacheSize" value="100"/><!-- 缓存的消息数 -->
 	</bean>
  
 	
