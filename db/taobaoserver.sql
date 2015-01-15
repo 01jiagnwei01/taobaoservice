@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50620
 File Encoding         : 65001
 
-Date: 2015-01-06 19:13:23
+Date: 2015-01-15 21:37:36
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,7 +28,7 @@ CREATE TABLE `admin_menu` (
   `btnflag` varchar(32) DEFAULT NULL,
   `pid` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of admin_menu
@@ -89,6 +89,9 @@ INSERT INTO `admin_menu` VALUES ('54', '查看邮件详情', '/admin/mail/conten
 INSERT INTO `admin_menu` VALUES ('55', '查看邮件模板详情', '/admin/mail/templete/get', null, '1', 'admin_mail_templete_get', '44');
 INSERT INTO `admin_menu` VALUES ('56', '工具箱', '', null, '0', '', '0');
 INSERT INTO `admin_menu` VALUES ('57', '图片库', '/admin/tool/pics', null, '0', '', '56');
+INSERT INTO `admin_menu` VALUES ('58', '分页查看图片', '/admin/tool/pics/dopage', null, '1', 'admin_tool_pics_dopage', '57');
+INSERT INTO `admin_menu` VALUES ('59', '上传图片', '/admin/tool/pics/upload', null, '1', 'admin_tool_pics_upload', '57');
+INSERT INTO `admin_menu` VALUES ('60', '删除图片', '/admin/tool/pics/dodel', null, '1', 'admin_tool_pics_del', '57');
 
 -- ----------------------------
 -- Table structure for `admin_role`
@@ -233,6 +236,9 @@ CREATE TABLE `log_info` (
 -- ----------------------------
 -- Records of log_info
 -- ----------------------------
+INSERT INTO `log_info` VALUES ('1', '1', '2015-01-10 23:32:14', 'FIND_PASSWORD');
+INSERT INTO `log_info` VALUES ('2', '1', '2015-01-11 16:05:44', 'FIND_PASSWORD');
+INSERT INTO `log_info` VALUES ('3', '1', '2015-01-12 11:15:34', 'FIND_PASSWORD');
 
 -- ----------------------------
 -- Table structure for `mail_content`
@@ -281,6 +287,20 @@ INSERT INTO `mail_templete` VALUES ('1', '测试模板', '/templete/mail/v1', '2
 INSERT INTO `mail_templete` VALUES ('2', '模板2', '/admin/123233', '2014-12-24 19:44:25', 'DELETE', '1', null, null);
 
 -- ----------------------------
+-- Table structure for `notifications`
+-- ----------------------------
+DROP TABLE IF EXISTS `notifications`;
+CREATE TABLE `notifications` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `message` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of notifications
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `operate_log`
 -- ----------------------------
 DROP TABLE IF EXISTS `operate_log`;
@@ -310,6 +330,27 @@ INSERT INTO `operate_log` VALUES ('8', '1', '2014-12-06 21:35:15', 'SET_SUPPLY_M
 INSERT INTO `operate_log` VALUES ('9', '1', '2014-12-06 21:35:18', 'SET_SUPPLY_MONEY', '21', '0', null, '0');
 
 -- ----------------------------
+-- Table structure for `pics`
+-- ----------------------------
+DROP TABLE IF EXISTS `pics`;
+CREATE TABLE `pics` (
+  `id` int(11) NOT NULL DEFAULT '0',
+  `pic_path` varchar(200) NOT NULL,
+  `status` varchar(20) NOT NULL,
+  `pic_name` varchar(100) NOT NULL,
+  `pic_desc` varchar(400) DEFAULT NULL,
+  `create_time` datetime NOT NULL,
+  `create_user` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of pics
+-- ----------------------------
+INSERT INTO `pics` VALUES ('1', 'upload/pics/20150115174104228.jpg', 'NORMAL', ' 聚来宝四个阶段', ' 聚来宝四个阶段', '2015-01-15 17:41:04', '1');
+INSERT INTO `pics` VALUES ('2', 'upload/pics/20150115174147531.jpg', 'NORMAL', '聚来宝返利平台简介', '聚来宝返利平台简介', '2015-01-15 17:41:48', '1');
+
+-- ----------------------------
 -- Table structure for `rel_admin_user_role`
 -- ----------------------------
 DROP TABLE IF EXISTS `rel_admin_user_role`;
@@ -334,7 +375,7 @@ CREATE TABLE `rel_role_menu` (
   `roleid` int(10) DEFAULT NULL,
   `menuid` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=222 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=226 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rel_role_menu
@@ -409,32 +450,36 @@ INSERT INTO `rel_role_menu` VALUES ('192', '8', '46');
 INSERT INTO `rel_role_menu` VALUES ('193', '8', '47');
 INSERT INTO `rel_role_menu` VALUES ('194', '8', '48');
 INSERT INTO `rel_role_menu` VALUES ('195', '8', '49');
-INSERT INTO `rel_role_menu` VALUES ('196', '8', '45');
-INSERT INTO `rel_role_menu` VALUES ('197', '8', '50');
-INSERT INTO `rel_role_menu` VALUES ('198', '8', '51');
-INSERT INTO `rel_role_menu` VALUES ('199', '8', '52');
-INSERT INTO `rel_role_menu` VALUES ('200', '8', '53');
-INSERT INTO `rel_role_menu` VALUES ('201', '8', '54');
-INSERT INTO `rel_role_menu` VALUES ('202', '8', '56');
-INSERT INTO `rel_role_menu` VALUES ('203', '8', '57');
-INSERT INTO `rel_role_menu` VALUES ('204', '8', '1');
-INSERT INTO `rel_role_menu` VALUES ('205', '8', '2');
-INSERT INTO `rel_role_menu` VALUES ('206', '8', '9');
-INSERT INTO `rel_role_menu` VALUES ('207', '8', '10');
-INSERT INTO `rel_role_menu` VALUES ('208', '8', '11');
-INSERT INTO `rel_role_menu` VALUES ('209', '8', '12');
-INSERT INTO `rel_role_menu` VALUES ('210', '8', '3');
-INSERT INTO `rel_role_menu` VALUES ('211', '8', '13');
-INSERT INTO `rel_role_menu` VALUES ('212', '8', '14');
-INSERT INTO `rel_role_menu` VALUES ('213', '8', '15');
-INSERT INTO `rel_role_menu` VALUES ('214', '8', '16');
-INSERT INTO `rel_role_menu` VALUES ('215', '8', '17');
-INSERT INTO `rel_role_menu` VALUES ('216', '8', '4');
-INSERT INTO `rel_role_menu` VALUES ('217', '8', '5');
-INSERT INTO `rel_role_menu` VALUES ('218', '8', '6');
-INSERT INTO `rel_role_menu` VALUES ('219', '8', '7');
-INSERT INTO `rel_role_menu` VALUES ('220', '8', '8');
-INSERT INTO `rel_role_menu` VALUES ('221', '8', '18');
+INSERT INTO `rel_role_menu` VALUES ('196', '8', '55');
+INSERT INTO `rel_role_menu` VALUES ('197', '8', '45');
+INSERT INTO `rel_role_menu` VALUES ('198', '8', '50');
+INSERT INTO `rel_role_menu` VALUES ('199', '8', '51');
+INSERT INTO `rel_role_menu` VALUES ('200', '8', '52');
+INSERT INTO `rel_role_menu` VALUES ('201', '8', '53');
+INSERT INTO `rel_role_menu` VALUES ('202', '8', '54');
+INSERT INTO `rel_role_menu` VALUES ('203', '8', '56');
+INSERT INTO `rel_role_menu` VALUES ('204', '8', '57');
+INSERT INTO `rel_role_menu` VALUES ('205', '8', '58');
+INSERT INTO `rel_role_menu` VALUES ('206', '8', '59');
+INSERT INTO `rel_role_menu` VALUES ('207', '8', '60');
+INSERT INTO `rel_role_menu` VALUES ('208', '8', '1');
+INSERT INTO `rel_role_menu` VALUES ('209', '8', '2');
+INSERT INTO `rel_role_menu` VALUES ('210', '8', '9');
+INSERT INTO `rel_role_menu` VALUES ('211', '8', '10');
+INSERT INTO `rel_role_menu` VALUES ('212', '8', '11');
+INSERT INTO `rel_role_menu` VALUES ('213', '8', '12');
+INSERT INTO `rel_role_menu` VALUES ('214', '8', '3');
+INSERT INTO `rel_role_menu` VALUES ('215', '8', '13');
+INSERT INTO `rel_role_menu` VALUES ('216', '8', '14');
+INSERT INTO `rel_role_menu` VALUES ('217', '8', '15');
+INSERT INTO `rel_role_menu` VALUES ('218', '8', '16');
+INSERT INTO `rel_role_menu` VALUES ('219', '8', '17');
+INSERT INTO `rel_role_menu` VALUES ('220', '8', '4');
+INSERT INTO `rel_role_menu` VALUES ('221', '8', '5');
+INSERT INTO `rel_role_menu` VALUES ('222', '8', '6');
+INSERT INTO `rel_role_menu` VALUES ('223', '8', '7');
+INSERT INTO `rel_role_menu` VALUES ('224', '8', '8');
+INSERT INTO `rel_role_menu` VALUES ('225', '8', '18');
 
 -- ----------------------------
 -- Table structure for `task_appreciation`
