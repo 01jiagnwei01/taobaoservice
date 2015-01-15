@@ -22,15 +22,29 @@ public class PicsDaoImpl extends BaseDAOImpl implements PicsDao {
 		pager.setPageNo(pageno);
 		pager.setRowsPerPage(pagesize );
 		
-		String sql = "select pics.*,admin_user.name createUserName from pics left join admin_user on admin_user.id = pics.create_user";
+		String sql = "select pics.*,admin_user.name createUserName from pics left join admin_user on admin_user.id = pics.create_user where";
 		Map<String,Object> parameterMap = new HashMap<String,Object> ();
+		boolean haveParam = false;
 		if(StringUtils.isNotBlank(name)){
-			sql += " where pics.pic_name like :pic_name ";
+			sql += "  pics.pic_name like :pic_name ";
 			parameterMap.put("pic_name", "%"+name+"%");
+			 haveParam = true;
+		}
+		if(status != null){
+			if(haveParam){sql += " and "; }
+			sql += "  pics.status = :status ";
+			parameterMap.put("status", status.name());
+			haveParam = true;
+		}
+		if(!haveParam){
+			sql  = sql.replace("where", "");
 		}
 		sql += " order by pics.id desc";
 		ListPager page = this.selectPageBySQL(sql, parameterMap,Pics.class, pager);
 		return page;
+	}
+	public static void main(String[] args) {
+		System.out.println(PicStatus.NORMAL.name());
 	}
 
 	 

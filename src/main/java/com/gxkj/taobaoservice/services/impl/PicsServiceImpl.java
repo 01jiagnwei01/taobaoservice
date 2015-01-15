@@ -61,8 +61,8 @@ public class PicsServiceImpl implements PicsService {
 		entity.setPicPath(commonFile+"/"+picSaveName);
 		picsDao.insert(entity);
 		
-		System.out.println("文件名称: " + pic.getName());  
-		System.out.println("文件原名: " + pic.getOriginalFilename());  
+//		System.out.println("文件名称: " + pic.getName());  
+//		System.out.println("文件原名: " + pic.getOriginalFilename());  
 
 		
 		return entity;
