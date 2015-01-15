@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
@@ -24,6 +25,7 @@ public class CustomSimpleMappingExceptionResolver extends SimpleMappingException
 	
 	protected ModelAndView doResolveException(HttpServletRequest request,  
             HttpServletResponse response, Object handler, Exception ex) { 
+		
 		 
 		 String viewName = determineViewName(ex, request); 
 		 if (viewName != null) {// JSP格式返回  
@@ -48,11 +50,11 @@ public class CustomSimpleMappingExceptionResolver extends SimpleMappingException
 	                   
 	                    if (ex instanceof  BusinessException){
 	                    	json.setMsg(  ex.getMessage());
+	    				}else if (ex instanceof  MaxUploadSizeExceededException){
+	    					json.setMsg(  "上传文件大小超限了，"+ex.getMessage());
 	    				}else if (ex instanceof  BindException){
 	    					List<FieldError> filedErrors = ((BindException) ex).getFieldErrors();
 	    					 
-	    					
-	    					
 	    					List<Map<String,String>> listErrors = new ArrayList<Map<String,String>>();
 	    					for(FieldError error : filedErrors){
 	    						 Map<String,String> errMap = new HashMap<String,String>();

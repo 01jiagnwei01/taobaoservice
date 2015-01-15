@@ -89,7 +89,6 @@ public  class BaseDAOImpl    implements BaseDAO {
 		pager.setTotalRows(totalRows);
 		if(totalRows == 0){
 			pager.setPageData(null);
-			
 			return pager; 
 		}
 		List<?> pageData = this.selectPageByHQL(hql,parameters,
@@ -404,6 +403,50 @@ public  class BaseDAOImpl    implements BaseDAO {
 	public static void main(String[] args) {
 //		Map n = new HashMap();
 //		System.out.println(n.getClass().getName());
+	}
+
+
+	 
+	public ListPager selectPageBySQL(String sql, Map<String, Object> param,
+			Class<?> clazz, ListPager pager) throws SQLException {
+		Session session = sessionFactory.getCurrentSession();
+		String countSql = this.getCounthql(sql);
+		SQLQuery countQuery = session.createSQLQuery(countSql);
+		if(param != null){
+			for (String key : param.keySet()) {
+				countQuery.setParameter(key, param.get(key));
+			}
+		}
+		BigInteger totalRows = (BigInteger) countQuery.uniqueResult();
+		pager.setTotalRows(totalRows.longValue());
+		if(totalRows.intValue() == 0){
+			pager.setPageData(null);
+			return pager; 
+		}
+	 
+		List<?> pageData = this.selectPageBySQL(sql,param,
+				(pager.getPageNo()-1)*pager.getRowsPerPage(),pager.getRowsPerPage(),clazz);
+		pager.setPageData(pageData);
+		return pager;
+		
+	}
+	public List<?> selectPageBySQL(String sql, Map<String, Object> param,
+			int from, int limit,Class<?> clazz) throws SQLException {
+		Session session = sessionFactory.getCurrentSession();
+		SQLQuery query = session.createSQLQuery(sql);
+		if(param != null){
+			for (String key : param.keySet()) {
+				query.setParameter(key, param.get(key));
+			}
+		}
+		 query.setFirstResult(from);   
+		 query.setMaxResults(limit);  
+		 if(clazz != null  ){
+				this._transFormResult(query, clazz);
+		}else{
+			query.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+		}
+		 return query.list();
 	}
 
 	

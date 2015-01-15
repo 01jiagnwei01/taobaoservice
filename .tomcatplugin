@@ -61,7 +61,7 @@
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.apache.maven/maven-repository-metadata/2.2.1/98f0c07fcf1eeb213bef8d9316a9935184084b06/maven-repository-metadata-2.2.1.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.apache.maven/maven-settings/2.2.1/2236ffe71fa5f78ce42b0f5fc22c54ed45f14294/maven-settings-2.2.1.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.apache.maven/maven-toolchain/1.0/1ff4a3f5869f68dfa05562a84e7a5d510d909608/maven-toolchain-1.0.jar</webClassPathEntry>
-        <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.codehaus.groovy/groovy-all/2.3.6/dfe5f424777f4579786ec2145fc43286fcda8195/groovy-all-2.3.6.jar</webClassPathEntry>
+        <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.codehaus.groovy/groovy-all/2.3.4/63573270662a8d2bdea1f75b2291e667c7d972a7/groovy-all-2.3.4.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.codehaus.jackson/jackson-core-lgpl/1.9.13/daf3ed9350a24e505a9ef77a713b9e2b66135993/jackson-core-lgpl-1.9.13.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.codehaus.jackson/jackson-mapper-lgpl/1.9.13/562912b6ea695a2ae6411b9e4aed21153f46dde1/jackson-mapper-lgpl-1.9.13.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/gradlelib/caches/modules-2/files-2.1/org.codehaus.plexus/plexus-classworlds/2.2.2/3a2bad2b58c1ca765d3f471cea8c1655d70fdfd9/plexus-classworlds-2.2.2.jar</webClassPathEntry>
@@ -96,7 +96,7 @@
         <webClassPathEntry>D:/java/maven_repository/commons-dbcp/commons-dbcp/1.4/commons-dbcp-1.4.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/maven_repository/commons-fileupload/commons-fileupload/1.3.1/commons-fileupload-1.3.1.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/maven_repository/commons-httpclient/commons-httpclient/3.1/commons-httpclient-3.1.jar</webClassPathEntry>
-        <webClassPathEntry>D:/java/maven_repository/commons-io/commons-io/2.2/commons-io-2.2.jar</webClassPathEntry>
+        <webClassPathEntry>D:/java/maven_repository/commons-io/commons-io/2.4/commons-io-2.4.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/maven_repository/commons-logging/commons-logging-api/1.1/commons-logging-api-1.1.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/maven_repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/maven_repository/commons-pool/commons-pool/1.6/commons-pool-1.6.jar</webClassPathEntry>
@@ -109,6 +109,7 @@
         <webClassPathEntry>D:/java/maven_repository/mysql/mysql-connector-java/5.1.34/mysql-connector-java-5.1.34.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/maven_repository/org/apache/activemq/activemq-broker/5.10.0/activemq-broker-5.10.0.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/maven_repository/org/apache/activemq/activemq-client/5.10.0/activemq-client-5.10.0.jar</webClassPathEntry>
+        <webClassPathEntry>D:/java/maven_repository/org/apache/activemq/activemq-jms-pool/5.10.0/activemq-jms-pool-5.10.0.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/maven_repository/org/apache/activemq/activemq-openwire-legacy/5.10.0/activemq-openwire-legacy-5.10.0.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/maven_repository/org/apache/activemq/activemq-pool/5.10.0/activemq-pool-5.10.0.jar</webClassPathEntry>
         <webClassPathEntry>D:/java/maven_repository/org/apache/activemq/activemq-spring/5.10.0/activemq-spring-5.10.0.jar</webClassPathEntry>

@@ -69,7 +69,7 @@ var detail = "${_adminUser_.btnMap.admin_mail_content_get}"== "true"?true:false;
 		<table style="width:100%">
 			<tr >
 				<td width="50%">
-					标题: <input class="easyui-spinner" style="width:160px" id="title"/>
+					标题: <input class="easyui-textbox" style="width:160px" id="title"/>
 					<a href="#"  class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="searchFn()">查看</a>
 				</td>
 				<td align="right" width="50%">

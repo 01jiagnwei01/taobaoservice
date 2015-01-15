@@ -19,7 +19,8 @@ public enum BusinessExceptionInfos {
 	SET_SUPPLY_POINT_OUT_THE_LARGE_RANGE("16","补助用户帐户点数超限制了"),
 	Yan_Zheng_MA_ERROR("17","验证码输入错误"),
 	ADMIN_IS_MAINTING("18","管理员正在维护中 ，请联系客服"),
-	EMAIL_ADDRESS_IS_ERROR("18","邮箱地址无效");
+	EMAIL_ADDRESS_IS_ERROR("19","邮箱地址无效"),
+	UP_LOAD_PIC_CANNOT_BE_NULL_ERROR("20","上传图片不能为空");
 	private String errorCode; 
 	
 	private String errorMsg;

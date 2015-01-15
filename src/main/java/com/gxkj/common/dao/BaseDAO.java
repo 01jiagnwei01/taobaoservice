@@ -41,10 +41,13 @@ public interface BaseDAO {
 	
 	public ListPager selectPageByHql(String hql, Object[] parameters, ListPager pager)
 			throws SQLException;
+	
 	public ListPager selectPageByHql(String hql, Map<String, Object> param,
 			ListPager pager) throws SQLException;
 	
 	public ListPager selectPageBySQL(String sql, Object[] parameters,Class<?> clazz, ListPager pager)
+			throws SQLException;
+	public ListPager selectPageBySQL(String sql,  Map<String, Object> param,Class<?> clazz, ListPager pager)
 			throws SQLException;
 
 	public List<?> selectPageByHQL(String hql, Object[] parameters, int from, int to)

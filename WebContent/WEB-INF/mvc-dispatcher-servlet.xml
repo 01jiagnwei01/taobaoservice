@@ -70,6 +70,7 @@
 		<property name="exceptionMappings">
 			<props>
 				<prop key="com.gxkj.common.exceptions.BusinessException">error/error-business</prop>
+				<prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">error/error-business</prop>
 				<prop key="java.lang.Exception">error/500</prop>
 			</props>
 		</property>
@@ -78,13 +79,15 @@
 	 <!--  这里申明的id必须为multipartResolver  -->  
 	<bean id="multipartResolver"  
 	    class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
-	    <!-- one of the properties available; the maximum file size in bytes -->  
+	    <!-- one of the properties available; the maximum file size in bytes --> 
+	    <!-- 指定所上传文件的总大小不能超过5M。注意maxUploadSize属性的限制不是针对单个文件，而是所有文件的容量之和 -->  
+	     <property name="maxUploadSize" value="5242880"/>
 	    <!-- 
-	    <property name="maxUploadSize" value="1000000"/>
 	      <property name="defaultEncoding" value="ISO-8859-1"/>
 	      <property name="uploadTempDir" value="/temp"/>
 	      <property name="maxInMemorySize" value="10240"/>
 	     -->  
 	</bean>  
 	 <mvc:resources mapping="/resources/**" location="/resources/" />
+	 <mvc:resources mapping="/upload/**" location="/upload/" />
 </beans>

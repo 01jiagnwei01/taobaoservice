@@ -101,6 +101,11 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
+	<classpathentry sourcepath="D:/java/maven_repository/commons-io/commons-io/2.4/commons-io-2.4-sources.jar" kind="lib" path="D:/java/maven_repository/commons-io/commons-io/2.4/commons-io-2.4.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="D:/java/maven_repository/commons-beanutils/commons-beanutils/1.9.2/commons-beanutils-1.9.2.jar" exported="true">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
@@ -272,11 +277,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="D:/java/maven_repository/com/fasterxml/jackson/core/jackson-annotations/2.4.0/jackson-annotations-2.4.0.jar" exported="true">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
-		</attributes>
-	</classpathentry>
-	<classpathentry sourcepath="D:/java/maven_repository/commons-io/commons-io/2.2/commons-io-2.2-sources.jar" kind="lib" path="D:/java/maven_repository/commons-io/commons-io/2.2/commons-io-2.2.jar" exported="true">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
