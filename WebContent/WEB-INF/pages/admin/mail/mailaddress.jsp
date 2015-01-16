@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
  <%@ page import="com.gxkj.common.util.SystemGlobals"%>
+ <%@ page import ="com.gxkj.taobaoservice.enums.MailAddressComeFrom" %>
+  <%@ page import ="com.gxkj.taobaoservice.enums.MailAddressListStatus" %>
+ 
  <!DOCTYPE html>
 <html lang="zh">
 <head><%--  --%>
@@ -11,12 +14,20 @@
  
   
 <script type="text/javascript">
- 
 var fenye = "${_adminUser_.btnMap.admin_mail_addresslist_dopage}"== "true"?true:false;
-var add = "${_adminUser_.btnMap.admin_mail_addresslist_doaddaddress}"== "true"?true:false;
-var update = "${_adminUser_.btnMap.admin_mail_addresslist_doupdateaddress}"== "true"?true:false;
-var del = "${_adminUser_.btnMap.admin_mail_addresslist_dodeladdress}"== "true"?true:false;
+var add = "${_adminUser_.btnMap.admin_mail_addresslist_doadd}"== "true"?true:false;
+var update = "${_adminUser_.btnMap.admin_mail_addresslist_doupdate}"== "true"?true:false;
+var del = "${_adminUser_.btnMap.admin_mail_addresslist_dodel}"== "true"?true:false;
 var detail = "${_adminUser_.btnMap.xx}"== "true"?true:false;
+var typeMap = {};
+<%
+MailAddressListStatus[] atitems = MailAddressListStatus.values();
+for(MailAddressListStatus type: atitems){
+%>
+typeMap['<%=type.name()%>'] ='<%=type.getName()%>'
+<%
+}
+%>
 </script>
 </head>
 <body class="easyui-layout">
@@ -55,7 +66,7 @@ var detail = "${_adminUser_.btnMap.xx}"== "true"?true:false;
 								<th data-options="field:'id',width:30" >id</th>
 								<th data-options="field:'name',width:150"  >姓名</th>
 								<th data-options="field:'email',width:150"  >email</th>
-								<th data-options="field:'status',width:100"  >状态</th>
+								<th data-options="field:'status',width:100,formatter: function(value,row,index){if(value)return typeMap[value]}"  >状态</th>
 								<th data-options="field:'createUserId' ,width:100"  >管理员</th>
 								<th data-options="field:'creteTime',formatter:dateFormat,width:100"  >修改时间</th> 
 								<th data-options="field:'opt',formatter:optFormat,width:150"  >操作</th> 
@@ -67,11 +78,23 @@ var detail = "${_adminUser_.btnMap.xx}"== "true"?true:false;
 	<div id="tb" style="padding:5px;height:auto">
 		<table style="width:100%">
 			<tr >
-				<td width="50%">
-					姓名: <input class="easyui-textbox" style="width:160px" id="s_name"/> 邮箱: <input class="easyui-textbox" style="width:160px" id="s_email"/>
+				<td width="80%">
+					姓名: <input class="easyui-textbox" style="width:160px" id="s_name"/> 
+					邮箱: <input class="easyui-textbox" style="width:160px" id="s_email"/>
+					状态: <select id="s_status" class="easyui-combobox" name="s_status" data-options="editable:false,panelHeight:80,width:100" >
+										 <option value="">不限</option> 
+									     <%
+									     MailAddressListStatus[] aitems = MailAddressListStatus.values();
+													for(MailAddressListStatus item: aitems){
+													%>
+													 <option value="<%=item.name()%>"><%=item.getName()%></option>  
+													<%
+													}
+													%>
+									 </select>
 					<a href="#"  class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="searchFn()">查看</a>
 				</td>
-				<td align="right" width="50%">
+				<td align="right" width="20%">
 					<a href="#"  class="easyui-linkbutton" id="addBtn"  data-options="iconCls:'add_btn',plain:true" onclick="addFn()">创建</a>
 				</td>
 				 
@@ -79,7 +102,7 @@ var detail = "${_adminUser_.btnMap.xx}"== "true"?true:false;
 		</table>
 	</div>
 	 <div id="mail_w" class="easyui-window" title="窗口" data-options="modal:true,closed:true,iconCls:'icon-save',
-		collapsible:false,minimizable:false,maximizable:false,resizable:false,onOpen:winOpen" 
+		collapsible:false,minimizable:false,maximizable:false,resizable:false" 
 			style="width:600px;height:420px;padding:10px;">
 		<div class="easyui-layout" data-options="fit:true">
 			<div data-options="region:'center',border:false" id="content_layout" >
@@ -92,54 +115,28 @@ var detail = "${_adminUser_.btnMap.xx}"== "true"?true:false;
 				    		<tr>
 				    			<td>姓名:</td>
 				    			<td>
-				    				<input style="width:300px;" class="easyui-validatebox" type="text" id="form_title" name="title" data-options="required:true"></input>
-				    			</td>
-				    		</tr>
-				    		<tr >
-				    			<td>模板:</td>
-				    			<td>
-				    				 <input id="templeteid" name="templeteId" class="easyui-combogrid" style="width:200px;heigh:50px" data-options="
-										panelWidth: 380,
-										textField: 'templeteName',
-										idField:'id',
-										editable:false,
-										mode: 'remote',
-										method:'post',
-										fit:true,
-										pageSize:20,
-										url:'<%=request.getContextPath() %>/admin/mail/templete/dopage?d='+new Date().getTime(),
-										method: 'post',
-										columns: [[
-											{field:'id',title:'id',width:80,hidden:true},
-											{field:'templeteName',title:'名字',width:120} 
-										]],
-										fitColumns: true,
-										pagination:true,
-										pageSize:20,
-										onBeforeLoad:function(param){
-											 param['pageno'] =  param['page']-1;
-											param['limit']  = param['rows'];
-									  		return true ;
-									  	},
-									  	loadFilter:function(data){
-											var result = data.result;
-											if(!result){
-												return {total:0,rows:[]};
-											}else {
-												var obj = {
-													total:data.entity.totalRows,
-													rows:data.entity.pageData ?data.entity.pageData:[]
-												};
-												return obj;
-											} 
-										}
-									">
+				    				<input style="width:300px;" class="easyui-validatebox" type="text" id="form_name" name="name" data-options="required:true"></input>
 				    			</td>
 				    		</tr>
 				    		<tr>
-				    			<td>邮件内容:</td>
+				    			<td>邮箱:</td>
 				    			<td>
-				    				<textarea id="content" name="content"  ></textarea>
+				    				<input style="width:300px;" class="easyui-validatebox" type="text" id="form_email" name="email" data-options="required:true"></input>
+				    			</td>
+				    		</tr>
+				    		<tr >
+				    			<td>来源:</td>
+				    			<td>
+									 <select id="form_comefrom" class="easyui-combobox" name="comefrom" style="width:200px;" data-options="editable:false,panelHeight:60">
+									     <%
+									     		MailAddressComeFrom[] items = MailAddressComeFrom.values();
+													for(MailAddressComeFrom item: items){
+													%>
+													 <option value="<%=item.name()%>"><%=item.getName()%></option>  
+													<%
+													}
+													%>
+									 </select> 
 				    			</td>
 				    		</tr>
 				    	</table>
@@ -157,16 +154,14 @@ var detail = "${_adminUser_.btnMap.xx}"== "true"?true:false;
 $(function(){
 	 
 });
-function winOpen(){
- 
-	
-}
+
 function searchFn(){
 	var email = $("#s_email").val(); 
 	var name = $("#s_name").val(); 
+	var status = $('#s_status').combo('getValue');	
 	$('#dg').datagrid('load',{
 		email:email, 
-		status:null,
+		status:status,
 		name:name, 
 		d:new Date().getTime()
 	});
@@ -178,10 +173,7 @@ function dateFormat(value,row,index){
 		return new Date(value).format("yyyy-MM-dd hh:mm:ss");
 	}
 }
-function temFormat(value,row,index){
-	return row["templeteName"]+"["+row['templeteId']+"]"
-	
-}
+
 function userIdFormat(value,row,index){
 	if(typeof value == 'undefined'){
 		return value;
@@ -189,12 +181,7 @@ function userIdFormat(value,row,index){
 	 
 	return row['userName']+"["+row['userId']+"]"
 }
-function adminUserIdFormat(value,row,index){
-	if(typeof value == 'undefined'){
-		return value;
-	} 
-	return row['updateUserName']+"["+row['updateUserId']+"]"
-}
+
 function optFormat(value,row,index){
 		var btns = [];
 		if(detail){
@@ -214,131 +201,16 @@ var saveType = "add";
 function closeWinFn(){
 			$('#mail_w').window('close');
 }
-//获取页面的高度、宽度
 
-function getPageSize() {
-
-    var xScroll, yScroll;
-
-    if (window.innerHeight && window.scrollMaxY) {
-
-        xScroll = window.innerWidth + window.scrollMaxX;
-
-        yScroll = window.innerHeight + window.scrollMaxY;
-
-    } else {
-
-        if (document.body.scrollHeight > document.body.offsetHeight) { // all but Explorer Mac    
-
-            xScroll = document.body.scrollWidth;
-
-            yScroll = document.body.scrollHeight;
-
-        } else { // Explorer Mac...would also work in Explorer 6 Strict, Mozilla and Safari    
-
-            xScroll = document.body.offsetWidth;
-
-            yScroll = document.body.offsetHeight;
-
-        }
-
-    }
-
-    var windowWidth, windowHeight;
-
-    if (self.innerHeight) { // all except Explorer    
-
-        if (document.documentElement.clientWidth) {
-
-            windowWidth = document.documentElement.clientWidth;
-
-        } else {
-
-            windowWidth = self.innerWidth;
-
-        }
-
-        windowHeight = self.innerHeight;
-
-    } else {
-
-        if (document.documentElement && document.documentElement.clientHeight) { // Explorer 6 Strict Mode    
-
-            windowWidth = document.documentElement.clientWidth;
-
-            windowHeight = document.documentElement.clientHeight;
-
-        } else {
-
-            if (document.body) { // other Explorers    
-
-                windowWidth = document.body.clientWidth;
-
-                windowHeight = document.body.clientHeight;
-
-            }
-
-        }
-
-    }       
-
-    // for small pages with total height less then height of the viewport    
-
-    if (yScroll < windowHeight) {
-
-        pageHeight = windowHeight;
-
-    } else {
-
-        pageHeight = yScroll;
-
-    }    
-
-    // for small pages with total width less then width of the viewport    
-
-    if (xScroll < windowWidth) {
-
-        pageWidth = xScroll;
-
-    } else {
-
-        pageWidth = windowWidth;
-
-    }
-
-    //arrayPageSize = new Array(pageWidth, pageHeight, windowWidth, windowHeight);
-
-    return {
-    	"pageWidth":pageWidth,
-    	"pageHeight":pageHeight,
-    	"windowWidth":windowWidth,
-    	"windowHeight":windowHeight
-    	};
-
-}
-function initEditor(pageSize){
-	 var w = pageSize.pageWidth;
-	 var h = pageSize.pageHeight;
-	 $( '#content' ).ckeditor(function( textarea ) {
-	  },{
-		  	width:w,
-		  	height :(h-100)
-		 
-	});
-	
-	  
-	
-}
 function addFn(){
 	saveType = "add";
 	 $("#ff").form("reset");
 	 
 	 /** */
-	 var pageSize = getPageSize();
-	 var w = pageSize.pageWidth;
-	 var h = pageSize.pageHeight;
 	
-	 initEditor(pageSize);
+	 var w = 500;
+	 var h = 360;
+	
 	 $('#mail_w').window('resize', {
 		  width:w,
 		  height: (h-10)
@@ -365,62 +237,49 @@ function updateFn(id){
 	 
 	$("#id").val(row['id']);
 	$("#form_title").val(row['title']);
-	//$("#content").val(row['content']);
-	 if(row['templeteId']){
-	 	var templeteId = row['templeteId'];
-	 	var templeteName = row['templeteName'] == null ?"": row['templeteName'] ;
-	 	//var roleName = role.name;
-	 	 $('#templeteid').combogrid('setValue', templeteId);
-		 $('#templeteid').combogrid('setText', templeteName);
-		  
-	 }
-	 var pageSize = getPageSize();
-	 var w = pageSize.pageWidth;
-	 var h = pageSize.pageHeight;
-		initEditor(pageSize);
-	var editor = CKEDITOR.instances.content;
-	editor.setData( row['content'] );
+	 var w = 500;
+	 var h = 360;
+ 
 	
 	 $('#mail_w').window('resize', {
 		  width:w,
-		  height: (h-10)
+		  height: h
 	  });
-	$('#mail_w').window('open').panel('setTitle',"修改邮件") ;
+	$('#mail_w').window('open').panel('setTitle',"修改联系人") ;
 	$('#mail_w').window('center');
 	$('#savebtn').show();
 }
 function submitFormFn(){
 	var u_id = $("#id").val();
-	var title = $("#form_title").val();
-	var content = $("#content").val();
-	var templeteid = $('#templeteid').combogrid('getValue');
-	var templeteName = $('#templeteid').combogrid('getText'); 
-	if(title.length == 0){
-		 $.messager.alert('系统提示','标题不能为空!','info');
+	var name = $("#form_name").val();
+	var email = $("#form_email").val();
+	 
+	var  comefrom = $('#form_comefrom').combobox("getValue");
+	if(name.length == 0){
+		 $.messager.alert('系统提示','联系人姓名不能为空!','info');
 		 return;
 	}
-	if(templeteid == null ||  templeteid.length == 0 || templeteid == 0){
-		 $.messager.alert('系统提示','请选择模板!','info');
+	if(email.length == 0){
+		 $.messager.alert('系统提示','联系人邮箱不能为空!','info');
 		 return;
 	}
-	if(content.length == 0  ){
-		 $.messager.alert('系统提示','内容不能为空!','info');
+	if(comefrom == null ||  comefrom.length == 0 ){
+		 $.messager.alert('系统提示','请选择联系人来源!','info');
 		 return;
 	}
-	var editor = CKEDITOR.instances.content;
-	content = editor.getData() ;
+	
  
 	
 	var saveObj = {};
 	saveObj.id=$.trim(u_id).length==0?0:u_id;
-	saveObj.templeteId= templeteid;
-	saveObj.content=content;
-	saveObj.title = title;
+	saveObj.name= name;
+	saveObj.email=email;
+	saveObj.comefrom = comefrom;
 	 
 	if(saveType == 'add'){ insertIntoDb(saveObj); }else if(saveType == 'update'){ updateIntoDb(saveObj); }
 }
 function insertIntoDb(saveObj){
-	var url =  "<%=request.getContextPath()%>/admin/mail/content/doadd";
+	var url =  "<%=request.getContextPath()%>/admin/mail/addresslist/doadd";
   	 $.ajax({
   	  	  type:'post',
 		  url: url,

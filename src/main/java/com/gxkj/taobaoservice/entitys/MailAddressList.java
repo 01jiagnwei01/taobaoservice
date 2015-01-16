@@ -86,7 +86,7 @@ public class MailAddressList implements Serializable {
 	 */
 	@Column(name = "come_from", nullable = false)
 	@Enumerated(EnumType.STRING)
-	private MailAddressComeFrom comeform;
+	private MailAddressComeFrom comefrom;
 
 	public Integer getId() {
 		return id;
@@ -136,16 +136,21 @@ public class MailAddressList implements Serializable {
 		this.creteTime = creteTime;
 	}
 
-	public MailAddressComeFrom getComeform() {
-		return comeform;
+	public String getCreateUserName() {
+		return createUserName;
 	}
 
-	public void setComeform(MailAddressComeFrom comeform) {
-		this.comeform = comeform;
+	public void setCreateUserName(String createUserName) {
+		this.createUserName = createUserName;
 	}
-	
-	
-	
-	
+
+	public MailAddressComeFrom getComefrom() {
+		return comefrom;
+	}
+
+	public void setComefrom(MailAddressComeFrom comefrom) {
+		this.comefrom = comefrom;
+	}
+ 
 
 }
