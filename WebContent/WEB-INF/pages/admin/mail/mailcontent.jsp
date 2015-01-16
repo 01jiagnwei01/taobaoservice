@@ -320,7 +320,7 @@ function initEditor(pageSize){
 	 $( '#content' ).ckeditor(function( textarea ) {
 	  },{
 		  	width:w,
-	        heigh:(h-100)
+		  	height :(h-100)
 		 
 	});
 	

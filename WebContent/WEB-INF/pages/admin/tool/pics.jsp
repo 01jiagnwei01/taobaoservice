@@ -134,7 +134,7 @@ function optFormat(value,row,index){
 }
 function imgFormat(value,row,index){
 	 
-	return "<img style='width:100px;heigh:100px;' src='<%=request.getContextPath() %>/"+value+"'>";
+	return "<img style='width:100px;heigh:100px;' src='"+value+"'>";
 }
 function callback(json){
  var result  = json['result'];

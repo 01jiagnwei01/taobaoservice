@@ -1,11 +1,9 @@
 package com.gxkj.taobaoservice.services.impl;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,6 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.gxkj.common.enums.BusinessExceptionInfos;
 import com.gxkj.common.exceptions.BusinessException;
 import com.gxkj.common.util.ListPager;
+import com.gxkj.common.util.SystemGlobals;
+import com.gxkj.taobaoservice.ali.oss.ClientUtils;
 import com.gxkj.taobaoservice.daos.PicsDao;
 import com.gxkj.taobaoservice.entitys.AdminUser;
 import com.gxkj.taobaoservice.entitys.Pics;
@@ -37,13 +37,6 @@ public class PicsServiceImpl implements PicsService {
 		if(pic  == null){
 			throw new BusinessException(BusinessExceptionInfos.UP_LOAD_PIC_CANNOT_BE_NULL_ERROR);
 		}
-		String commonFile = "upload/pics";
-		
-		File saveDir_dir = new File(baseDir+commonFile);
-		if (!saveDir_dir.exists()) {  //文件夹  
-			saveDir_dir.mkdirs();  
-		}
-
 		 
 		Pics entity = new Pics();
 		Date now = new Date();
@@ -53,12 +46,17 @@ public class PicsServiceImpl implements PicsService {
 		entity.setPicName(picName);
 		entity.setStatus(PicStatus.NORMAL);
 		//pic.getContentType()
-		String picSaveName = FileUtil.generateFileNameWithDate(pic.getOriginalFilename());
+		String picAfterSetName = FileUtil.generateFileNameWithDate(pic.getOriginalFilename());
 		
-		String savePath = String.format("%s/%s/%s", baseDir,commonFile,picSaveName);
-		FileUtils.copyInputStreamToFile(pic.getInputStream(), new File(savePath));
+		 String  bucketName = SystemGlobals.getPreference("taobaoservice.ali.bucketName","001taobaoservice");
+		 String saveName = "img/"+picAfterSetName;
+		ClientUtils.uploadFile(bucketName, saveName, pic);
+		 
+		 String picPath = SystemGlobals.getPreference("taobaoservice.ali.bucket.location","http://{bucketName}.oss-cn-beijing.aliyuncs.com/");
+		 picPath = picPath.replace("{bucketName}", bucketName);
+		 picPath += saveName;
 		
-		entity.setPicPath(commonFile+"/"+picSaveName);
+		entity.setPicPath(picPath);
 		picsDao.insert(entity);
 		
 //		System.out.println("文件名称: " + pic.getName());  

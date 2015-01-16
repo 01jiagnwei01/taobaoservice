@@ -35,6 +35,9 @@
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/java/gradlelib/caches/modules-2/files-2.1/org.apache.activemq/activemq-all/5.10.0/bb376083b608a6f74e3d3c06afb92049549302c9/activemq-all-5.10.0.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/java/gradlelib/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.4/e9b3863fd9c8a273ceed4a7fae10f40bb10a2328/httpcore-4.4.jar">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/java/gradlelib/caches/modules-2/files-2.1/org.apache.activemq/activemq-kahadb-store/5.10.0/1081d9cbaa121c5d70eee1d34e005e65ac1265e2/activemq-kahadb-store-5.10.0.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
@@ -54,6 +57,9 @@
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/java/gradlelib/caches/modules-2/files-2.1/org.apache.maven/maven-model/2.2.1/c0a1c17436ec3ff5a56207c031d82277b4250a29/maven-model-2.2.1.jar">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/java/gradlelib/caches/modules-2/files-2.1/com.google.code.gson/gson/2.3.1/ecb6e1f8e4b0e84c4b886c2f14a1500caf309757/gson-2.3.1.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/java/maven_repository/org/apache/activemq/activemq-client/5.10.0/activemq-client-5.10.0.jar">
@@ -129,6 +135,9 @@
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/java/maven_repository/org/springframework/batch/spring-batch-core/3.0.2.RELEASE/spring-batch-core-3.0.2.RELEASE.jar">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/F:/taobaoservice/libs/aliyun-sdk-oss-2.0.1.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/java/maven_repository/org/springframework/spring-expression/4.1.4.RELEASE/spring-expression-4.1.4.RELEASE.jar">
@@ -248,6 +257,9 @@
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/java/maven_repository/org/springframework/spring-jms/4.1.4.RELEASE/spring-jms-4.1.4.RELEASE.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/java/maven_repository/org/jdom/jdom/1.1/jdom-1.1.jar">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/java/maven_repository/org/springframework/spring-jdbc/4.1.2.RELEASE/spring-jdbc-4.1.2.RELEASE.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
@@ -255,9 +267,6 @@
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/java/maven_repository/org/jboss/logging/jboss-logging/3.1.3.GA/jboss-logging-3.1.3.GA.jar">
-			<dependency-type>uses</dependency-type>
-		</dependent-module>
-		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/java/maven_repository/commons-codec/commons-codec/1.6/commons-codec-1.6.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/java/maven_repository/org/springframework/spring-messaging/4.1.4.RELEASE/spring-messaging-4.1.4.RELEASE.jar">
@@ -401,6 +410,9 @@
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/java/maven_repository/org/apache/xbean/xbean-reflect/3.4/xbean-reflect-3.4.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/java/gradlelib/caches/modules-2/files-2.1/com.google.protobuf/protobuf-java/2.6.1/d9521f2aecb909835746b7a5facf612af5e890e8/protobuf-java-2.6.1.jar">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/java/maven_repository/javax/servlet/jstl/1.2/jstl-1.2.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
@@ -437,6 +449,9 @@
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/java/maven_repository/org/springframework/spring-context/4.1.4.RELEASE/spring-context-4.1.4.RELEASE.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/F:/taobaoservice/libs/protobuf-java-2.4.1.jar">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/java/maven_repository/org/apache/maven/doxia/doxia-logging-api/1.1/doxia-logging-api-1.1.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
@@ -452,10 +467,10 @@
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/java/maven_repository/org/apache/geronimo/specs/geronimo-jms_1.1_spec/1.1.1/geronimo-jms_1.1_spec-1.1.1.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
-		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/java/gradlelib/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.2.2/b76bee23cd3f3ee9b98bc7c2c14670e821ddbbfd/httpcore-4.2.2.jar">
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/java/gradlelib/caches/modules-2/files-2.1/org.apache.maven/maven-error-diagnostics/2.2.1/e81bb342d7d172f23d108dc8fa979a1facdcde8e/maven-error-diagnostics-2.2.1.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
-		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/java/gradlelib/caches/modules-2/files-2.1/org.apache.maven/maven-error-diagnostics/2.2.1/e81bb342d7d172f23d108dc8fa979a1facdcde8e/maven-error-diagnostics-2.2.1.jar">
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/java/gradlelib/caches/modules-2/files-2.1/commons-codec/commons-codec/1.10/4b95f4897fa13f2cd904aee711aeafc0c5295cd8/commons-codec-1.10.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/java/maven_repository/org/apache/maven/wagon/wagon-provider-api/1.0-beta-6/wagon-provider-api-1.0-beta-6.jar">
