@@ -2,7 +2,7 @@
  <%@ page import="com.gxkj.common.util.SystemGlobals"%>
  <%@ page import ="com.gxkj.taobaoservice.enums.MailAddressComeFrom" %>
   <%@ page import ="com.gxkj.taobaoservice.enums.MailAddressListStatus" %>
- 
+ <%@ page import ="com.gxkj.taobaoservice.enums.UserGender" %>
  <!DOCTYPE html>
 <html lang="zh">
 <head><%--  --%>
@@ -20,11 +20,20 @@ var update = "${_adminUser_.btnMap.admin_mail_addresslist_doupdate}"== "true"?tr
 var del = "${_adminUser_.btnMap.admin_mail_addresslist_dodel}"== "true"?true:false;
 var detail = "${_adminUser_.btnMap.xx}"== "true"?true:false;
 var typeMap = {};
+var gendermap = {};
 <%
 MailAddressListStatus[] atitems = MailAddressListStatus.values();
 for(MailAddressListStatus type: atitems){
 %>
 typeMap['<%=type.name()%>'] ='<%=type.getName()%>'
+<%
+}
+%>
+<%
+UserGender[] genderitems = UserGender.values();
+for(UserGender type: genderitems){
+%>
+gendermap['<%=type.name()%>'] ='<%=type.getName()%>'
 <%
 }
 %>
@@ -67,6 +76,8 @@ typeMap['<%=type.name()%>'] ='<%=type.getName()%>'
 								<th data-options="field:'name',width:150"  >姓名</th>
 								<th data-options="field:'email',width:150"  >email</th>
 								<th data-options="field:'status',width:100,formatter: function(value,row,index){if(value)return typeMap[value]}"  >状态</th>
+								<th data-options="field:'gender',width:100,formatter: function(value,row,index){if(value)return gendermap[value]}"  >性别</th>
+								
 								<th data-options="field:'createUserId' ,width:100"  >管理员</th>
 								<th data-options="field:'creteTime',formatter:dateFormat,width:100"  >修改时间</th> 
 								<th data-options="field:'opt',formatter:optFormat,width:150"  >操作</th> 
@@ -122,6 +133,21 @@ typeMap['<%=type.name()%>'] ='<%=type.getName()%>'
 				    			<td>邮箱:</td>
 				    			<td>
 				    				<input style="width:300px;" class="easyui-validatebox" type="text" id="form_email" name="email" data-options="required:true"></input>
+				    			</td>
+				    		</tr>
+				    		<tr >
+				    			<td>性别:</td>
+				    			<td>
+									 <select id="form_gender" class="easyui-combobox" name="gender" style="width:200px;" data-options="editable:false,panelHeight:60">
+									     <%
+									     
+													for(UserGender item: genderitems){
+													%>
+													 <option value="<%=item.name()%>"><%=item.getName()%></option>  
+													<%
+													}
+													%>
+									 </select> 
 				    			</td>
 				    		</tr>
 				    		<tr >
@@ -236,7 +262,15 @@ function updateFn(id){
 
 	 
 	$("#id").val(row['id']);
-	$("#form_title").val(row['title']);
+	$("#form_name").val(row['name']);
+	$("#form_email").val(row['email']);
+	$('#form_comefrom').combobox("setValue",row['comefrom']);
+	$('#form_gender').combobox("setValue",row['gender']);
+	
+	$('#form_name').validatebox("validate");
+	$('#form_email').validatebox("validate");
+	 
+	 
 	 var w = 500;
 	 var h = 360;
  
@@ -253,6 +287,7 @@ function submitFormFn(){
 	var u_id = $("#id").val();
 	var name = $("#form_name").val();
 	var email = $("#form_email").val();
+	var gender =  $('#form_gender').combobox("getValue");
 	 
 	var  comefrom = $('#form_comefrom').combobox("getValue");
 	if(name.length == 0){
@@ -275,6 +310,7 @@ function submitFormFn(){
 	saveObj.name= name;
 	saveObj.email=email;
 	saveObj.comefrom = comefrom;
+	saveObj.gender = gender;
 	 
 	if(saveType == 'add'){ insertIntoDb(saveObj); }else if(saveType == 'update'){ updateIntoDb(saveObj); }
 }
@@ -286,7 +322,6 @@ function insertIntoDb(saveObj){
 		  context: document.body,
 		  data:saveObj,
 		  success:function(json){
-		   
 		   	 var result = json.result;
 		   	 var entity = json.entity;
 		   	 if(result){
@@ -309,9 +344,9 @@ function insertIntoDb(saveObj){
 		    				var d = msg[i] ;
 		    				msgArray.push(d['errorMsg']);
 		    			}
-		    			$.messager.alert('系统提示','保存失败\r\n'+msgArray.join("\r\n"),'error');
+		    			$.messager.alert('系统提示','保存失败,\r\n'+msgArray.join("\r\n"),'error');
 		    		}else{
-		    			$.messager.alert('系统提示','保存失败\r\n'+msg,'error');
+		    			$.messager.alert('系统提示','保存失败,\r\n'+msg,'error');
 		    		}
 		    	 
 		    		
@@ -324,7 +359,7 @@ function insertIntoDb(saveObj){
 	});
 }
 function updateIntoDb(saveObj){
-	var url =  "<%=request.getContextPath() %>/admin/mail/content/doupdate";
+	var url =  "<%=request.getContextPath() %>/admin/mail/addresslist/doupdate";
   	 $.ajax({
   	  	  type:'post',
 		  url: url,
@@ -431,7 +466,7 @@ function delFn(id){
 	
 	$.messager.confirm('系统提示', '您确定要删除这条记录吗?', function(r){
 		if (r){
-				var url = "<%=request.getContextPath() %>/admin/mail/content/dodel";
+				var url = "<%=request.getContextPath() %>/admin/mail/addresslist/dodel";
 		  		 $.ajax({
 		  	  	  type:'post',
 				  url: url,

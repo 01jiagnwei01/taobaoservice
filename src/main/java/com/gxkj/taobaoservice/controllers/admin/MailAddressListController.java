@@ -19,7 +19,6 @@ import com.gxkj.taobaoservice.dto.EntityReturnData;
 import com.gxkj.taobaoservice.dto.SessionConstant;
 import com.gxkj.taobaoservice.entitys.AdminUser;
 import com.gxkj.taobaoservice.entitys.MailAddressList;
-import com.gxkj.taobaoservice.entitys.MailContent;
 import com.gxkj.taobaoservice.enums.MailAddressListStatus;
 import com.gxkj.taobaoservice.services.MailAddressListService;
 
@@ -48,10 +47,11 @@ public class MailAddressListController {
 			@RequestParam(value="status",required=false) MailAddressListStatus status,
 			ModelMap modelMap) throws SQLException  {
 			EntityReturnData ret = new EntityReturnData();
-			ret.setMsg("执行成功");
-			ret.setResult(true);
+			if(status==null)status = MailAddressListStatus.NORMAL;
 		
 			ListPager paper = mailAddressListService.doPage(pageno, pagesize, name,email,status);
+			ret.setMsg("执行成功");
+			ret.setResult(true);
 			ret.setEntity(paper);
 			return ret;
 	}
@@ -62,11 +62,41 @@ public class MailAddressListController {
 			MailAddressList mailAddressList,
 			ModelMap modelMap) throws SQLException, BindException  {
 			EntityReturnData ret = new EntityReturnData();
-			ret.setMsg("执行成功");
-			ret.setResult(true);
+			
 			AdminUser adminUser = SessionConstant.getAdminUserInSession(request);
 			mailAddressList = mailAddressListService.doAddMailAddressList(mailAddressList, adminUser);
 			ret.setEntity(mailAddressList);
+			ret.setMsg("执行成功");
+			ret.setResult(true);
+			return ret;
+	}
+	@RequestMapping(value="/doupdate",method={RequestMethod.POST})
+	@ResponseBody
+	public EntityReturnData doupdate( HttpServletRequest request,
+			HttpServletResponse response,
+			MailAddressList mailAddressList,
+			ModelMap modelMap) throws SQLException, BindException  {
+			EntityReturnData ret = new EntityReturnData();
+			
+			AdminUser adminUser = SessionConstant.getAdminUserInSession(request);
+			mailAddressList = mailAddressListService.doUpdateMailAddressList(mailAddressList, adminUser);
+			ret.setEntity(mailAddressList);
+			ret.setMsg("执行成功");
+			ret.setResult(true);
+			return ret;
+	}
+	@RequestMapping(value="/dodel",method={RequestMethod.POST})
+	@ResponseBody
+	public EntityReturnData dodel( HttpServletRequest request,
+			HttpServletResponse response,
+			int id,
+			ModelMap modelMap) throws SQLException, BindException  {
+			EntityReturnData ret = new EntityReturnData();
+			ret.setMsg("执行成功");
+			
+			AdminUser adminUser = SessionConstant.getAdminUserInSession(request);
+			 mailAddressListService.doDelMailAddressList(id, adminUser);
+			 ret.setResult(true);
 			 
 			return ret;
 	}

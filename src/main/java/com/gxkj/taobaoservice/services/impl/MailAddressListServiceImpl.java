@@ -5,8 +5,10 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindException;
 
 import com.gxkj.common.util.ListPager;
+import com.gxkj.common.util.SpringValidatorHolder;
 import com.gxkj.taobaoservice.daos.MailAddressListDao;
 import com.gxkj.taobaoservice.entitys.AdminUser;
 import com.gxkj.taobaoservice.entitys.MailAddressList;
@@ -32,13 +34,15 @@ public class MailAddressListServiceImpl implements MailAddressListService {
 
 	/**
 	 * 增加
+	 * @throws BindException 
 	 */
 	public MailAddressList doAddMailAddressList(
-			MailAddressList mailAddressList, AdminUser adminUser) throws SQLException {
-		 
+			MailAddressList mailAddressList, AdminUser adminUser) throws SQLException, BindException {
+		
 		mailAddressList.setCreateUserId(adminUser.getId());
 		mailAddressList.setCreteTime(new Date());
 		mailAddressList.setStatus(MailAddressListStatus.NORMAL);
+		SpringValidatorHolder.validate(mailAddressList); 
 		mailAddressListDao.insert(mailAddressList);
 		return mailAddressList;
 	}
@@ -46,12 +50,14 @@ public class MailAddressListServiceImpl implements MailAddressListService {
 
 	/**
 	 * 修改
+	 * @throws BindException 
 	 */
 	public MailAddressList doUpdateMailAddressList(
-			MailAddressList mailAddressList, AdminUser adminUser) throws SQLException {
+			MailAddressList mailAddressList, AdminUser adminUser) throws SQLException, BindException {
 		mailAddressList.setCreateUserId(adminUser.getId());
 		mailAddressList.setCreteTime(new Date());
 		mailAddressList.setStatus(MailAddressListStatus.NORMAL);
+		SpringValidatorHolder.validate(mailAddressList); 
 		mailAddressListDao.update(mailAddressList);
 		return mailAddressList;
 	}

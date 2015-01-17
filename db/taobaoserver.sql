@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50620
 File Encoding         : 65001
 
-Date: 2015-01-16 19:02:01
+Date: 2015-01-17 17:26:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -94,9 +94,9 @@ INSERT INTO `admin_menu` VALUES ('59', '上传图片', '/admin/tool/pics/upload'
 INSERT INTO `admin_menu` VALUES ('60', '删除图片', '/admin/tool/pics/dodel', null, '1', 'admin_tool_pics_del', '57');
 INSERT INTO `admin_menu` VALUES ('61', '通讯录管理', '/admin/mail/addresslist', null, '0', '', '43');
 INSERT INTO `admin_menu` VALUES ('62', '分页查看通讯录', '/admin/mail/addresslist/dopage', null, '1', 'admin_mail_addresslist_dopage', '61');
-INSERT INTO `admin_menu` VALUES ('65', '增加通讯录联系人', '/admin/mail/addresslist/doaddaddress', null, '1', 'admin_mail_addresslist_doaddaddress', '61');
-INSERT INTO `admin_menu` VALUES ('66', '修改通讯录联系人', '/admin/mail/addresslist/doupdateaddress', null, '1', 'admin_mail_addresslist_doupdateaddress', '61');
-INSERT INTO `admin_menu` VALUES ('67', '删除通讯录联系人', '/admin/mail/addresslist/dodeladdress', null, '1', 'admin_mail_addresslist_dodeladdress', '0');
+INSERT INTO `admin_menu` VALUES ('65', '增加通讯录联系人', '/admin/mail/addresslist/doadd', null, '1', 'admin_mail_addresslist_doadd', '61');
+INSERT INTO `admin_menu` VALUES ('66', '修改通讯录联系人', '/admin/mail/addresslist/doupdate', null, '1', 'admin_mail_addresslist_doupdate', '61');
+INSERT INTO `admin_menu` VALUES ('67', '删除通讯录联系人', '/admin/mail/addresslist/dodel', null, '1', 'admin_mail_addresslist_dodel', '61');
 
 -- ----------------------------
 -- Table structure for `admin_role`
@@ -240,7 +240,7 @@ CREATE TABLE `log4j_log` (
   `user_id` int(11) DEFAULT NULL,
   `user_type` int(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1062 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of log4j_log
@@ -277,13 +277,16 @@ CREATE TABLE `mail_address_list` (
   `create_user_id` int(11) NOT NULL,
   `crete_time` datetime NOT NULL,
   `come_from` varchar(50) NOT NULL,
+  `gender` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mail_address_list
 -- ----------------------------
-INSERT INTO `mail_address_list` VALUES ('1', 'xu', '01jiangwei01@163.com', 'NORMAL', '1', '2015-01-16 18:56:10', 'QQ');
+INSERT INTO `mail_address_list` VALUES ('1', 'xu', '01jiangwei01@163.com', 'DEL', '1', '2015-01-17 17:12:04', 'QQ', 'male');
+INSERT INTO `mail_address_list` VALUES ('2', '1', '01jiangwei01@163.com', 'NORMAL', '1', '2015-01-17 17:25:36', 'QQ', 'female');
+INSERT INTO `mail_address_list` VALUES ('3', '12', 'ee@163.com', 'NORMAL', '1', '2015-01-17 17:07:46', 'QQ', 'male');
 
 -- ----------------------------
 -- Table structure for `mail_content`
@@ -419,7 +422,7 @@ CREATE TABLE `rel_role_menu` (
   `roleid` int(10) DEFAULT NULL,
   `menuid` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=230 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=231 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rel_role_menu
@@ -505,29 +508,30 @@ INSERT INTO `rel_role_menu` VALUES ('203', '8', '61');
 INSERT INTO `rel_role_menu` VALUES ('204', '8', '62');
 INSERT INTO `rel_role_menu` VALUES ('205', '8', '65');
 INSERT INTO `rel_role_menu` VALUES ('206', '8', '66');
-INSERT INTO `rel_role_menu` VALUES ('207', '8', '56');
-INSERT INTO `rel_role_menu` VALUES ('208', '8', '57');
-INSERT INTO `rel_role_menu` VALUES ('209', '8', '58');
-INSERT INTO `rel_role_menu` VALUES ('210', '8', '59');
-INSERT INTO `rel_role_menu` VALUES ('211', '8', '60');
-INSERT INTO `rel_role_menu` VALUES ('212', '8', '1');
-INSERT INTO `rel_role_menu` VALUES ('213', '8', '2');
-INSERT INTO `rel_role_menu` VALUES ('214', '8', '9');
-INSERT INTO `rel_role_menu` VALUES ('215', '8', '10');
-INSERT INTO `rel_role_menu` VALUES ('216', '8', '11');
-INSERT INTO `rel_role_menu` VALUES ('217', '8', '12');
-INSERT INTO `rel_role_menu` VALUES ('218', '8', '3');
-INSERT INTO `rel_role_menu` VALUES ('219', '8', '13');
-INSERT INTO `rel_role_menu` VALUES ('220', '8', '14');
-INSERT INTO `rel_role_menu` VALUES ('221', '8', '15');
-INSERT INTO `rel_role_menu` VALUES ('222', '8', '16');
-INSERT INTO `rel_role_menu` VALUES ('223', '8', '17');
-INSERT INTO `rel_role_menu` VALUES ('224', '8', '4');
-INSERT INTO `rel_role_menu` VALUES ('225', '8', '5');
-INSERT INTO `rel_role_menu` VALUES ('226', '8', '6');
-INSERT INTO `rel_role_menu` VALUES ('227', '8', '7');
-INSERT INTO `rel_role_menu` VALUES ('228', '8', '8');
-INSERT INTO `rel_role_menu` VALUES ('229', '8', '18');
+INSERT INTO `rel_role_menu` VALUES ('207', '8', '67');
+INSERT INTO `rel_role_menu` VALUES ('208', '8', '56');
+INSERT INTO `rel_role_menu` VALUES ('209', '8', '57');
+INSERT INTO `rel_role_menu` VALUES ('210', '8', '58');
+INSERT INTO `rel_role_menu` VALUES ('211', '8', '59');
+INSERT INTO `rel_role_menu` VALUES ('212', '8', '60');
+INSERT INTO `rel_role_menu` VALUES ('213', '8', '1');
+INSERT INTO `rel_role_menu` VALUES ('214', '8', '2');
+INSERT INTO `rel_role_menu` VALUES ('215', '8', '9');
+INSERT INTO `rel_role_menu` VALUES ('216', '8', '10');
+INSERT INTO `rel_role_menu` VALUES ('217', '8', '11');
+INSERT INTO `rel_role_menu` VALUES ('218', '8', '12');
+INSERT INTO `rel_role_menu` VALUES ('219', '8', '3');
+INSERT INTO `rel_role_menu` VALUES ('220', '8', '13');
+INSERT INTO `rel_role_menu` VALUES ('221', '8', '14');
+INSERT INTO `rel_role_menu` VALUES ('222', '8', '15');
+INSERT INTO `rel_role_menu` VALUES ('223', '8', '16');
+INSERT INTO `rel_role_menu` VALUES ('224', '8', '17');
+INSERT INTO `rel_role_menu` VALUES ('225', '8', '4');
+INSERT INTO `rel_role_menu` VALUES ('226', '8', '5');
+INSERT INTO `rel_role_menu` VALUES ('227', '8', '6');
+INSERT INTO `rel_role_menu` VALUES ('228', '8', '7');
+INSERT INTO `rel_role_menu` VALUES ('229', '8', '8');
+INSERT INTO `rel_role_menu` VALUES ('230', '8', '18');
 
 -- ----------------------------
 -- Table structure for `task_appreciation`

@@ -19,6 +19,7 @@ import org.hibernate.validator.constraints.Email;
 
 import com.gxkj.taobaoservice.enums.MailAddressComeFrom;
 import com.gxkj.taobaoservice.enums.MailAddressListStatus;
+import com.gxkj.taobaoservice.enums.UserGender;
 
 /**
  * 
@@ -50,7 +51,7 @@ public class MailAddressList implements Serializable {
 	/**
 	 * 邮箱
 	 */
-	@Email
+	@Email(message="邮箱地址无效")
 	@Column(name = "email", nullable = false) 
 	private String   email;
 	
@@ -87,6 +88,14 @@ public class MailAddressList implements Serializable {
 	@Column(name = "come_from", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private MailAddressComeFrom comefrom;
+	
+	
+	/**
+	 * 性别
+	 */
+	@Column(name = "gender", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private UserGender gender;
 
 	public Integer getId() {
 		return id;
@@ -151,6 +160,14 @@ public class MailAddressList implements Serializable {
 	public void setComefrom(MailAddressComeFrom comefrom) {
 		this.comefrom = comefrom;
 	}
- 
+
+	public UserGender getGender() {
+		return gender;
+	}
+
+	public void setGender(UserGender gender) {
+		this.gender = gender;
+	}
+	
 
 }

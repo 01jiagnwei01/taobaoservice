@@ -2,6 +2,8 @@ package com.gxkj.taobaoservice.services;
 
 import java.sql.SQLException;
 
+import org.springframework.validation.BindException;
+
 import com.gxkj.common.util.ListPager;
 import com.gxkj.taobaoservice.entitys.AdminUser;
 import com.gxkj.taobaoservice.entitys.MailAddressList;
@@ -19,7 +21,7 @@ public interface MailAddressListService {
 	 * @return
 	 */
 	MailAddressList doAddMailAddressList(MailAddressList mailAddressList,
-			AdminUser adminUser)throws SQLException ;
+			AdminUser adminUser)throws SQLException, BindException ;
 	
 	/**
 	 * 修改通讯录内容
@@ -28,7 +30,7 @@ public interface MailAddressListService {
 	 * @return
 	 */
 	MailAddressList doUpdateMailAddressList(MailAddressList mailAddressList,
-			AdminUser adminUser)throws SQLException ;
+			AdminUser adminUser)throws SQLException , BindException;
 	
 	/**
 	 * 删除通讯录内容
