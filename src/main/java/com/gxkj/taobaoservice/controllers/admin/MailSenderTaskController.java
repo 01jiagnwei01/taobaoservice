@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.gxkj.taobaoservice.services.MailSenderTaskService;
 
 @Controller
-@RequestMapping("/admin/mail/sender")
+@RequestMapping("/admin/mail/sendertask")
 public class MailSenderTaskController {
 	
 	@Autowired
@@ -20,7 +20,7 @@ public class MailSenderTaskController {
 	
 	@RequestMapping(value="",method={RequestMethod.GET})
 	public String index(HttpServletRequest request,HttpServletResponse response,ModelMap modelMap){
-		String mv = "admin/mail/mailsender";
+		String mv = "admin/mail/sendertask";
 		return mv;
 	}
 
