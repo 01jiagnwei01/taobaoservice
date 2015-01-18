@@ -9,14 +9,14 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.gxkj.taobaoservice.services.MailSenderService;
+import com.gxkj.taobaoservice.services.MailSenderTaskService;
 
 @Controller
 @RequestMapping("/admin/mail/sender")
-public class MailSenderController {
+public class MailSenderTaskController {
 	
 	@Autowired
-	private MailSenderService mailSenderService;
+	private MailSenderTaskService mailSenderService;
 	
 	@RequestMapping(value="",method={RequestMethod.GET})
 	public String index(HttpServletRequest request,HttpServletResponse response,ModelMap modelMap){

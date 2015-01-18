@@ -29,8 +29,8 @@ public class MailSenderRefAddressList implements Serializable {
 	/**
 	 * 关联 mail_sender表的ID 
 	 */
-	@Column(name = "mail_sender_id" ,   nullable = false) 
-	private Integer  mailSenderId;
+	@Column(name = "mail_sender_task_id" ,   nullable = false) 
+	private Integer  mailSenderTaskId;
 	
 	/**
 	 * 邮箱
@@ -74,14 +74,7 @@ public class MailSenderRefAddressList implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	public Integer getMailSenderId() {
-		return mailSenderId;
-	}
-
-	public void setMailSenderId(Integer mailSenderId) {
-		this.mailSenderId = mailSenderId;
-	}
+ 
 
 	public String getEmail() {
 		return email;
@@ -122,5 +115,14 @@ public class MailSenderRefAddressList implements Serializable {
 	public void setStatus(MailSenderRefAddressListStatus status) {
 		this.status = status;
 	}
+
+	public Integer getMailSenderTaskId() {
+		return mailSenderTaskId;
+	}
+
+	public void setMailSenderTaskId(Integer mailSenderTaskId) {
+		this.mailSenderTaskId = mailSenderTaskId;
+	}
+	
 	 
 }

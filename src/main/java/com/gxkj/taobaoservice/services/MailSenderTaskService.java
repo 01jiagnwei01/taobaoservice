@@ -1,5 +1,5 @@
 package com.gxkj.taobaoservice.services;
 
-public interface MailSenderService {
+public interface MailSenderTaskService {
 
 }

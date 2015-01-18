@@ -22,8 +22,8 @@ import com.gxkj.taobaoservice.enums.MailSenderStatus;
  *
  */
 @Entity
-@Table(name = "mail_sender")
-public class MailSender implements Serializable {
+@Table(name = "mail_sender_task")
+public class MailSenderTask implements Serializable {
 
 	/**
 	 * 
@@ -69,7 +69,56 @@ public class MailSender implements Serializable {
 	 * 状态
 	 */
 	@Column(name = "status" ,   nullable = false)
-	@Temporal(TemporalType.TIMESTAMP )
 	private MailSenderStatus status;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getCreateUser() {
+		return createUser;
+	}
+
+	public void setCreateUser(Integer createUser) {
+		this.createUser = createUser;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public MailSenderStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(MailSenderStatus status) {
+		this.status = status;
+	}
+	
+	
 
 }
