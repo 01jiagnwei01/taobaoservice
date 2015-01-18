@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.gxkj.common.dao.BaseDAOImpl;
 import com.gxkj.common.util.ListPager;
 import com.gxkj.taobaoservice.daos.MailAddressListDao;
+import com.gxkj.taobaoservice.entitys.MailAddressList;
 import com.gxkj.taobaoservice.enums.MailAddressListStatus;
 @Repository
 public class MailAddressListDaoImpl extends BaseDAOImpl implements
@@ -18,12 +19,12 @@ public class MailAddressListDaoImpl extends BaseDAOImpl implements
 	public ListPager doPage(int pageno, int pagesize, String name,
 			String email, MailAddressListStatus status) throws SQLException {
 		
-		String hql = "from MailAddressList where  ";
+		String hql =  " select mail_address_list.* ,admin_user.name as createUserName  from mail_address_list left join admin_user on  mail_address_list.create_user_id = admin_user.id  where  ";
 		Map<String,Object > params = new HashMap<String,Object > ();
 		boolean  haveParam = false;
 		if(StringUtils.isNotBlank(name)){
 			haveParam = true;
-			 hql += "  name like :name";
+			 hql += "  mail_address_list.name like :name";
 			 params.put("name", "%"+name+"%");
 		}
 		if(StringUtils.isNotBlank(email)){
@@ -31,7 +32,7 @@ public class MailAddressListDaoImpl extends BaseDAOImpl implements
 				 hql += " and ";
 			}
 			haveParam = true;
-			 hql += "  email like :email";
+			 hql += "  mail_address_list.email like :email";
 			 params.put("email", "%"+email+"%");
 		}
 		if(status != null){
@@ -39,8 +40,8 @@ public class MailAddressListDaoImpl extends BaseDAOImpl implements
 				 hql += " and ";
 			}
 			haveParam = true;
-			 hql += "   status = :status";
-			 params.put("status", status);
+			 hql += "   mail_address_list.status = :status";
+			 params.put("status", status.name());
 		}
 		if(!haveParam){
 			hql = hql.replace("where", "");
@@ -48,8 +49,7 @@ public class MailAddressListDaoImpl extends BaseDAOImpl implements
 		ListPager pager = new ListPager();
 		pager.setPageNo(pageno);
 		pager.setRowsPerPage(pagesize );
-		pager = this.selectPageByHql(hql, params, pager);
-		 
+		pager =  this.selectPageBySQL(hql, params, MailAddressList.class, pager);
 		return pager;
 	}
 

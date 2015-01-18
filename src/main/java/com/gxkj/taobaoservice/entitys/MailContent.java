@@ -54,7 +54,6 @@ public class MailContent implements Serializable {
 		 * 邮件标题
 		 */
 		@Column(name = "title",length=100) 
-		@Lob
 		@NotEmpty(message="邮件标题不允许为空")
 		private String title ;
 		

@@ -78,7 +78,7 @@ gendermap['<%=type.name()%>'] ='<%=type.getName()%>'
 								<th data-options="field:'status',width:100,formatter: function(value,row,index){if(value)return typeMap[value]}"  >状态</th>
 								<th data-options="field:'gender',width:100,formatter: function(value,row,index){if(value)return gendermap[value]}"  >性别</th>
 								
-								<th data-options="field:'createUserId' ,width:100"  >管理员</th>
+								<th data-options="field:'createUserId' ,width:100,formatter: userIdFormat"  >管理员</th>
 								<th data-options="field:'creteTime',formatter:dateFormat,width:100"  >修改时间</th> 
 								<th data-options="field:'opt',formatter:optFormat,width:150"  >操作</th> 
 					</tr>
@@ -205,7 +205,7 @@ function userIdFormat(value,row,index){
 		return value;
 	}
 	 
-	return row['userName']+"["+row['userId']+"]"
+	return row['createUserName']+"["+row['createUserId']+"]"
 }
 
 function optFormat(value,row,index){
