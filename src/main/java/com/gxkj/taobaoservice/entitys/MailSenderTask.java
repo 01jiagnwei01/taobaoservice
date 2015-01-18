@@ -11,6 +11,7 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -70,6 +71,12 @@ public class MailSenderTask implements Serializable {
 	 */
 	@Column(name = "status" ,   nullable = false)
 	private MailSenderStatus status;
+	
+	/**
+	 * 创建用户用户名
+	 */
+	@Transient
+	private String createUserName;
 
 	public Integer getId() {
 		return id;
@@ -118,7 +125,13 @@ public class MailSenderTask implements Serializable {
 	public void setStatus(MailSenderStatus status) {
 		this.status = status;
 	}
-	
-	
+
+	public String getCreateUserName() {
+		return createUserName;
+	}
+
+	public void setCreateUserName(String createUserName) {
+		this.createUserName = createUserName;
+	}
 
 }

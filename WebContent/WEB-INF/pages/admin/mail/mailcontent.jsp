@@ -6,7 +6,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" content="ie=edge"/>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>邮箱内容管理 </title>
-
 <%@include file="../../common/easyui-html5.jsp" %> 
 <script  src="<%=request.getContextPath() %>/resources/ckeditor/ckeditor.js"></script> 
 <script src="<%=request.getContextPath() %>/resources/ckeditor/adapters/jquery.js"></script>
@@ -99,13 +98,12 @@ var detail = "${_adminUser_.btnMap.admin_mail_content_get}"== "true"?true:false;
 				    		<tr >
 				    			<td>模板:</td>
 				    			<td>
-				    				 <input id="templeteid" name="templeteId" class="easyui-combogrid" style="width:200px;heigh:50px" data-options="
+				    				 <input id="templeteid" name="templeteId" class="easyui-combogrid" style="width:200px;heigh:80px" data-options="
 										panelWidth: 380,
 										textField: 'templeteName',
 										idField:'id',
 										editable:false,
 										mode: 'remote',
-										method:'post',
 										fit:true,
 										pageSize:20,
 										url:'<%=request.getContextPath() %>/admin/mail/templete/dopage?d='+new Date().getTime(),

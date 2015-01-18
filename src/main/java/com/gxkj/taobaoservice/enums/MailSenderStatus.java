@@ -1,7 +1,7 @@
 package com.gxkj.taobaoservice.enums;
 
 public enum MailSenderStatus {
-	NEW("新建"),PROCESS("处理中"),SUCCESS("成功"),FAILURE ("失败");
+	NEW("新建"),PROCESS("处理中"),SUCCESS("成功"),FAILURE ("失败"),DEL("已删除");
 	
 	private String name; 
 	
