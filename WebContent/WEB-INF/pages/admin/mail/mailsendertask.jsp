@@ -84,65 +84,13 @@ typeMap['<%=type.name()%>'] ='<%=type.getName()%>';
 		</table>
 	</div>
 	 <div id="mail_w" class="easyui-window" title="窗口" data-options="modal:true,closed:true,iconCls:'icon-save',
-		collapsible:false,minimizable:false,maximizable:false,resizable:false,onOpen:winOpen" 
+		collapsible:false,minimizable:false,maximizable:false,resizable:false" 
 			style="width:600px;height:420px;padding:10px;">
 		<div class="easyui-layout" data-options="fit:true">
 			<div data-options="region:'center',border:false" id="content_layout" >
 				<form id="ff" method="post">
-					 	<table>
-					 		<tr style="display: none;">
-				    			<td>id:</td>
-				    			<td><input class="easyui-validatebox" type="text" id="id" name="id" data-options="required:false"></input></td>
-				    		</tr>
-				    		<tr>
-				    			<td>标题:</td>
-				    			<td>
-				    				<input style="width:300px;" class="easyui-validatebox" type="text" id="form_title" name="title" 
-				    					 ></input>
-				    			</td>
-				    		</tr>
-				    		<tr >
-				    			<td>选择内容:</td>
-				    			<td>
-				    				  <input id="templeteid" name="templeteId" class="easyui-combogrid" style="width:200px;heigh:80px" data-options="
-										panelWidth: 380,
-										textField: 'templeteName',
-										idField:'id',
-										editable:false,
-										mode: 'remote',
-										fit:true,
-										pageSize:20,
-										url:'<%=request.getContextPath() %>/admin/mail/templete/dopage?d='+new Date().getTime(),
-										method: 'post',
-										columns: [[
-											{field:'id',title:'id',width:80,hidden:true},
-											{field:'templeteName',title:'名字',width:120} 
-										]],
-										fitColumns: true,
-										pagination:true,
-										pageSize:20,
-										onBeforeLoad:function(param){
-											 param['pageno'] =  param['page']-1;
-											param['limit']  = param['rows'];
-									  		return true ;
-									  	},
-									  	loadFilter:function(data){
-											var result = data.result;
-											if(!result){
-												return {total:0,rows:[]};
-											}else {
-												var obj = {
-													total:data.entity.totalRows,
-													rows:data.entity.pageData ?data.entity.pageData:[]
-												};
-												return obj;
-											} 
-										}
-									">
-				    			</td>
-				    		</tr>
-				    	</table>
-				 </form>
+					 	 
+				</form>
 			 </div>
 			 <div data-options="region:'south',border:false" style="text-align:right;padding:5px 0 0;">
 					<a class="easyui-linkbutton" id="savebtn"  data-options="iconCls:'icon-ok'" href="javascript:void(0)" onclick="javascript:submitFormFn()">保存</a>
@@ -156,10 +104,7 @@ typeMap['<%=type.name()%>'] ='<%=type.getName()%>';
 $(function(){
 	 
 });
-function winOpen(){
- 
-	
-}
+
 function searchFn(){
 	var title = $("#title").val(); 
 	$('#dg').datagrid('load',{
