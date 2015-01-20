@@ -2,9 +2,14 @@
  * http://groovy.codehaus.org/groovy-jdk/ 
  * http://groovy.codehaus.org/Process+Management
  * http://groovy.codehaus.org/Groosh
- * gradle --stacktrace -b F:/taobaoservice/build.gradle publishOnWindows 
+ * 
  * http://www.gradle.org/docs/current/dsl/org.gradle.api.tasks.Exec.html
  * http://www.gradle.org/docs/current/userguide/userguide_single.html#configure-by-dag
+ * 
+ * http://git-scm.com/book/zh/v1
+ * http://git-scm.com/book/zh/v1/Git-%E5%88%86%E6%94%AF-%E5%88%86%E6%94%AF%E7%9A%84%E6%96%B0%E5%BB%BA%E4%B8%8E%E5%90%88%E5%B9%B6
+ * http://www.infoq.com/cn/articles/Gradle-application-in-large-Java-projects/
+ * gradle --stacktrace -b F:/taobaoservice/build.gradle war 
  */
 import java.io.File;
 
@@ -13,6 +18,9 @@ apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'eclipse-wtp'
 apply plugin: 'groovy'
+//apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
+apply plugin: 'pmd'
 //apply plugin: 'maven'
 
 sourceCompatibility = 1.8
@@ -378,92 +386,14 @@ task snapshot(dependsOn: [build, uploadArchives]) << {
 //	println "initProject 执行完毕";
 //}
 
-//gradle -q -b F:/taobaoservice/build.gradle windowpublish
 
+//configurations.runtime.each { File f -> println f }
  
  
 
-project.version = 8.0;
-def tomcatdir = "D:/java/apache-tomcat-7.0.54"
 
-def tomcat_webapps_path = "${tomcatdir}/webapps"
-def shutdownTomcatCommon = "${tomcatdir}/bin/shutdown.bat";
-def startupTomcatCommon = "${tomcatdir}/bin/startup.bat";
-def delWar = "${tomcatdir}/webapps/taobaoservice.war";
-def warName = "${project.name}-${project.version}.war";
-def publishWarName = "${project.name}";
-def warpath = new File("${project.buildDir.absolutePath}/libs/${warName}").absolutePath;
-def gradleBuildPath ="F:/taobaoservice/build.gradle";
- 
-/**
-cmd /c dir 是执行完dir命令后关闭命令窗口。
 
-cmd /k dir 是执行完dir命令后不关闭命令窗口。
 
-cmd /c start dir 会打开一个新窗口后执行dir指令，原窗口会关闭。
-
-cmd /k start dir 会打开一个新窗口后执行dir指令，原窗口不会关闭。
-*/
- 
-task publishOnWindows(type: Sync, dependsOn:[war]) {
- 	println "打包结束";
-	 println "开始关闭tomcat";
-	 def proc =["${shutdownTomcatCommon}" ].execute();
-	 proc.waitFor();
-	 def shudownRef =  proc.exitValue();
-	 if(0 == shudownRef){
-		 println("tomcat关闭成功");
-	 }else{
-		 println("tomcat关闭失败,可能已经关闭");
-	 }
-	 //
-	 println ("开始删除原有的发布项目目录及war包")
-	 def dir = new File("${tomcat_webapps_path}")
-	 dir.eachFile { file ->
-		
-		 if(file.name.contains("${publishWarName}")){
-			if(file.isDirectory() ){
-				println("删除目录：${file.name}");
-				file.deleteDir();
-			}else{
-				println("删除文件：${file.name}");
-				file.delete()
-			}
-		 }
-		 
-		 
-	 }
-	
-	 println "开始拷贝项目从${warpath}到tomcat/webapps目录";
-	 //ant.copy file: src, tofile: dist
-	 
-	// File warOrg = new ("${warpath}");
- 	copy{
- 		from 
- 		into tomcat_webapps_path
- 	}
-	 File copyToHereWarFile = new File("${tomcat_webapps_path}/${warName}");
-	 copyToHereWarFile.renameTo(new File("${tomcat_webapps_path}/${publishWarName}.war"));
-	 println "结束拷贝项目到tomcat/webapps目录";
-	 
-	 println("启动tomcat");
-	 def startProc =["${startupTomcatCommon}" ].execute();
-	 startProc.waitFor();
- 
-	 def startRef = startProc.exitValue();
-	 if(0 == startRef){
-		 println("tomcat启动成功");
-	 }else{
-	 	println("tomcat启动失败");
-	 }
-	 
-//	 println "return code: ${ startProc.exitValue()}"
-	 //	println "stderr: ${proc.err.text}"
-	 //	println "stdout: ${proc.in.text}" // *out* from the external program is *in* for groovy
-	
-  
-}
- 
 
 
  
