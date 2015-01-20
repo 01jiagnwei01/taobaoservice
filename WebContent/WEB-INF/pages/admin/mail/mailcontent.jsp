@@ -136,9 +136,9 @@ var detail = "${_adminUser_.btnMap.admin_mail_content_get}"== "true"?true:false;
 				    			</td>
 				    		</tr>
 				    		<tr>
-				    			<td>邮件内容:</td>
+				    			<td>邮件内容(只读):</td>
 				    			<td>
-				    				<textarea id="content" name="content"  ></textarea>
+				    				<textarea id="content" name="content" ></textarea>
 				    			</td>
 				    		</tr>
 				    	</table>
@@ -317,12 +317,10 @@ function initEditor(pageSize){
 	 var h = pageSize.pageHeight;
 	 $( '#content' ).ckeditor(function( textarea ) {
 	  },{
-		  	width:w,
+		  	width:(w-150),
 		  	height :(h-100)
 		 
-	});
-	
-	  
+	});	  
 	
 }
 function addFn(){

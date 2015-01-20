@@ -20,7 +20,9 @@ public enum BusinessExceptionInfos {
 	Yan_Zheng_MA_ERROR("17","验证码输入错误"),
 	ADMIN_IS_MAINTING("18","管理员正在维护中 ，请联系客服"),
 	EMAIL_ADDRESS_IS_ERROR("19","邮箱地址无效"),
-	UP_LOAD_PIC_CANNOT_BE_NULL_ERROR("20","上传图片不能为空");
+	UP_LOAD_PIC_CANNOT_BE_NULL_ERROR("20","上传图片不能为空"),
+	MAIL_CONTENT_CANNOT_FOUND("21","邮件内容无法找到"),
+	MAIL_RECEIVER_CANNOT_BE_NULL("22","收件人不能为空");
 	private String errorCode; 
 	
 	private String errorMsg;
