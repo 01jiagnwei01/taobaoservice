@@ -20,6 +20,7 @@ import com.gxkj.common.util.ListPager;
 import com.gxkj.taobaoservice.daos.MailContentDao;
 import com.gxkj.taobaoservice.daos.MailSenderRefAddressListDao;
 import com.gxkj.taobaoservice.daos.MailSenderTaskDao;
+import com.gxkj.taobaoservice.daos.MailTempleteDao;
 import com.gxkj.taobaoservice.dto.MailSenderTaskDTO;
 import com.gxkj.taobaoservice.dto.ShouJianRen;
 import com.gxkj.taobaoservice.dto.ToolMailDTO;
@@ -27,6 +28,7 @@ import com.gxkj.taobaoservice.entitys.AdminUser;
 import com.gxkj.taobaoservice.entitys.MailContent;
 import com.gxkj.taobaoservice.entitys.MailSenderRefAddressList;
 import com.gxkj.taobaoservice.entitys.MailSenderTask;
+import com.gxkj.taobaoservice.entitys.MailTemplete;
 import com.gxkj.taobaoservice.enums.MailSenderRefAddressListStatus;
 import com.gxkj.taobaoservice.enums.MailSenderStatus;
 import com.gxkj.taobaoservice.services.MailSenderTaskService;
@@ -38,6 +40,9 @@ public class MailSenderTaskServiceImpl implements MailSenderTaskService {
 	
 	@Autowired
 	private MailContentDao mailContentDao;
+	
+	@Autowired
+	private MailTempleteDao mailTempleteDao;
 	
 	@Autowired
 	private MailSenderRefAddressListDao mailSenderRefAddressListDao;
@@ -139,7 +144,16 @@ public class MailSenderTaskServiceImpl implements MailSenderTaskService {
 		MailSenderTaskDTO dto = new MailSenderTaskDTO();
 		MailSenderTask task = (MailSenderTask) mailSenderTaskDao.selectById(taskId, MailSenderTask.class);
 		
-	
+		if(task != null){
+			MailContent mailContent = (MailContent) mailContentDao.selectById(task.getContentId(), MailContent.class);
+			dto.setMailContent(mailContent);
+			if(mailContent !=null){
+				MailTemplete mailTemplete = (MailTemplete) mailTempleteDao.selectById(mailContent.getTempleteId(), MailTemplete.class);
+				dto.setMailTemplete(mailTemplete);
+			}
+		}
+		
+		
 		try {
 			BeanUtils.copyProperties(dto, task);
 		} catch (IllegalAccessException | InvocationTargetException e) {
