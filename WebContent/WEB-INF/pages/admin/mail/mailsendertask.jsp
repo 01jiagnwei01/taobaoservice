@@ -128,6 +128,10 @@ mailSendStatus['<%=type.name()%>'] ='<%=type.getName()%>';
 					 <div id="tt" class="easyui-tabs" data-options="border:false,fit:true,tabWidth:150" >
 					     <div title="邮件内容" data-options="cache:false" style='padding-top: 20px;'>
 					         <table>
+					         <tr style="display: none;">
+				    			<td>id:</td>
+				    			<td><input class="easyui-validatebox" type="text" id="id" name="id" data-options="required:false"></input></td>
+				    		</tr>
 											<tr>
 										    			<td>内容标题:</td>
 										    			<td>
@@ -323,15 +327,18 @@ function optFormat(value,row,index){
 		if(detail){
 			btns.push('<a class="easyui-linkbutton l-btn l-btn-plain" onclick="detailWinFn(\''+row['id']+'\')" href="#" plain="true" iconCls="detail_btn"><span class="l-btn-left"><span class="l-btn-text detail_btn l-btn-icon-left">查看收件人</span></span></a>');
 		}
-		 if(update){
-			btns.push('<a class="easyui-linkbutton l-btn l-btn-plain" onclick="updateFn(\''+row['id']+'\')" href="#" plain="true" iconCls="update_btn"><span class="l-btn-left"><span class="l-btn-text update_btn l-btn-icon-left">修改</span></span></a>');
-		 }
-		 if(del){
-				btns.push('<a class="easyui-linkbutton l-btn l-btn-plain" onclick="delFn(\''+row['id']+'\')" href="#" plain="true" iconCls="del_btn"><span class="l-btn-left"><span class="l-btn-text del_btn l-btn-icon-left">删除</span></span></a>');
-		 }
-		 if(sendMail){
-				btns.push('<a class="easyui-linkbutton l-btn l-btn-plain" onclick="sendMailFn(\''+row['id']+'\')" href="#" plain="true" iconCls="send_btn"><span class="l-btn-left"><span class="l-btn-text send_btn l-btn-icon-left">发送</span></span></a>');
-		 }
+		if(row['status'] == 'NOSEND'){
+			if(update){
+				btns.push('<a class="easyui-linkbutton l-btn l-btn-plain" onclick="updateFn(\''+row['id']+'\')" href="#" plain="true" iconCls="update_btn"><span class="l-btn-left"><span class="l-btn-text update_btn l-btn-icon-left">修改</span></span></a>');
+			 }
+			 if(del){
+					btns.push('<a class="easyui-linkbutton l-btn l-btn-plain" onclick="delFn(\''+row['id']+'\')" href="#" plain="true" iconCls="del_btn"><span class="l-btn-left"><span class="l-btn-text del_btn l-btn-icon-left">删除</span></span></a>');
+			 }
+			 if(sendMail){
+					btns.push('<a class="easyui-linkbutton l-btn l-btn-plain" onclick="sendMailFn(\''+row['id']+'\')" href="#" plain="true" iconCls="send_btn"><span class="l-btn-left"><span class="l-btn-text send_btn l-btn-icon-left">发送</span></span></a>');
+			 }
+		}
+		 
 		return btns.join("&nbsp;");
 	
 }
@@ -535,8 +542,16 @@ function updateFn(id){
 		 var editor = CKEDITOR.instances.content;
 			editor.setData( entity?entity.content:"" );
 		  
+			
 		 $('#contentId').combogrid('setValue', entity?entity.contentId:"");
 		 $('#contentId').combogrid('setText', entity?entity.title:"");
+		 
+		 var temp = entity.mailTemplete; 
+		 if(temp){
+			 
+			 $('#temp_id').textbox('setValue',temp['templeteName']+"["+temp['id']+"]");
+		 }
+		 
 		 
 	
 		 $('#mail_w').window('resize', {
@@ -576,7 +591,7 @@ function submitFormFn(){
 	}
 
 	var saveObj = {};
-	saveObj.id=$.trim(u_id).length==0?0:u_id;
+	saveObj.taskId=$.trim(u_id).length==0?0:u_id;
 	saveObj.contentId= contentId;
 	saveObj.shoujianren = JSON.stringify(selAddressIds);
 	 
@@ -633,9 +648,8 @@ function insertIntoDb(saveObj){
 	});
 }
 function updateIntoDb(saveObj){
-	alert("undo");
-	return;
-	var url =  "<%=request.getContextPath() %>/admin/mail/content/doupdate";
+	 
+	var url =  "<%=request.getContextPath() %>/admin/mail/sendertask/doupdate";
   	 $.ajax({
   	  	  type:'post',
 		  url: url,
