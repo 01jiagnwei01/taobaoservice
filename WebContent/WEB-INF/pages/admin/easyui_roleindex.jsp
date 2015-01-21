@@ -286,18 +286,23 @@ var roleget = "${_adminUser_.btnMap.roleget}"?true:false;
 		  	  	  type:'post',
 				  url: url,
 				  context: document.body,
+				  beforeSend:function(){
+					  	jQuery.showMask($("#w")[0],"正在保存中 ....");
+				},
 				  data:{
 				  	name:roleName,
 				  	status:1,
 				  	menuIds: authoritiesIds
 				  },
 				  success:function(json){
+					  jQuery.hideMask($("#w")[0]);
 				   	//	json = $.parseJSON(json);
 				 	 $('#dg').datagrid('appendRow',json);
 				 	 $.messager.alert('系统提示','保存成功!','info',closeWinFn);
 					
 				  },
 				  error:function(xhr,textStatus,errorThrown){
+					  jQuery.hideMask($("#w")[0]);
 				  		var responseText = xhr.responseText;
 				    	$.messager.alert('系统提示','保存失败，请刷新后重试!','error');
 				  
@@ -310,6 +315,9 @@ var roleget = "${_adminUser_.btnMap.roleget}"?true:false;
 		  	  	  type:'post',
 				  url: url,
 				  context: document.body,
+				  beforeSend:function(){
+					  	jQuery.showMask($("#w")[0],"正在保存中 ....");
+				},
 				  data:{
 				  	id:roleId,
 				  	name:roleName,
@@ -317,6 +325,7 @@ var roleget = "${_adminUser_.btnMap.roleget}"?true:false;
 				  	menuIds: authoritiesIds
 				  },
 				  success:function(json){
+					  jQuery.hideMask($("#w")[0]);
 				  	//json = $.parseJSON(json);
 				  	 $('#dg').datagrid('updateRow',{
 				  	 	index:updateRowIndex,
@@ -329,6 +338,7 @@ var roleget = "${_adminUser_.btnMap.roleget}"?true:false;
 				  
 				  },
 				  error:function(xhr,textStatus,errorThrown){
+					  jQuery.hideMask($("#w")[0]);
 				  	var responseText = xhr.responseText;
 				  	$.messager.alert('系统提示','保存失败，请刷新后重试!','error');
 				  

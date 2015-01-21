@@ -80,6 +80,9 @@ public class MailSenderTask implements Serializable {
 	 */
 	@Transient
 	private String createUserName;
+	
+	@Column(name = "content_id" ,   nullable = false)
+	private Integer   contentId;
 
 	public Integer getId() {
 		return id;
@@ -136,5 +139,14 @@ public class MailSenderTask implements Serializable {
 	public void setCreateUserName(String createUserName) {
 		this.createUserName = createUserName;
 	}
+
+	public Integer getContentId() {
+		return contentId;
+	}
+
+	public void setContentId(Integer contentId) {
+		this.contentId = contentId;
+	}
+	
 
 }

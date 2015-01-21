@@ -9,8 +9,6 @@ import java.util.List;
 import javax.jms.Destination;
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.BeanUtilsBean;
-import org.apache.commons.beanutils.BeanUtilsBean2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jms.core.JmsTemplate;
@@ -82,6 +80,7 @@ public class MailSenderTaskServiceImpl implements MailSenderTaskService {
 		task.setStatus(MailSenderStatus.NOSEND);
 		task.setTitle(mailContent.getTitle());
 		task.setCreateUserName(adminUser.getName());
+		task.setContentId(contentId);
 		mailSenderTaskDao.insert(task);
 		
 		//保存收件人
@@ -140,6 +139,7 @@ public class MailSenderTaskServiceImpl implements MailSenderTaskService {
 		MailSenderTaskDTO dto = new MailSenderTaskDTO();
 		MailSenderTask task = (MailSenderTask) mailSenderTaskDao.selectById(taskId, MailSenderTask.class);
 		
+	
 		try {
 			BeanUtils.copyProperties(dto, task);
 		} catch (IllegalAccessException | InvocationTargetException e) {

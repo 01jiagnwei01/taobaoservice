@@ -12,6 +12,8 @@ public class MailSenderTaskDTO extends MailSenderTask {
 	private static final long serialVersionUID = 5381460597597202134L;
 	
 	private List<ShouJianRen> shouJianRen = null;
+	
+
 
 	public List<ShouJianRen> getShouJianRen() {
 		return shouJianRen;
@@ -20,7 +22,7 @@ public class MailSenderTaskDTO extends MailSenderTask {
 	public void setShouJianRen(List<ShouJianRen> shouJianRen) {
 		this.shouJianRen = shouJianRen;
 	}
-	
-	
 
+	
+	
 }

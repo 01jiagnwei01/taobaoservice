@@ -794,16 +794,6 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="F:/taobaoservice/libs/netpayclient.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
-		</attributes>
-	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="F:/taobaoservice/libs/protobuf-java-2.4.1.jar">
-		<attributes>
-			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
-		</attributes>
-	</classpathentry>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.springsource.ide.eclipse.gradle.dsld.classpathcontainer"/>

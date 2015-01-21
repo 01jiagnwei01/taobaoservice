@@ -20,7 +20,9 @@ var add = "${_adminUser_.btnMap.admin_mail_sendertask_doadd}"== "true"?true:fals
 var update = "${_adminUser_.btnMap.admin_mail_sendertask_doupdate}"== "true"?true:false;
 var del = "${_adminUser_.btnMap.admin_mail_sendertask_dodel}"== "true"?true:false;
 var sendMail = "${_adminUser_.btnMap.admin_mail_sendertask_dosend}"== "true"?true:false;
+var taskDetail = "${_adminUser_.btnMap.admin_mail_sendertask_dotail}"== "true"?true:false;
 var detail = "${_adminUser_.btnMap.admin_mail_sendertask_detailpage}"== "true"?true:false;
+
 var typeMap = {}; 
 var gendermap = {};
 var addressTypemap = {};
@@ -471,54 +473,89 @@ function addFn(){
 	  $('#mail_w').window('open').panel('setTitle',"创建发送任务");
 	  
 	selAddressIds = [];
-	selAddressEmails = [];
 	$('#showSeleAddress').html("");
 	
 	 $('#savebtn').show();
 }
 function updateFn(id){
-	alert("undo");
-	return;
-	$("#ff").form("reset");
-	updateRowIndex = -1;
-	saveType = "update";
-	var rows = $("#dg").datagrid("getRows");
-	var row = null;
-	for(var i=0;i<rows.length;i++){
-		if(rows[i]['id'] == id){
-			row = rows[i];
-			break;
-		}
+	if(!taskDetail){
+		$.messager.alert('系统提示','您需要有查看详情的权限才可以继续修改!','info');
+		return;
 	}
-	var rowIndex = 	$('#dg').datagrid("getRowIndex",row);
-	updateRowIndex = rowIndex;
-
-	 
-	$("#id").val(row['id']);
-	$("#form_title").val(row['title']);
-	//$("#content").val(row['content']);
-	 if(row['templeteId']){
-	 	var templeteId = row['templeteId'];
-	 	var templeteName = row['templeteName'] == null ?"": row['templeteName'] ;
-	 	//var roleName = role.name;
-	 	 $('#templeteid').combogrid('setValue', templeteId);
-		 $('#templeteid').combogrid('setText', templeteName);
+	var url =  "<%=request.getContextPath() %>/admin/mail/sendertask/get?d="+new Date().getTime();
+ 	$.ajax({
+	  url: url,
+	  method:'POST',
+	  context: document.body,
+	  beforeSend:function(){
+		   
+		  jQuery.showMask(document.body,"正在努力加载数据中 ....");
+		 },
+	  data:{
+		  taskId:id
+	  },
+	  success:function(json){
+	 	// var json_str = JSON2.stringify(json);
+	 	  jQuery.hideMask(document.body);
+	 	if(!json){
+	 		$.messager.alert('系统提示','获取数据失败，请刷新后重试!','error');
+	 		return;
+	 	}
+	 	var result = json.result;
+   	 	var entity = json.entity;
+   	 	
+   	 	//设置收件人
+   	 	selAddressIds = entity.shouJianRen?entity.shouJianRen:[]; 
+   		var emails = [];
+   		for(var i=0;i<selAddressIds.length;i++){
+   			emails.push(selAddressIds[i]['email']);
+   		}
+   		$('#showSeleAddress').html(emails.join(","));
+   		$("#ff").form("reset");
+   		updateRowIndex = -1;
+   		saveType = "update";
+   		var rows = $("#dg").datagrid("getRows");
+   		var row = null;
+   		for(var i=0;i<rows.length;i++){
+   			if(rows[i]['id'] == id){
+   				row = rows[i];
+   				break;
+   			}
+   		}
+   		updateRowIndex = $('#dg').datagrid("getRowIndex",row);
+   		  
+   		$("#id").val(row['id']);
+	   	 var pageSize = getPageSize();
+		 var w = pageSize.pageWidth;
+		 var h = pageSize.pageHeight;
+		
+		 initEditor(pageSize);
+		 var editor = CKEDITOR.instances.content;
+			editor.setData( entity?entity.content:"" );
 		  
-	 }
-	 var pageSize = getPageSize();
-	 var w = pageSize.pageWidth;
-	 var h = pageSize.pageHeight;
-		initEditor(pageSize);
-	var editor = CKEDITOR.instances.content;
-	editor.setData( row['content'] );
+		 $('#contentId').combogrid('setValue', entity?entity.contentId:"");
+		 $('#contentId').combogrid('setText', entity?entity.title:"");
+		 
 	
-	 $('#mail_w').window('resize', {
-		  width:w,
-		  height: (h-10)
-	  });
-	$('#mail_w').window('open').panel('setTitle',"修改邮件") ;
-	$('#mail_w').window('center');
-	$('#savebtn').show();
+		 $('#mail_w').window('resize', {
+			  width: w,
+			  height: (h-10)
+		  });
+		  $('#mail_w').window('center');
+		  $('#mail_w').window('open').panel('setTitle',"修改发送任务");
+		  $('#savebtn').show();
+	  
+	  },
+	  error:function(xhr,textStatus,errorThrown){
+		  jQuery.hideMask(document.body);
+	  	var responseText = xhr.responseText;
+	  	$.messager.alert('系统提示','获取数据失败，请刷新后重试!','error');
+	  
+	  } 
+	});
+	
+	
+	 
 }
 function submitFormFn(){
 	var u_id = $("#id").val();
@@ -648,61 +685,7 @@ function updateIntoDb(saveObj){
 }
 function getFn(id){
 	alert("undo");
-	return
-	
-	var url = "<%=request.getContextPath() %>/admin/mail/sendertask/get";
-	$.ajax({
-	  type:'post',
-	  url: url,
-	  beforeSend:function(){
-		  	//jQuery.showMask($("#w")[0],"正在保存中 ....");
-		  jQuery.showMask(document.body,"正在处理中 ....");
-	},
-	  data:{
-		taskId:id ,
-	  	d:new Date().getTime()
-	  },
-	  context: document.body,
-	  success:function(json){
-		  jQuery.hideMask(document.body);
-			 var result = json.result;
-		   	 	var entity = json.entity;
-		   	 	if(result){
-		   	 		$('#dg').datagrid("deleteRow",delRowIndex);
-		  			$('#dg').datagrid('acceptChanges');
-			 		 $.messager.alert('系统提示','删除成功!','info',closeWinFn);
-			   	 }else{
-			   		$.messager.alert('系统提示','删除失败，请刷新后重试!','error');
-			   	 }
-		   	 	
-	  },
-	  error:function(xhr,textStatus,errorThrown){
-		  jQuery.hideMask(document.body);
-		  var responseText = xhr.responseText;
-	    	try{
-	    		var json = $.parseJSON(responseText);
-	    		var msg = json.msg;
-	    		if(typeof  msg == 'string' && msg.indexOf("errorMsg")>0 ){
-	    			var msgArray = [];
-	    			msg = eval("("+msg+")");
-	    			for (var i=0;i<msg.length;i++){
-	    				var d = msg[i] ;
-	    				msgArray.push(d['errorMsg']);
-	    			}
-	    			$.messager.alert('系统提示','删除失败\r\n'+msgArray.join("\r\n"),'error');
-	    		}else{
-	    			$.messager.alert('系统提示','删除失败\r\n'+msg,'error');
-	    		}
-	    	 
-	    		
-	    	}catch(error){
-	    		alert(error);
-	    		$.messager.alert('系统提示','删除失败，请刷新后重试!','error');
-	    	}
-	  
-	  } 
-});
-	 
+	return  
 }
 
 function delFn(id){
@@ -792,7 +775,6 @@ function uNameFormat(value,row,index){
 		return null;
 }
 var selAddressIds = [];
-var selAddressEmails = [];
 function onCheckShouJianRen(index,row){
 	var email = row['email'];
 	var id = row['id'];
