@@ -510,7 +510,9 @@ function updateFn(id){
    		for(var i=0;i<selAddressIds.length;i++){
    			emails.push(selAddressIds[i]['email']);
    		}
+   
    		$('#showSeleAddress').html(emails.join(","));
+   		
    		$("#ff").form("reset");
    		updateRowIndex = -1;
    		saveType = "update";
@@ -544,7 +546,7 @@ function updateFn(id){
 		  $('#mail_w').window('center');
 		  $('#mail_w').window('open').panel('setTitle',"修改发送任务");
 		  $('#savebtn').show();
-	  
+		  onLoadSuccessSelShouJianRen();
 	  },
 	  error:function(xhr,textStatus,errorThrown){
 		  jQuery.hideMask(document.body);
