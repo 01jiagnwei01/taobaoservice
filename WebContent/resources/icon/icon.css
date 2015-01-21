@@ -18,6 +18,9 @@
 .del_btn {
   background:  url('delete.gif') no-repeat  center;
 }
+.detail_btn{
+ background:  url('detail.png') no-repeat  center;
+}
 .set_btn {
   background: #E0ECFF url('set.png') no-repeat  center;
 }
@@ -44,5 +47,8 @@
 }
 .poweroff_btn {
    background: #E0ECFF url('poweroff.png') no-repeat  center;
+}
+.send_btn{
+  background: #E0ECFF url('send.png') no-repeat  center;
 }
 

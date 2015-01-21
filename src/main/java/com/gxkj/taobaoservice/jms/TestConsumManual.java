@@ -33,7 +33,7 @@ public class TestConsumManual {
 	private JmsTemplate jmsTemplate; 
 	
 	@Autowired  
-	@Qualifier("queueDestination")  
+	@Qualifier("myqueue")  
 	private Destination destination;
 	
 	@ManagedOperation(description = "brower In DLQ" )

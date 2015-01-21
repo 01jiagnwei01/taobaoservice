@@ -52,6 +52,10 @@ http://wenku.baidu.com/link?url=oZkKhVWaKOOnBu5y44TTiFGceqqDF9mUWoK4gXJ6xxZr0vHR
 					<amq:redeliveryPolicy queue="myqueue"
 						maximumRedeliveries="3" initialRedeliveryDelay="60000"
 						backOffMultiplier="2" useExponentialBackOff="true" />
+						
+					<amq:redeliveryPolicy queue="toolMailQueue"
+						maximumRedeliveries="3" initialRedeliveryDelay="60000"
+						backOffMultiplier="2" useExponentialBackOff="true" />
 						<!-- 此处可以设置多个 -->
 				</amq:redeliveryPolicyEntries>
 			</amq:redeliveryPolicyMap>
@@ -76,22 +80,23 @@ http://wenku.baidu.com/link?url=oZkKhVWaKOOnBu5y44TTiFGceqqDF9mUWoK4gXJ6xxZr0vHR
         <property name="receiveTimeout" value="5000"/>
     </bean>
     
-	<amq:queue id="queueDestination" physicalName="myqueue" />
+	<amq:queue id="myqueue" physicalName="myqueue" />
+	<amq:queue id="toolMailQueue" physicalName="toolMailQueue" />
 	
 	<jms:listener-container destination-type="queue" 
 		concurrency="8-32" acknowledge="transacted" connection-factory="cachingConnectionFactory"
 		transaction-manager="transactionManager" 
 		>
-		<jms:listener destination="myqueue"
-			ref="consumerMessageListener"   />
+		<jms:listener destination="myqueue" ref="consumerMessageListener"   />
 			<!-- 此处可以设置多个 -->
+		<jms:listener destination="toolMailQueue" ref="toolMailMessageListener" />
 	</jms:listener-container>
 	
 	 
 	
 <!-- 定义消费者结束 -->
 	
- 
+ <!-- 
 	<bean id="mysql-ds" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
 		<property name="url" value="jdbc:mysql://localhost/activemq?relaxAutoCommit=true"/>
@@ -100,7 +105,7 @@ http://wenku.baidu.com/link?url=oZkKhVWaKOOnBu5y44TTiFGceqqDF9mUWoK4gXJ6xxZr0vHR
 		<property name="maxActive" value="200"/>
 		<property name="poolPreparedStatements" value="true"/>
 	</bean>
- 
+  -->
 	
 	 
 	 

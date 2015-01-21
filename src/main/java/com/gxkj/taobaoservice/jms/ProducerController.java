@@ -37,7 +37,7 @@ public class ProducerController {
 	private JmsTemplate jmsTemplate; 
 	
 	@Autowired  
-	@Qualifier("queueDestination")  
+	@Qualifier("myqueue")  
 	private Destination destination;
 	
 	@Autowired

@@ -136,7 +136,7 @@ public class SendMixedMail {
      */
     private static BodyPart createContent() throws MessagingException {
         BodyPart content=new MimeBodyPart();
-        Multipart relate=new MimeMultipart("related");//组合MIME消息
+        Multipart relate=new MimeMultipart("related");//related意味着可以发送html格式的邮件 
 
         relate.addBodyPart(createHtmlBody());
         relate.addBodyPart(createImagePart(new File("D:/image1.jpg"), "img1"));//嵌入图片

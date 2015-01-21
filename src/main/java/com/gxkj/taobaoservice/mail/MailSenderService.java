@@ -15,6 +15,8 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import com.gxkj.taobaoservice.dto.ToolMailDTO;
+
 @Service("demoMailService")
 public class MailSenderService {
 	
@@ -27,6 +29,9 @@ public class MailSenderService {
 	@Autowired
 	@Qualifier("templateMailMessage")
 	private SimpleMailMessage templateMailMessage;
+	
+	
+	private static final String ENCODING = "utf-8";
 	
 	public void setJavaMailSender(JavaMailSenderImpl javaMailSender) {
 		this.javaMailSender = javaMailSender;
@@ -58,6 +63,27 @@ public class MailSenderService {
 		simpleMailMessage.setText(code);
 		mailSender.send(simpleMailMessage);	
 	} 
+	/***
+	 * 邮件营销发送邮件
+	 * @param toolMailDTO
+	 */
+	public void sendMailWithToolMailDTO(ToolMailDTO toolMailDTO){
+		 MimeMessage msg = javaMailSender.createMimeMessage();
+		 try {
+			MimeMessageHelper helper = new MimeMessageHelper(msg, true, ENCODING);
+			helper.setFrom(templateMailMessage.getFrom());
+			helper.setTo(toolMailDTO.getEmail());
+			helper.setSubject(toolMailDTO.getSubject());
+			String htmlTemplete = "<!DOCTYPE html><html lang=\"zh\"><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=EmulateIE8\" content=\"ie=edge\"/><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"></head><body >${content}</body></html>";
+			String content = htmlTemplete.replace("${content}", toolMailDTO.getContent());
+			helper.setText(content, true);
+			javaMailSender.send(msg);
+			
+		} catch (MessagingException e) {
+			 
+			e.printStackTrace();
+		}
+	}
 	
 	public void sendMailWithTemplate(String dear, String content) {			 
 		   SimpleMailMessage message = new SimpleMailMessage(templateMailMessage);

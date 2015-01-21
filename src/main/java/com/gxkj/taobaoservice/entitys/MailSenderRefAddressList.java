@@ -3,16 +3,19 @@ package com.gxkj.taobaoservice.entitys;
 import java.io.Serializable;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
 import com.gxkj.taobaoservice.enums.MailSenderRefAddressListStatus;
 import com.gxkj.taobaoservice.enums.UserGender;
-
+@Entity
+@Table(name = "mail_sender_ref_address_list")
 public class MailSenderRefAddressList implements Serializable {
 
 	/**

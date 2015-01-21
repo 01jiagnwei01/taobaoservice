@@ -1,7 +1,7 @@
 package com.gxkj.taobaoservice.enums;
 
 public enum MailSenderStatus {
-	NOSEND("未发送"),PROCESS("处理中"),SUCCESS("成功"),FAILURE ("失败"),DEL("已删除");
+	NOSEND("未发送"),ISEXECUTED("已执行"),SEND("已发送"),SUCCESS("成功"),FAILURE ("失败"),DEL("已删除");
 	
 	private String name; 
 	
