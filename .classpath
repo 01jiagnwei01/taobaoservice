@@ -289,6 +289,46 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/org.glassfish.hk2.external/aopalliance-repackaged/2.4.0-b06/c202aed303326c185e27fb21d9aed29128087b7e/aopalliance-repackaged-2.4.0-b06.jar" sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/org.glassfish.hk2.external/aopalliance-repackaged/2.4.0-b06/a0685666395bb7f81f24e150dd2c02e1cb303d62/aopalliance-repackaged-2.4.0-b06-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/org.glassfish.hk2.external/javax.inject/2.4.0-b06/bae639241d8afaf869cd60319021683b95819427/javax.inject-2.4.0-b06.jar" sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/org.glassfish.hk2.external/javax.inject/2.4.0-b06/693190b7e66acfd3ac446ab561e79a176c5487e6/javax.inject-2.4.0-b06-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/org.glassfish.hk2/hk2-api/2.4.0-b06/1ce898afcbd1cb37d94d30459f8b4d25c909c450/hk2-api-2.4.0-b06.jar" sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/org.glassfish.hk2/hk2-api/2.4.0-b06/7ada91a6c2e5901752462e1d3956798467a45849/hk2-api-2.4.0-b06-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/org.glassfish.hk2/hk2-locator/2.4.0-b06/7d7ac29839ae720cb32efb3c69636011323e1dc7/hk2-locator-2.4.0-b06.jar" sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/org.glassfish.hk2/hk2-locator/2.4.0-b06/21203a84c599e2ef25000c0b716e03a806e72068/hk2-locator-2.4.0-b06-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/org.glassfish.hk2/hk2-utils/2.4.0-b06/beeb25c0c92e8cfaa073733485a5927b60df7deb/hk2-utils-2.4.0-b06.jar" sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/org.glassfish.hk2/hk2-utils/2.4.0-b06/752e60d110052b918d70ed080039932f612fb2f0/hk2-utils-2.4.0-b06-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/org.glassfish.jersey.bundles.repackaged/jersey-guava/2.15/15eb8e6214c413c567a4265bbc931f4e9099b99c/jersey-guava-2.15.jar" sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/org.glassfish.jersey.bundles.repackaged/jersey-guava/2.15/77fa4cf2089905b0cd3bda5a70c67cbec5c21da4/jersey-guava-2.15-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/org.glassfish.jersey.core/jersey-client/2.15/86934111571e6b736d7ad2b6f7647e5d874e42c0/jersey-client-2.15.jar" sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/org.glassfish.jersey.core/jersey-client/2.15/e1b3d8a09cdee8172a08bef5c663589ded0f716/jersey-client-2.15-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/org.glassfish.jersey.core/jersey-common/2.15/eddbd0e4ca260bb4eca4f1f33071dcd75bbcd4ab/jersey-common-2.15.jar" sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/org.glassfish.jersey.core/jersey-common/2.15/632e2a637882a8f571fda2f2927347b249067d/jersey-common-2.15-sources.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="D:/java/gradlelib/caches/modules-2/files-2.1/org.glassfish/javax.el/3.0.0/dd532526e7c8de48e40419e6af1183658a973379/javax.el-3.0.0.jar" sourcepath="D:/java/gradlelib/caches/modules-2/files-2.1/org.glassfish/javax.el/3.0.0/9a2a19399140efdd86a5b350e7bff8cd1eb05579/javax.el-3.0.0-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
@@ -449,7 +489,17 @@
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
 	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="D:/java/maven_repository/javax/annotation/javax.annotation-api/1.2/javax.annotation-api-1.2.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="D:/java/maven_repository/javax/batch/javax.batch-api/1.0/javax.batch-api-1.0.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="D:/java/maven_repository/javax/inject/javax.inject/1/javax.inject-1.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
@@ -465,6 +515,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="D:/java/maven_repository/javax/validation/validation-api/1.1.0.Final/validation-api-1.1.0.Final.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="D:/java/maven_repository/javax/ws/rs/javax.ws.rs-api/2.0.1/javax.ws.rs-api-2.0.1.jar" sourcepath="D:/java/maven_repository/javax/ws/rs/javax.ws.rs-api/2.0.1/javax.ws.rs-api-2.0.1-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>
@@ -605,6 +660,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="D:/java/maven_repository/org/fusesource/hawtbuf/hawtbuf/1.10/hawtbuf-1.10.jar">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="D:/java/maven_repository/org/glassfish/hk2/osgi-resource-locator/1.0.1/osgi-resource-locator-1.0.1.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
 		</attributes>

@@ -23,7 +23,8 @@ public enum BusinessExceptionInfos {
 	UP_LOAD_PIC_CANNOT_BE_NULL_ERROR("20","上传图片不能为空"),
 	MAIL_CONTENT_CANNOT_FOUND("21","邮件内容无法找到"),
 	MAIL_RECEIVER_CANNOT_BE_NULL("22","收件人不能为空"), 
-	ONLY_NOSEND_MAIL_CAN_EXECUTE("23","只有未发送的邮件才允许执行");
+	ONLY_NOSEND_MAIL_CAN_EXECUTE("23","只有未发送的邮件才允许执行"), 
+	SEND_TIME_SHOULD_AFTER_SYSTEM_TIME("24","发送时间应该晚于系统当前时间");
 	private String errorCode; 
 	
 	private String errorMsg;
