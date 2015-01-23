@@ -24,13 +24,17 @@ public enum BusinessExceptionInfos {
 	MAIL_CONTENT_CANNOT_FOUND("21","邮件内容无法找到"),
 	MAIL_RECEIVER_CANNOT_BE_NULL("22","收件人不能为空"), 
 	ONLY_NOSEND_MAIL_CAN_EXECUTE("23","只有未发送的邮件才允许执行"), 
-	SEND_TIME_SHOULD_AFTER_SYSTEM_TIME("24","发送时间应该晚于系统当前时间");
+	SEND_TIME_SHOULD_AFTER_SYSTEM_TIME("24","发送时间应该晚于系统当前时间"), 
+	NO_USE_EXCEL_TEMPLATE("25","请使用模板进行导入");
 	private String errorCode; 
 	
 	private String errorMsg;
 	private BusinessExceptionInfos(String errorCode, String errorMsg) {  
 		       this.errorCode = errorCode; 
 		       this.errorMsg = errorMsg;
+	}
+	private BusinessExceptionInfos( String errorMsg) {  
+	       this.errorMsg = errorMsg;
 	}
 
 	public String getErrorCode() {

@@ -11,5 +11,7 @@ public interface MailAddressListDao extends BaseDAO {
 	ListPager doPage(int pageno, int pagesize, String name, String email,
 			MailAddressListStatus status) throws SQLException;
 
+	boolean emailIsExist(String email)throws SQLException;
+
  
 }

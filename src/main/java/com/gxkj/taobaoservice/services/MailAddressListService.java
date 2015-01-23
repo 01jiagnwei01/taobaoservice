@@ -1,9 +1,12 @@
 package com.gxkj.taobaoservice.services;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 import org.springframework.validation.BindException;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.gxkj.common.exceptions.BusinessException;
 import com.gxkj.common.util.ListPager;
 import com.gxkj.taobaoservice.entitys.AdminUser;
 import com.gxkj.taobaoservice.entitys.MailAddressList;
@@ -39,5 +42,14 @@ public interface MailAddressListService {
 	 * @return
 	 */
 	void doDelMailAddressList(Integer id, AdminUser adminUser) throws SQLException ;
+
+	/**
+	 * 批量导入通讯录
+	 * @param excel
+	 * @param adminUser
+	 * @throws SQLException
+	 * @throws BindException
+	 */
+	void doImport(MultipartFile excel, AdminUser adminUser)throws SQLException ,BusinessException, IOException;
 
 }

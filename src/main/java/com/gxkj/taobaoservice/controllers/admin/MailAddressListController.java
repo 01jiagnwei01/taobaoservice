@@ -1,5 +1,6 @@
 package com.gxkj.taobaoservice.controllers.admin;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.gxkj.common.exceptions.BusinessException;
 import com.gxkj.common.util.ListPager;
 import com.gxkj.taobaoservice.dto.EntityReturnData;
 import com.gxkj.taobaoservice.dto.SessionConstant;
@@ -96,6 +99,22 @@ public class MailAddressListController {
 			
 			AdminUser adminUser = SessionConstant.getAdminUserInSession(request);
 			 mailAddressListService.doDelMailAddressList(id, adminUser);
+			 ret.setResult(true);
+			 
+			return ret;
+	}
+	
+	@RequestMapping(value="/import",method={RequestMethod.POST})
+	@ResponseBody
+	public EntityReturnData doimport( HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value="excel") MultipartFile excel,   
+			ModelMap modelMap) throws SQLException, BindException, BusinessException, IOException  {
+			EntityReturnData ret = new EntityReturnData();
+			ret.setMsg("执行成功");
+			
+			AdminUser adminUser = SessionConstant.getAdminUserInSession(request);
+			 mailAddressListService.doImport(excel, adminUser);
 			 ret.setResult(true);
 			 
 			return ret;

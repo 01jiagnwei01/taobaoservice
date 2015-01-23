@@ -16,6 +16,8 @@ import com.gxkj.taobaoservice.enums.MailAddressListStatus;
 public class MailAddressListDaoImpl extends BaseDAOImpl implements
 		MailAddressListDao {
 
+	private final String emailIsExistHql = "from MailAddressList where email =?";
+	
 	public ListPager doPage(int pageno, int pagesize, String name,
 			String email, MailAddressListStatus status) throws SQLException {
 		
@@ -51,6 +53,17 @@ public class MailAddressListDaoImpl extends BaseDAOImpl implements
 		pager.setRowsPerPage(pagesize );
 		pager =  this.selectPageBySQL(hql, params, MailAddressList.class, pager);
 		return pager;
+	}
+
+
+	public boolean emailIsExist(String email) throws SQLException {
+		MailAddressList address =  (MailAddressList) this.selectOneByHQL(emailIsExistHql, new Object[]{email});
+		if(address == null){
+			return false;
+		}else{
+			return true;
+		}
+		
 	}
 
 }
