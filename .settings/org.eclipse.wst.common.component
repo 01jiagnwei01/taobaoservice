@@ -6,7 +6,7 @@
 		<wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/java"/>
 		<wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/groovy"/>
 		<wb-resource deploy-path="/" source-path="WebContent"/>
-		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/a/.gradle/caches/modules-2/files-2.1/org.codehaus.groovy/groovy-all/2.3.4/63573270662a8d2bdea1f75b2291e667c7d972a7/groovy-all-2.3.4.jar">
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/a/.gradle/caches/modules-2/files-2.1/org.codehaus.groovy/groovy-all/2.3.7/feb6df9c6936c797159091a451ed8590d67101dc/groovy-all-2.3.7.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/a/.gradle/caches/modules-2/files-2.1/log4j/log4j/1.2.17/5af35056b4d257e4b64b9e8069c0746e8b08629f/log4j-1.2.17.jar">
@@ -141,6 +141,15 @@
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/a/.gradle/caches/modules-2/files-2.1/org.apache.activemq/activemq-broker/5.10.0/4095c7ab762f381b00f99a3e9520e456e32100d1/activemq-broker-5.10.0.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/a/.gradle/caches/modules-2/files-2.1/org.apache.mina/mina-core/2.0.9/255f546277515f2191105e89f4d768e3ca02db9c/mina-core-2.0.9.jar">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/a/.gradle/caches/modules-2/files-2.1/org.apache.mina/mina-integration-jmx/2.0.9/2c5f7b880decc88cf361fb8d6ec25072589c8eb3/mina-integration-jmx-2.0.9.jar">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/a/.gradle/caches/modules-2/files-2.1/org.apache.mina/mina-filter-ssl/1.1.7/2ec9c6d3e3ba144c1026054827ae9e531bbd6a5b/mina-filter-ssl-1.1.7.jar">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/a/.gradle/caches/modules-2/files-2.1/org.apache.maven.plugins/maven-compiler-plugin/3.2/aec10f274ac07fafab8906cb1aa69669d753b2c2/maven-compiler-plugin-3.2.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
@@ -258,6 +267,15 @@
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/a/.gradle/caches/modules-2/files-2.1/org.apache.activemq/activemq-openwire-legacy/5.10.0/b7ebdea2ca08c0ff5a73665110e6447945ca342/activemq-openwire-legacy-5.10.0.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/a/.gradle/caches/modules-2/files-2.1/org.apache.mina/mina-integration-beans/2.0.9/2aa1d3ec37098729c45f88ff7e16ff6415855fbc/mina-integration-beans-2.0.9.jar">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/a/.gradle/caches/modules-2/files-2.1/org.apache.mina/mina-integration-ognl/2.0.9/26dfce5f078d161ee3775a2348e0a471ed2db945/mina-integration-ognl-2.0.9.jar">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/a/.gradle/caches/modules-2/files-2.1/ognl/ognl/3.0.8/37e1aebfde7eb7baebc9ad4f85116ef9009c5fc5/ognl-3.0.8.jar">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/a/.gradle/caches/modules-2/files-2.1/org.apache.maven/maven-toolchain/1.0/1ff4a3f5869f68dfa05562a84e7a5d510d909608/maven-toolchain-1.0.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
@@ -307,6 +325,9 @@
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/a/.gradle/caches/modules-2/files-2.1/org.fusesource.hawtbuf/hawtbuf/1.10/a20907168eb4f05c8f777e1671d8070cd06715e4/hawtbuf-1.10.jar">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/a/.gradle/caches/modules-2/files-2.1/javassist/javassist/3.11.0.GA/2c00105734a57e9ee4f27e4b17cd43200e5f0ff8/javassist-3.11.0.GA.jar">
 			<dependency-type>uses</dependency-type>
 		</dependent-module>
 		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/a/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/2.0.1/516c03b21d50a644d538de0f0369c620989cd8f0/jsr305-2.0.1.jar">
